@@ -19,12 +19,15 @@ Route::prefix('users')->group(function () {
 Route::prefix('auth')->group(function () {
     Route::post('/register', [AuthController::class, 'register']);
     Route::post('/login', [AuthController::class, 'login']);
-    
+
+    // دي بس اللي مفتوحة من غير توثيق
     Route::middleware('auth:sanctum')->group(function () {
         Route::get('/profile', [AuthController::class, 'profile']);
         Route::post('/logout', [AuthController::class, 'logout']);
+        Route::put('/update-profile', [AuthController::class, 'updateProfile']);
     });
 });
+
 
 // // Protected routes
 // Route::middleware('auth:sanctum')->group(function () {
