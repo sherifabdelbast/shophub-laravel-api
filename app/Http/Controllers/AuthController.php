@@ -7,14 +7,13 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Laravel\Socialite\Facades\Socialite;
+use Illuminate\Support\Str;
 
 class AuthController extends Controller
 {
-    /**
-     * Register user and create token
-     */
-    public function register(Request $request)
-    {
+
+    public function register(Request $request){
         try {
             $validator = Validator::make($request->all(), [
                 'name' => 'required|string|max:255',
@@ -71,12 +70,7 @@ class AuthController extends Controller
             ], 500);
         }
     }
-
-    /**
-     * Login user and create token
-     */
-    public function login(Request $request)
-    {
+    public function login(Request $request){
         try {
             $validator = Validator::make($request->all(), [
                 'email' => 'required|email',
@@ -128,82 +122,41 @@ class AuthController extends Controller
             ], 500);
         }
     }
-public function updateProfile(Request $request)
-{
-    try {
-        $user = $request->user();
+    public function updateProfile(Request $request){
+        try {
+            $user = $request->user();
 
-        $validator = Validator::make($request->all(), [
-            'name' => 'required|string|max:255',
-            'email' => 'required|email|unique:users,email,' . $user->id,
-            'phone' => 'nullable|string|max:20',
-            'address' => 'nullable|string|max:255',
-            'gender' => 'nullable|in:male,female',
-            'birthday' => 'nullable|date|before:today',
-        ]);
+            $validator = Validator::make($request->all(), [
+                'name' => 'required|string|max:255',
+                'email' => 'required|email|unique:users,email,' . $user->id,
+                'phone' => 'nullable|string|max:20',
+                'address' => 'nullable|string|max:255',
+                'gender' => 'nullable|in:male,female',
+                'birthday' => 'nullable|date|before:today',
+            ]);
 
-        if ($validator->fails()) {
+            if ($validator->fails()) {
+                return response()->json([
+                    'success' => false,
+                    'errors' => $validator->errors(),
+                ], 422);
+            }
+
+            $user->update($validator->validated());
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Profile updated successfully',
+                'user' => $user,
+            ]);
+        } catch (\Exception $e) {
             return response()->json([
                 'success' => false,
-                'errors' => $validator->errors(),
-            ], 422);
+                'message' => 'Server error: ' . $e->getMessage(),
+            ], 500);
         }
-
-        $user->update($validator->validated());
-
-        return response()->json([
-            'success' => true,
-            'message' => 'Profile updated successfully',
-            'user' => $user,
-        ]);
-    } catch (\Exception $e) {
-        return response()->json([
-            'success' => false,
-            'message' => 'Server error: ' . $e->getMessage(),
-        ], 500);
     }
-}
-
-
-
-    /**
-     * Get authenticated user profile
-     */
-//     public function profile(Request $request)
-//     {
-//         try {
-//             $user = $request->user();
-
-// return response()->json([
-//     'success' => true,
-//     'token' => $token,
-//     'user' => [
-//         'id' => $user->id,
-//         'name' => $user->name,
-//         'email' => $user->email,
-//         'gender' => $user->gender,
-//         'phone' => $user->phone,
-//         'birthday' => $user->birthday,
-//         'address' => $user->address,
-//         'email_verified_at' => $user->email_verified_at,
-//     ],
-//     // 'message' => 'Login successful'
-// ]);
-
-
-//         } catch (\Exception $e) {
-//             return response()->json([
-//                 'success' => false,
-//                 'message' => 'Failed to fetch profile'
-//             ], 500);
-//         }
-//     }
-
-    /**
-     * Logout user (revoke token)
-     */
-    public function logout(Request $request)
-    {
+    public function logout(Request $request){
         try {
             $request->user()->currentAccessToken()->delete();
 
@@ -219,4 +172,100 @@ public function updateProfile(Request $request)
             ], 500);
         }
     }
+   public function redirectToGoogle()
+    {
+        try {
+            $clientId = config('services.google.client_id');
+            $redirectUri = config('services.google.redirect');
+            
+            if (empty($clientId)) {
+                throw new \Exception('Google Client ID is missing');
+            }
+
+            $authUrl = "https://accounts.google.com/o/oauth2/v2/auth?" . http_build_query([
+                'client_id' => $clientId,
+                'redirect_uri' => $redirectUri,
+                'response_type' => 'code',
+                'scope' => 'openid email profile',
+                'access_type' => 'online',
+                'prompt' => 'select_account',
+            ]);
+
+            return response()->json([
+                'success' => true,
+                'url' => $authUrl
+            ]);
+                
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Google OAuth configuration error'
+            ], 500);
+        }
+    }
+
+    /**
+     * Handle Google OAuth callback
+     */
+    public function handleGoogleCallback(Request $request)
+    {
+        try {
+            if (!$request->has('code')) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Authorization code not found'
+                ], 400);
+            }
+
+            $googleUser = Socialite::driver('google')->stateless()->user();
+
+            $user = User::where('email', $googleUser->getEmail())->first();
+
+            if (!$user) {
+                $user = User::create([
+                    'name' => $googleUser->getName(),
+                    'email' => $googleUser->getEmail(),
+                    'password' => Hash::make(Str::random(24)),
+                    'provider' => 'google',
+                    'provider_id' => $googleUser->getId(),
+                    'email_verified_at' => now(),
+                    'gender' => 'male',
+                    'phone' => '',
+                    'birthday' => now()->subYears(20)->format('Y-m-d'),
+                    'address' => '',
+                ]);
+            } else {
+                $user->update([
+                    'provider' => 'google',
+                    'provider_id' => $googleUser->getId(),
+                ]);
+            }
+
+            $token = $user->createToken('auth-token')->plainTextToken;
+
+            return response()->json([
+                'success' => true,
+                'token' => $token,
+                'user' => [
+                    'id' => $user->id,
+                    'name' => $user->name,
+                    'email' => $user->email,
+                    'gender' => $user->gender,
+                    'phone' => $user->phone,
+                    'birthday' => $user->birthday,
+                    'address' => $user->address,
+                    'email_verified_at' => $user->email_verified_at,
+                ],
+                'message' => 'Google login successful'
+            ]);
+
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Google login failed',
+                'error' => $e->getMessage()
+            ], 500);
+        }
+    }
+
 }
