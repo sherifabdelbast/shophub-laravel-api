@@ -9,11 +9,15 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Laravel\Socialite\Facades\Socialite;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Password; // ← صحح هذا السطر
+use Illuminate\Auth\Events\PasswordReset; 
+use Illuminate\Support\Facades\Log; // ← أضف هذا للسجلات
 
 class AuthController extends Controller
 {
 
-    public function register(Request $request){
+    public function register(Request $request)
+    {
         try {
             $validator = Validator::make($request->all(), [
                 'name' => 'required|string|max:255',
@@ -32,17 +36,17 @@ class AuthController extends Controller
                     'errors' => $validator->errors()
                 ], 422);
             }
-            
+
             $user = User::create([
                 'name' => $request->name,
                 'email' => $request->email,
-                'gender'=>$request->gender,
-                'phone'=>$request->phone,
+                'gender' => $request->gender,
+                'phone' => $request->phone,
                 'birthday' => $request->birthday,
                 'address' => $request->address,
                 'password' => Hash::make($request->password),
             ]);
-            
+
             $token = $user->createToken('auth-token')->plainTextToken;
 
             return response()->json([
@@ -51,8 +55,8 @@ class AuthController extends Controller
                 'user' => [
                     'id' => $user->id,
                     'name' => $user->name,
-                    'gender'=>$request->gender,
-                    'phone'=>$request->phone,
+                    'gender' => $request->gender,
+                    'phone' => $request->phone,
                     'birthday' => $request->birthday,
                     'address' => $request->address,
                     'email' => $user->email,
@@ -61,7 +65,6 @@ class AuthController extends Controller
                 ],
                 'message' => 'User registered successfully'
             ], 201);
-
         } catch (\Exception $e) {
             return response()->json([
                 'success' => false,
@@ -70,7 +73,8 @@ class AuthController extends Controller
             ], 500);
         }
     }
-    public function login(Request $request){
+    public function login(Request $request)
+    {
         try {
             $validator = Validator::make($request->all(), [
                 'email' => 'required|email',
@@ -112,8 +116,6 @@ class AuthController extends Controller
                 ],
                 'message' => 'Login successful'
             ]);
-
-
         } catch (\Exception $e) {
             return response()->json([
                 'success' => false,
@@ -122,7 +124,8 @@ class AuthController extends Controller
             ], 500);
         }
     }
-    public function updateProfile(Request $request){
+    public function updateProfile(Request $request)
+    {
         try {
             $user = $request->user();
 
@@ -156,7 +159,8 @@ class AuthController extends Controller
             ], 500);
         }
     }
-    public function logout(Request $request){
+    public function logout(Request $request)
+    {
         try {
             $request->user()->currentAccessToken()->delete();
 
@@ -164,7 +168,6 @@ class AuthController extends Controller
                 'success' => true,
                 'message' => 'Logged out successfully'
             ]);
-
         } catch (\Exception $e) {
             return response()->json([
                 'success' => false,
@@ -172,12 +175,12 @@ class AuthController extends Controller
             ], 500);
         }
     }
-   public function redirectToGoogle()
+    public function redirectToGoogle()
     {
         try {
             $clientId = config('services.google.client_id');
             $redirectUri = config('services.google.redirect');
-            
+
             if (empty($clientId)) {
                 throw new \Exception('Google Client ID is missing');
             }
@@ -195,7 +198,6 @@ class AuthController extends Controller
                 'success' => true,
                 'url' => $authUrl
             ]);
-                
         } catch (\Exception $e) {
             return response()->json([
                 'success' => false,
@@ -203,10 +205,6 @@ class AuthController extends Controller
             ], 500);
         }
     }
-
-    /**
-     * Handle Google OAuth callback
-     */
     public function handleGoogleCallback(Request $request)
     {
         try {
@@ -258,7 +256,6 @@ class AuthController extends Controller
                 ],
                 'message' => 'Google login successful'
             ]);
-
         } catch (\Exception $e) {
             return response()->json([
                 'success' => false,
@@ -268,4 +265,110 @@ class AuthController extends Controller
         }
     }
 
+//   public function forgotPassword(Request $request)
+//     {
+//         try {
+//             $validator = Validator::make($request->all(), [
+//                 'email' => 'required|email|exists:users,email',
+//             ]);
+
+//             if ($validator->fails()) {
+//                 return response()->json([
+//                     'success' => false,
+//                     'message' => 'Validation error',
+//                     'errors' => $validator->errors()
+//                 ], 422);
+//             }
+
+//             $status = Password::sendResetLink(
+//                 $request->only('email')
+//             );
+
+//             \Log::info('Password reset link sent', [
+//                 'email' => $request->email,
+//                 'status' => $status
+//             ]);
+
+//             if ($status === Password::RESET_LINK_SENT) {
+//                 return response()->json([
+//                     'success' => true,
+//                     'message' => 'Password reset link has been sent to your email'
+//                 ]);
+//             }
+
+//             return response()->json([
+//                 'success' => false,
+//                 'message' => 'Unable to send reset link. Please try again.'
+//             ], 400);
+
+//         } catch (\Exception $e) {
+//             \Log::error('Forgot password error: ' . $e->getMessage());
+//             return response()->json([
+//                 'success' => false,
+//                 'message' => 'Failed to send reset link',
+//                 'error' => $e->getMessage()
+//             ], 500);
+//         }
+//     }
+
+//     /**
+//      * Reset password
+//      */
+//     public function resetPassword(Request $request)
+//     {
+//         try {
+//             $validator = Validator::make($request->all(), [
+//                 'token' => 'required',
+//                 'email' => 'required|email|exists:users,email',
+//                 'password' => 'required|string|min:6|confirmed',
+//             ], [
+//                 'password.confirmed' => 'Password confirmation does not match.',
+//                 'email.exists' => 'No account found with this email address.'
+//             ]);
+
+//             if ($validator->fails()) {
+//                 return response()->json([
+//                     'success' => false,
+//                     'message' => 'Validation error',
+//                     'errors' => $validator->errors()
+//                 ], 422);
+//             }
+
+//             $status = Password::reset(
+//                 $request->only('email', 'password', 'password_confirmation', 'token'),
+//                 function ($user, $password) {
+//                     $user->forceFill([
+//                         'password' => Hash::make($password)
+//                     ])->setRememberToken(Str::random(60));
+
+//                     $user->save();
+
+//                     event(new PasswordReset($user));
+                    
+//                     \Log::info('Password reset successful', ['user_id' => $user->id]);
+//                 }
+//             );
+
+//             if ($status === Password::PASSWORD_RESET) {
+//                 return response()->json([
+//                     'success' => true,
+//                     'message' => 'Password has been reset successfully'
+//                 ]);
+//             }
+
+//             return response()->json([
+//                 'success' => false,
+//                 'message' => 'Invalid or expired reset token'
+//             ], 400);
+
+//         } catch (\Exception $e) {
+//             \Log::error('Reset password error: ' . $e->getMessage());
+//             return response()->json([
+//                 'success' => false,
+//                 'message' => 'Failed to reset password',
+//                 'error' => $e->getMessage()
+//             ], 500);
+//         }
+//     }
 }
+
