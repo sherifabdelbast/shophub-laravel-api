@@ -2,12 +2,15 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Product;
-use Illuminate\Http\Request;
 
+use App\Models\Product;
+use App\Models\Category;  // تأكد من وجود هذا
+use App\Models\Brand;     // تأكد من وجود هذا
+use App\Http\Requests\StoreProductRequest;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
 class ProductController extends Controller
 {
-    // ✅ عرض كل المنتجات
     public function index()
     {
         $products = Product::with(['category', 'brand'])->where('status', 'active')->get();
@@ -27,47 +30,81 @@ class ProductController extends Controller
     }
 
     // ✅ إنشاء منتج جديد
-    public function store(Request $request)
-    {
-        $validated = $request->validate([
-            'name' => 'required|string|max:255',
-            'price' => 'required|numeric',
-            'category_id' => 'nullable|exists:categories,id',
-            'brand_id' => 'nullable|exists:brands,id',
-        ]);
+    public function store(StoreProductRequest $request){
+        try {
+            $product = Product::create($request->validated());
 
-        $product = Product::create($validated + [
-            'status' => 'active'
-        ]);
+            return response()->json([
+                'message' => 'Product created successfully',
+                'product' => $product->load(['category', 'brand'])
+            ], 201);
 
-        return response()->json(['message' => 'Product created successfully', 'product' => $product], 201);
-    }
-
-    // ✅ تحديث منتج
-    public function update(Request $request, $id)
-    {
-        $product = Product::find($id);
-
-        if (!$product) {
-            return response()->json(['message' => 'Product not found'], 404);
+        } catch (\Exception $e) {
+            return response()->json([
+                'message' => 'Failed to create product',
+                'error' => $e->getMessage()
+            ], 500);
         }
-
-        $product->update($request->all());
-
-        return response()->json(['message' => 'Product updated successfully', 'product' => $product]);
     }
 
-    // ✅ حذف منتج
+    // ✅ بيانات الفورم (الكاتيجوريات والبراندات)
+    public function getFormData(): JsonResponse
+    {
+        $categories = Category::where('status', 'active')->get();
+        $brands = Brand::where('status', 'active')->get();
+
+        return response()->json([
+            'categories' => $categories,
+            'brands' => $brands
+        ]);
+    }
+
+    // ✅ تحديث المنتج
+    public function update(StoreProductRequest $request, $id)
+    {
+        try {
+            $product = Product::find($id);
+            
+            if (!$product) {
+                return response()->json(['message' => 'Product not found'], 404);
+            }
+
+            $product->update($request->validated());
+
+            return response()->json([
+                'message' => 'Product updated successfully',
+                'product' => $product->load(['category', 'brand'])
+            ]);
+
+        } catch (\Exception $e) {
+            return response()->json([
+                'message' => 'Failed to update product',
+                'error' => $e->getMessage()
+            ], 500);
+        }
+    }
+
+    // ✅ حذف المنتج
     public function destroy($id)
     {
-        $product = Product::find($id);
+        try {
+            $product = Product::find($id);
+            
+            if (!$product) {
+                return response()->json(['message' => 'Product not found'], 404);
+            }
 
-        if (!$product) {
-            return response()->json(['message' => 'Product not found'], 404);
+            $product->delete();
+
+            return response()->json([
+                'message' => 'Product deleted successfully'
+            ]);
+
+        } catch (\Exception $e) {
+            return response()->json([
+                'message' => 'Failed to delete product',
+                'error' => $e->getMessage()
+            ], 500);
         }
-
-        $product->update(['status' => 'deleted']);
-
-        return response()->json(['message' => 'Product deleted successfully']);
     }
 }

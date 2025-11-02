@@ -31,11 +31,12 @@ Route::prefix('users')->group(function () {
     Route::put('/edit/{id}', [UserController::class, 'update']); // PUT /api/users/{id}
 });
 Route::prefix('products')->group(function () {
-    Route::get('/', [ProductController::class, 'index']);      // عرض كل المنتجات
-    Route::get('/{id}', [ProductController::class, 'show']);   // عرض منتج واحد
-    Route::post('/', [ProductController::class, 'store']);     // إضافة منتج
-    Route::put('/{id}', [ProductController::class, 'update']); // تعديل منتج
-    Route::delete('/{id}', [ProductController::class, 'destroy']); // حذف منتج
+    Route::get('/', [ProductController::class, 'index']);           // GET /api/products
+    Route::get('/{id}', [ProductController::class, 'show']);        // GET /api/products/1
+    Route::get('/form/data', [ProductController::class, 'getFormData']); // GET /api/products/form/data
+    Route::post('/new-product', [ProductController::class, 'store']);          // POST /api/products
+    Route::put('/{id}', [ProductController::class, 'update']);      // PUT /api/products/1
+    Route::delete('/{id}', [ProductController::class, 'destroy']);  // DELETE /api/products/1
 });
 
 
