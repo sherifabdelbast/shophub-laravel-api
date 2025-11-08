@@ -7,7 +7,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\Auth\PasswordResetLinkController;
 use App\Http\Controllers\Auth\NewPasswordController;
-
+//?----------------------User------------------------------------------------
 Route::prefix('auth')->group(function () {
     Route::post('/register', [AuthController::class, 'register']);
     Route::post('/login', [AuthController::class, 'login']);
@@ -23,13 +23,7 @@ Route::prefix('auth')->group(function () {
         Route::put('/update-profile', [AuthController::class, 'updateProfile']);
     });
 });
-Route::prefix('users')->group(function () {
-    Route::get('/', [UserController::class, 'index']);   // GET /api/users
-    Route::get('/{id}', [UserController::class, 'show']); // GET /api/users/{id}
-    Route::post('/create', [AuthController::class, 'register']);   // POST /api/users
-    Route::delete('/{id}', [UserController::class, 'delete']); // DELETE /api/users/{id}
-    Route::put('/edit/{id}', [UserController::class, 'update']); // PUT /api/users/{id}
-});
+
 Route::prefix('products')->group(function () {
     Route::get('/', [ProductController::class, 'index']);           // GET /api/products
     Route::get('/{id}', [ProductController::class, 'show']);        // GET /api/products/1
@@ -38,7 +32,7 @@ Route::prefix('products')->group(function () {
     Route::put('/{id}', [ProductController::class, 'update']);      // PUT /api/products/1
     Route::delete('/{id}', [ProductController::class, 'destroy']);  // DELETE /api/products/1
 });
-
+//?----------------------------Admin---------------------------------------------------
 Route::prefix('admin/products')->group(function () {
     Route::get('/', [ProductController::class, 'index']);  
     Route::get('/{id}', [ProductController::class, 'show']);
@@ -49,6 +43,9 @@ Route::prefix('admin/products')->group(function () {
     Route::delete('/{id}', [ProductController::class, 'destroy']); 
 });
 Route::prefix('admin/users')->group(function () {
-
+    Route::get('/', [UserController::class, 'index']); // GET - Index (show all users)
+    Route::get('/{id}', [UserController::class, 'show']); // GET - Show (single user)
+    Route::put('/{id}', [UserController::class, 'update']); // PUT - Update user
+    Route::delete('/{id}', [UserController::class, 'destroy']); // DELETE - Delete user
 });
 
