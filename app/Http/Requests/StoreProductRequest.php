@@ -27,17 +27,14 @@ class StoreProductRequest extends FormRequest
             'category_id' => 'required|exists:categories,id',
             'brand_id' => 'required|exists:brands,id',
             'price' => 'required|numeric|min:0',
-            'discount_price' => 'nullable|numeric|min:0',
+            'discount_price' => 'nullable|numeric|min:0|lt:price',
             'stock' => 'required|integer|min:0',
             'sku' => 'required|string|unique:products,sku',
-            'image_url' => 'nullable|url',
-            'gallery' => 'nullable|array',
-            'gallery.*' => 'url',
-            'rating' => 'nullable|numeric|min:0|max:5',
-            'status' => 'required|in:active,inactive'
+            'image_url' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'gallery.*' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'status' => 'required|in:active,inactive,draft',
         ];
     }
-    
     public function messages(): array
     {
         return [

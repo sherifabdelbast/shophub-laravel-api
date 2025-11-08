@@ -34,9 +34,21 @@ Route::prefix('products')->group(function () {
     Route::get('/', [ProductController::class, 'index']);           // GET /api/products
     Route::get('/{id}', [ProductController::class, 'show']);        // GET /api/products/1
     Route::get('/form/data', [ProductController::class, 'getFormData']); // GET /api/products/form/data
-    Route::post('/new-product', [ProductController::class, 'store']);          // POST /api/products
+    Route::patch('/{id}/status', [ProductController::class, 'updateStatus']);    Route::post('/new-product', [ProductController::class, 'store']);          // POST /api/products
     Route::put('/{id}', [ProductController::class, 'update']);      // PUT /api/products/1
     Route::delete('/{id}', [ProductController::class, 'destroy']);  // DELETE /api/products/1
 });
 
+Route::prefix('admin/products')->group(function () {
+    Route::get('/', [ProductController::class, 'index']);  
+    Route::get('/{id}', [ProductController::class, 'show']);
+    Route::get('/form/data', [ProductController::class, 'getFormData']);
+    Route::post('/create', [ProductController::class, 'store']);
+    Route::patch('/{id}/status', [ProductController::class, 'updateStatus']);
+    Route::put('edit/{id}', [ProductController::class, 'update']);      // PUT /api/products/1
+    Route::delete('/{id}', [ProductController::class, 'destroy']); 
+});
+Route::prefix('admin/users')->group(function () {
+
+});
 
