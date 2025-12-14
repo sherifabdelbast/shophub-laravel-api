@@ -2,9 +2,11 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\UserController;
 use App\Http\Controllers\AuthController;
-use App\Http\Controllers\ProductController;
+use App\Http\Controllers\Product\ProductController;
+use App\Http\Controllers\Product\CategoryController;
+use App\Http\Controllers\Product\BrandController;
+use App\Http\Controllers\UserController;
 use App\Http\Controllers\Auth\PasswordResetLinkController;
 use App\Http\Controllers\Auth\NewPasswordController;
 //?----------------------User------------------------------------------------
@@ -33,19 +35,42 @@ Route::prefix('products')->group(function () {
     Route::delete('/{id}', [ProductController::class, 'destroy']);  // DELETE /api/products/1
 });
 //?----------------------------Admin---------------------------------------------------
-Route::prefix('admin/products')->group(function () {
-    Route::get('/', [ProductController::class, 'index']);  
-    Route::get('/{id}', [ProductController::class, 'show']);
-    Route::get('/form/data', [ProductController::class, 'getFormData']);
-    Route::post('/create', [ProductController::class, 'store']);
-    Route::patch('/{id}/status', [ProductController::class, 'updateStatus']);
-    Route::put('edit/{id}', [ProductController::class, 'update']);      // PUT /api/products/1
-    Route::delete('/{id}', [ProductController::class, 'destroy']); 
-});
-Route::prefix('admin/users')->group(function () {
-    Route::get('/', [UserController::class, 'index']); // GET - Index (show all users)
-    Route::get('/{id}', [UserController::class, 'show']); // GET - Show (single user)
-    Route::put('/{id}', [UserController::class, 'update']); // PUT - Update user
-    Route::delete('/{id}', [UserController::class, 'destroy']); // DELETE - Delete user
-});
+Route::prefix('admin')->group(function () {
+    // Products Routes
+    Route::prefix('products')->group(function () {
+        Route::get('/', [ProductController::class, 'index']);
+        Route::get('/form/data', [ProductController::class, 'getFormData']);
+        Route::post('/create', [ProductController::class, 'store']);
+        Route::patch('/{id}/status', [ProductController::class, 'updateStatus']);
+        Route::put('/edit/{id}', [ProductController::class, 'update']);
+        Route::get('/{id}', [ProductController::class, 'show']);
+        Route::delete('/{id}', [ProductController::class, 'destroy']);
+    });
+     // Categories Routes
+    Route::prefix('categories')->group(function () {
+        Route::get('/', [CategoryController::class, 'index']);
+        Route::post('/', [CategoryController::class, 'store']);
+        Route::get('/parent-categories', [CategoryController::class, 'getParentCategories']);
+        Route::get('/{id}', [CategoryController::class, 'show']);
+        Route::put('/edit/{id}', [CategoryController::class, 'update']);
+        Route::delete('/{id}', [CategoryController::class, 'destroy']);
+        Route::patch('/{id}/status', [CategoryController::class, 'updateStatus']);
+    });
 
+    // Brands Routes
+    Route::prefix('brands')->group(function () {
+        Route::get('/', [BrandController::class, 'index']);
+        Route::post('/', [BrandController::class, 'store']);
+        Route::get('/{id}', [BrandController::class, 'show']);
+        Route::put('/{id}', [BrandController::class, 'update']);
+        Route::delete('/{id}', [BrandController::class, 'destroy']);
+        Route::patch('/{id}/status', [BrandController::class, 'updateStatus']);
+    });
+    // Users Routes
+    Route::prefix('users')->group(function () {
+        Route::get('/', [UserController::class, 'index']);
+        Route::put('/{id}', [UserController::class, 'update']);
+        Route::delete('/{id}', [UserController::class, 'destroy']);
+        Route::get('/{id}', [UserController::class, 'show']);
+    });
+});
