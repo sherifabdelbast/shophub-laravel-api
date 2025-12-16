@@ -20,7 +20,8 @@ class AuthController extends Controller
     {
         try {
             $validator = Validator::make($request->all(), [
-                'name' => 'required|string|max:255',
+                'first_name' => 'required|string|max:255',
+                'last_name' => 'required|string|max:255',
                 'email' => 'required|string|email|max:255|unique:users',
                 'gender' => 'required|string|in:male,female', // 👈 جديد
                 'birthday' => 'required|date|before:today', // 👈 جديد
