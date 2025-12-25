@@ -23,26 +23,15 @@ class UserController extends Controller
     }
 
 
-    public function show($id): JsonResponse
+    public function show(User $user): JsonResponse
     {
-        $user = User::find($id);
-        
         return response()->json([
             'success' => true,
             'data' => $user
         ]);
     }
     
-   public function update(Request $request, $id): JsonResponse{
-    $user = User::find($id);
-    
-    if (!$user) {
-        return response()->json([
-            'success' => false,
-            'message' => 'User not found'
-        ], 404);
-    }
-
+   public function update(Request $request, User $user): JsonResponse{
     $request->validate([
         'name' => ['required', 'string', 'max:255'],
         'email' => ['required', 'string', 'email', 'max:255', 'unique:users,email,' . $user->id],
@@ -63,14 +52,8 @@ class UserController extends Controller
 
 
     //?Done
-    public function destroy($id){
+    public function destroy(User $user){
         try {
-            $user = User::find($id);
-            
-            if (!$user) {
-                return response()->json(['message' => 'Product not found'], 404);
-            }
-
             $user->delete();
 
             return response()->json([

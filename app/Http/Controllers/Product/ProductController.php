@@ -18,13 +18,8 @@ class ProductController extends Controller
         $products = Product::with(['category', 'brand'])->get();
         return response()->json($products);
     }
-    public function show($id){
-        $product = Product::with(['category', 'brand'])->find($id);
-
-        if (!$product) {
-            return response()->json(['message' => 'Product not found'], 404);
-        }
-
+    public function show(Product $product){
+        $product->load(['category', 'brand']);
         return response()->json($product);
     }
     public function store(StoreProductRequest $request){
@@ -52,17 +47,8 @@ class ProductController extends Controller
             'brands' => $brands
         ]);
     }
-    public function updateStatus($id){
+    public function updateStatus(Product $product){
         try {
-            $product = Product::find($id);
-            
-            if (!$product) {
-                return response()->json([
-                    'success' => false,
-                    'message' => 'Product not found'
-                ], 404);
-            }
-
             // تبديل الحالة بين active و inactive
             $newStatus = $product->status === 'active' ? 'inactive' : 'active';
             $product->update(['status' => $newStatus]);
@@ -81,16 +67,7 @@ class ProductController extends Controller
             ], 500);
         }
     }
-    public function update(UpdateProductRequest $request, $id): JsonResponse{
-        // Find the product
-        $product = Product::find($id);
-        
-        if (!$product) {
-            return response()->json([
-                'message' => 'Product not found'
-            ], 404);
-        }
-
+    public function update(UpdateProductRequest $request, Product $product): JsonResponse{
         // البيانات أصبحت مُتحقق منها تلقائياً عبر الـ Form Request
         $data = $request->validated();
 
@@ -128,14 +105,8 @@ class ProductController extends Controller
             'product' => $product
         ], 200);
     }
-    public function destroy($id){
+    public function destroy(Product $product){
         try {
-            $product = Product::find($id);
-            
-            if (!$product) {
-                return response()->json(['message' => 'Product not found'], 404);
-            }
-
             $product->delete();
 
             return response()->json([

@@ -115,42 +115,21 @@ class BrandController extends Controller
     /**
      * Display the specified brand
      */
-    public function show($id)
+    public function show(Brand $brand)
     {
-        try {
-            $brand = Brand::findOrFail($id);
-            
-            return response()->json([
-                'success' => true,
-                'data' => $brand,
-                'message' => 'Brand retrieved successfully'
-            ]);
-            
-        } catch (\Exception $e) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Brand not found',
-                'error' => $e->getMessage()
-            ], 404);
-        }
+        return response()->json([
+            'success' => true,
+            'data' => $brand,
+            'message' => 'Brand retrieved successfully'
+        ]);
     }
 
     /**
      * Update the specified brand
      */
-public function update(Request $request, $id)
+public function update(Request $request, Brand $brand)
 {
     try {
-        $brand = Brand::find($id);
-
-        if (!$brand) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Brand not found',
-                'data' => null
-            ], 404);
-        }
-
         $validated = $request->validate([
             'name' => 'required|string|max:255',
             'slug' => 'nullable|string|max:255',
@@ -180,11 +159,9 @@ public function update(Request $request, $id)
     /**
      * Remove the specified brand
      */
-    public function destroy($id)
+    public function destroy(Brand $brand)
     {
         try {
-            $brand = Brand::findOrFail($id);
-            
             // Check if brand has products
             if ($brand->products()->count() > 0) {
                 return response()->json([
@@ -218,11 +195,9 @@ public function update(Request $request, $id)
     /**
      * Update brand status
      */
-    public function updateStatus(Request $request, $id)
+    public function updateStatus(Request $request, Brand $brand)
     {
         try {
-            $brand = Brand::findOrFail($id);
-            
             $validated = $request->validate([
                 'status' => 'required|in:active,inactive'
             ]);

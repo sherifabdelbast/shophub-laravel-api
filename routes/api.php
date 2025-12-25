@@ -28,11 +28,12 @@ Route::prefix('auth')->group(function () {
 
 Route::prefix('products')->group(function () {
     Route::get('/', [ProductController::class, 'index']);           // GET /api/products
-    Route::get('/{id}', [ProductController::class, 'show']);        // GET /api/products/1
     Route::get('/form/data', [ProductController::class, 'getFormData']); // GET /api/products/form/data
-    Route::patch('/{id}/status', [ProductController::class, 'updateStatus']);    Route::post('/new-product', [ProductController::class, 'store']);          // POST /api/products
-    Route::put('/{id}', [ProductController::class, 'update']);      // PUT /api/products/1
-    Route::delete('/{id}', [ProductController::class, 'destroy']);  // DELETE /api/products/1
+    Route::post('/new-product', [ProductController::class, 'store']);          // POST /api/products
+    Route::get('/{product}', [ProductController::class, 'show']);        // GET /api/products/1
+    Route::put('/{product}', [ProductController::class, 'update']);      // PUT /api/products/1
+    Route::patch('/{product}/status', [ProductController::class, 'updateStatus']);    // PATCH /api/products/1/status
+    Route::delete('/{product}', [ProductController::class, 'destroy']);  // DELETE /api/products/1
 });
 //?----------------------------Admin---------------------------------------------------
 Route::prefix('admin')->group(function () {
@@ -41,36 +42,36 @@ Route::prefix('admin')->group(function () {
         Route::get('/', [ProductController::class, 'index']);
         Route::get('/form/data', [ProductController::class, 'getFormData']);
         Route::post('/create', [ProductController::class, 'store']);
-        Route::patch('/{id}/status', [ProductController::class, 'updateStatus']);
-        Route::put('/edit/{id}', [ProductController::class, 'update']);
-        Route::get('/{id}', [ProductController::class, 'show']);
-        Route::delete('/{id}', [ProductController::class, 'destroy']);
+        Route::get('/{product}', [ProductController::class, 'show']);
+        Route::put('/edit/{product}', [ProductController::class, 'update']);
+        Route::patch('/{product}/status', [ProductController::class, 'updateStatus']);
+        Route::delete('/{product}', [ProductController::class, 'destroy']);
     });
      // Categories Routes
     Route::prefix('categories')->group(function () {
         Route::get('/', [CategoryController::class, 'index']);
-        Route::post('/', [CategoryController::class, 'store']);
         Route::get('/parent-categories', [CategoryController::class, 'getParentCategories']);
-        Route::get('/{id}', [CategoryController::class, 'show']);
-        Route::put('/edit/{id}', [CategoryController::class, 'update']);
-        Route::delete('/{id}', [CategoryController::class, 'destroy']);
-        Route::patch('/{id}/status', [CategoryController::class, 'updateStatus']);
+        Route::post('/', [CategoryController::class, 'store']);
+        Route::get('/{category}', [CategoryController::class, 'show']);
+        Route::put('/edit/{category}', [CategoryController::class, 'update']);
+        Route::patch('/{category}/status', [CategoryController::class, 'updateStatus']);
+        Route::delete('/{category}', [CategoryController::class, 'destroy']);
     });
 
     // Brands Routes
     Route::prefix('brands')->group(function () {
         Route::get('/', [BrandController::class, 'index']);
         Route::post('/', [BrandController::class, 'store']);
-        Route::get('/{id}', [BrandController::class, 'show']);
-        Route::put('/{id}', [BrandController::class, 'update']);
-        Route::delete('/{id}', [BrandController::class, 'destroy']);
-        Route::patch('/{id}/status', [BrandController::class, 'updateStatus']);
+        Route::get('/{brand}', [BrandController::class, 'show']);
+        Route::put('/{brand}', [BrandController::class, 'update']);
+        Route::patch('/{brand}/status', [BrandController::class, 'updateStatus']);
+        Route::delete('/{brand}', [BrandController::class, 'destroy']);
     });
     // Users Routes
     Route::prefix('users')->group(function () {
         Route::get('/', [UserController::class, 'index']);
-        Route::put('/{id}', [UserController::class, 'update']);
-        Route::delete('/{id}', [UserController::class, 'destroy']);
-        Route::get('/{id}', [UserController::class, 'show']);
+        Route::get('/{user}', [UserController::class, 'show']);
+        Route::put('/{user}', [UserController::class, 'update']);
+        Route::delete('/{user}', [UserController::class, 'destroy']);
     });
 });

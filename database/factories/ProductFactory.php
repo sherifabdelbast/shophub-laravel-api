@@ -17,19 +17,21 @@ class ProductFactory extends Factory
      */
     public function definition(): array
     {
+        $name = fake()->words(2, true);
         return [
-            'name' => fake()->words(2, true),
+            'name' => $name,
+            'slug' => \Illuminate\Support\Str::slug($name) . '-' . fake()->unique()->numberBetween(1000, 9999),
             'description' => fake()->sentence(12),
             'category_id' => Category::inRandomOrder()->first()->id ?? 1,
             'brand_id' => Brand::inRandomOrder()->first()->id ?? 1,
             'price' => fake()->randomFloat(2, 50, 1000),
             'discount_price' => fake()->optional()->randomFloat(2, 30, 800),
-            'stock' => fake()->numberBetween(0, 100),
+            'stock' => fake()->numberBetween(10, 100),
             'sku' => strtoupper(fake()->bothify('SKU-###??')),
             'image_url' => fake()->imageUrl(400, 400, 'products', true),
-            'gallery' => [fake()->imageUrl(), fake()->imageUrl()],
             'rating' => fake()->randomFloat(1, 1, 5),
             'status' => 'active',
+            'is_featured' => fake()->boolean(20),
         ];
     }
 }

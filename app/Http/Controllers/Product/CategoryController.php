@@ -75,36 +75,19 @@ class CategoryController extends Controller
         }
     }
 
-    public function show($id)
+    public function show(Category $category)
     {
-        $category = Category::with(['parent', 'children'])->find($id);
-
-        if (!$category) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Category not found'
-            ], 404);
-        }
-
+        $category->load(['parent', 'children']);
         return response()->json([
             'success' => true,
             'data' => $category
         ]);
     }
 
-public function update(Request $request, $id)
+public function update(Request $request, Category $category)
 {
-    $category = Category::find($id);
-
-    if (!$category) {
-        return response()->json([
-            'success' => false,
-            'message' => 'Category not found'
-        ], 404);
-    }
-
     $validated = $request->validate([
-        'name' => 'required|string|max:255|unique:categories,name,' . $id,
+        'name' => 'required|string|max:255|unique:categories,name,' . $category->id,
         'description' => 'nullable|string|max:500',
         'parent_id' => 'nullable|sometimes|exists:categories,id',
         'image' => 'nullable|sometimes|image|mimes:jpeg,png,jpg,gif,webp|max:2048',
@@ -151,17 +134,8 @@ public function update(Request $request, $id)
     }
 }
 
-    public function destroy($id)
+    public function destroy(Category $category)
     {
-        $category = Category::find($id);
-
-        if (!$category) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Category not found'
-            ], 404);
-        }
-
         // Check if category has products or subcategories
         if ($category->products()->count() > 0 || $category->children()->count() > 0) {
             return response()->json([
@@ -205,17 +179,8 @@ public function update(Request $request, $id)
         ]);
     }
 
-    public function updateStatus(Request $request, $id)
+    public function updateStatus(Request $request, Category $category)
     {
-        $category = Category::find($id);
-
-        if (!$category) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Category not found'
-            ], 404);
-        }
-
         $validated = $request->validate([
             'status' => 'required|in:active,inactive'
         ]);

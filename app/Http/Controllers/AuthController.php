@@ -39,7 +39,8 @@ class AuthController extends Controller
             }
 
             $user = User::create([
-                'name' => $request->name,
+                'first_name' => $request->first_name,
+                'last_name' => $request->last_name,
                 'email' => $request->email,
                 'gender' => $request->gender,
                 'phone' => $request->phone,
@@ -55,13 +56,14 @@ class AuthController extends Controller
                 'token' => $token,
                 'user' => [
                     'id' => $user->id,
-                    'name' => $user->name,
-                    'gender' => $request->gender,
-                    'phone' => $request->phone,
-                    'birthday' => $request->birthday,
-                    'address' => $request->address,
+                    'first_name' => $user->first_name,
+                    'last_name' => $user->last_name,
+                    'name' => $user->full_name,
+                    'gender' => $user->gender,
+                    'phone' => $user->phone,
+                    'birthday' => $user->birthday,
+                    'address' => $user->address,
                     'email' => $user->email,
-
                     'email_verified_at' => $user->email_verified_at,
                 ],
                 'message' => 'User registered successfully'
@@ -107,7 +109,9 @@ class AuthController extends Controller
                 'token' => $token,
                 'user' => [
                     'id' => $user->id,
-                    'name' => $user->name,
+                    'first_name' => $user->first_name,
+                    'last_name' => $user->last_name,
+                    'name' => $user->full_name,
                     'email' => $user->email,
                     'gender' => $user->gender,
                     'phone' => $user->phone,
@@ -131,7 +135,8 @@ class AuthController extends Controller
             $user = $request->user();
 
             $validator = Validator::make($request->all(), [
-                'name' => 'required|string|max:255',
+                'first_name' => 'required|string|max:255',
+                'last_name' => 'required|string|max:255',
                 'email' => 'required|email|unique:users,email,' . $user->id,
                 'phone' => 'nullable|string|max:20',
                 'address' => 'nullable|string|max:255',
@@ -221,8 +226,10 @@ class AuthController extends Controller
             $user = User::where('email', $googleUser->getEmail())->first();
 
             if (!$user) {
+                $nameParts = explode(' ', $googleUser->getName(), 2);
                 $user = User::create([
-                    'name' => $googleUser->getName(),
+                    'first_name' => $nameParts[0] ?? 'User',
+                    'last_name' => $nameParts[1] ?? '',
                     'email' => $googleUser->getEmail(),
                     'password' => Hash::make(Str::random(24)),
                     'provider' => 'google',
@@ -247,7 +254,9 @@ class AuthController extends Controller
                 'token' => $token,
                 'user' => [
                     'id' => $user->id,
-                    'name' => $user->name,
+                    'first_name' => $user->first_name,
+                    'last_name' => $user->last_name,
+                    'name' => $user->full_name,
                     'email' => $user->email,
                     'gender' => $user->gender,
                     'phone' => $user->phone,
