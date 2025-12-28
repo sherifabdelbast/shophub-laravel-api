@@ -76,6 +76,35 @@ class AuthController extends Controller
             ], 500);
         }
     }
+    public function profile(Request $request)
+    {
+        try {
+            $user = $request->user();
+            
+            return response()->json([
+                'success' => true,
+                'user' => [
+                    'id' => $user->id,
+                    'first_name' => $user->first_name,
+                    'last_name' => $user->last_name,
+                    'name' => $user->full_name,
+                    'email' => $user->email,
+                    'gender' => $user->gender,
+                    'phone' => $user->phone,
+                    'birthday' => $user->birthday,
+                    'address' => $user->address,
+                    'email_verified_at' => $user->email_verified_at,
+                ]
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Failed to get profile',
+                'error' => $e->getMessage()
+            ], 500);
+        }
+    }
+
     public function login(Request $request)
     {
         try {

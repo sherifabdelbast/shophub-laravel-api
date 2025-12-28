@@ -19,9 +19,11 @@ class UpdateProductRequest extends FormRequest
      *
      * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
      */
-        public function rules(): array
+    public function rules(): array
     {
-        $productId = $this->route('id'); // أو 'product' إذا كان اسم الـ route parameter مختلف
+        // Get product ID from route (handles both model binding and raw ID)
+        $product = $this->route('product');
+        $productId = $product instanceof \App\Models\Product ? $product->id : $product;
         
         return [
             'name' => 'sometimes|string|max:255',
@@ -31,7 +33,7 @@ class UpdateProductRequest extends FormRequest
             'price' => 'sometimes|numeric|min:0',
             'discount_price' => 'nullable|numeric|min:0',
             'stock' => 'sometimes|integer|min:0',
-            'sku' => 'sometimes|string|unique:products,sku,' . $productId,
+            'sku' => ['sometimes', 'string', Rule::unique('products', 'sku')->ignore($productId)],
             'image_url' => 'sometimes|url',
             'gallery' => 'sometimes|array',
             'gallery.*' => 'url',

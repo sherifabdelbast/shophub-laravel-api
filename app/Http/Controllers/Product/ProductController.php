@@ -10,8 +10,9 @@ use App\Http\Requests\StoreProductRequest;
 use App\Http\Requests\UpdateProductRequest;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Validator; // ✅ أضف هذا السطر
-use Illuminate\Support\Facades\Storage;   // ✅ وأضف هذا أيضاً إذا كنت تستخدم Storage
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 class ProductController extends Controller
 {
     public function index(){
@@ -24,7 +25,19 @@ class ProductController extends Controller
     }
     public function store(StoreProductRequest $request){
         try {
-            $product = Product::create($request->validated());
+            $data = $request->validated();
+            
+            // Auto-generate slug from name
+            $slug = Str::slug($data['name']);
+            // Ensure unique slug
+            $originalSlug = $slug;
+            $count = 1;
+            while (Product::where('slug', $slug)->exists()) {
+                $slug = $originalSlug . '-' . $count++;
+            }
+            $data['slug'] = $slug;
+
+            $product = Product::create($data);
 
             return response()->json([
                 'message' => 'Product created successfully',
