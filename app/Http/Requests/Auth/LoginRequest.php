@@ -8,6 +8,8 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
+use Illuminate\Contracts\Validation\Validator;
+use Illuminate\Http\Exceptions\HttpResponseException;
 
 class LoginRequest extends FormRequest
 {
@@ -33,9 +35,37 @@ class LoginRequest extends FormRequest
     }
 
     /**
+     * Get custom error messages for validation rules.
+     *
+     * @return array<string, string>
+     */
+    public function messages(): array
+    {
+        return [
+            'email.required' => 'Email is required.',
+            'email.email' => 'Please provide a valid email address.',
+            'password.required' => 'Password is required.',
+        ];
+    }
+
+    /**
+     * Handle a failed validation attempt.
+     *
+     * @throws \Illuminate\Http\Exceptions\HttpResponseException
+     */
+    protected function failedValidation(Validator $validator): void
+    {
+        throw new HttpResponseException(response()->json([
+            'success' => false,
+            'message' => 'Validation error',
+            'errors' => $validator->errors()
+        ], 422));
+    }
+
+    /**
      * Attempt to authenticate the request's credentials.
      *
-     * @throws \Illuminate\Validation\ValidationException
+     * @throws \Illuminate\Http\Exceptions\HttpResponseException
      */
     public function authenticate(): void
     {
@@ -44,9 +74,10 @@ class LoginRequest extends FormRequest
         if (! Auth::attempt($this->only('email', 'password'), $this->boolean('remember'))) {
             RateLimiter::hit($this->throttleKey());
 
-            throw ValidationException::withMessages([
-                'email' => __('auth.failed'),
-            ]);
+            throw new HttpResponseException(response()->json([
+                'success' => false,
+                'message' => 'Invalid email or password'
+            ], 401));
         }
 
         RateLimiter::clear($this->throttleKey());
@@ -55,7 +86,7 @@ class LoginRequest extends FormRequest
     /**
      * Ensure the login request is not rate limited.
      *
-     * @throws \Illuminate\Validation\ValidationException
+     * @throws \Illuminate\Http\Exceptions\HttpResponseException
      */
     public function ensureIsNotRateLimited(): void
     {
@@ -67,12 +98,10 @@ class LoginRequest extends FormRequest
 
         $seconds = RateLimiter::availableIn($this->throttleKey());
 
-        throw ValidationException::withMessages([
-            'email' => trans('auth.throttle', [
-                'seconds' => $seconds,
-                'minutes' => ceil($seconds / 60),
-            ]),
-        ]);
+        throw new HttpResponseException(response()->json([
+            'success' => false,
+            'message' => 'Too many login attempts. Please try again in ' . ceil($seconds / 60) . ' minutes.'
+        ], 429));
     }
 
     /**
