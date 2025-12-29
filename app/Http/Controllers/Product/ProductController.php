@@ -1,35 +1,113 @@
 <?php
 
 namespace App\Http\Controllers\Product;
-use App\Http\Controllers\Controller;
 
+use App\Http\Controllers\Controller;
 use App\Models\Product;
-use App\Models\Category;  // تأكد من وجود هذا
-use App\Models\Brand;     // تأكد من وجود هذا
-use App\Http\Requests\StoreProductRequest;
-use App\Http\Requests\UpdateProductRequest;
+use App\Models\Category;
+use App\Models\Brand;
+use App\Http\Requests\Product\StoreProductRequest;
+use App\Http\Requests\Product\UpdateProductRequest;
+use App\Http\Requests\Product\ProductIndexRequest;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
+
 class ProductController extends Controller
 {
-    public function index(){
-        $products = Product::with(['category', 'brand'])->get();
-        return response()->json($products);
+    /**
+     * Display a paginated listing of products with filters.
+     */
+    public function index(ProductIndexRequest $request): JsonResponse
+    {
+        $query = Product::with(['category', 'brand']);
+
+        // Search filter
+        if ($request->filled('search')) {
+            $search = $request->search;
+            $query->where(function ($q) use ($search) {
+                $q->where('name', 'like', "%{$search}%")
+                  ->orWhere('description', 'like', "%{$search}%")
+                  ->orWhere('sku', 'like', "%{$search}%");
+            });
+        }
+
+        // Category filter
+        if ($request->filled('category_id')) {
+            $query->where('category_id', $request->category_id);
+        }
+
+        // Brand filter
+        if ($request->filled('brand_id')) {
+            $query->where('brand_id', $request->brand_id);
+        }
+
+        // Status filter
+        if ($request->filled('status')) {
+            $query->where('status', $request->status);
+        }
+
+        // Price range filter
+        if ($request->filled('min_price')) {
+            $query->where('price', '>=', $request->min_price);
+        }
+        if ($request->filled('max_price')) {
+            $query->where('price', '<=', $request->max_price);
+        }
+
+        // Sorting
+        $sortBy = $request->input('sort_by', 'created_at');
+        $sortOrder = $request->input('sort_order', 'desc');
+        $query->orderBy($sortBy, $sortOrder);
+
+        // Pagination
+        $perPage = $request->input('per_page', 15);
+        $products = $query->paginate($perPage);
+
+        return response()->json([
+            'success' => true,
+            'data' => $products->items(),
+            'meta' => [
+                'current_page' => $products->currentPage(),
+                'last_page' => $products->lastPage(),
+                'per_page' => $products->perPage(),
+                'total' => $products->total(),
+                'from' => $products->firstItem(),
+                'to' => $products->lastItem(),
+            ],
+            'links' => [
+                'first' => $products->url(1),
+                'last' => $products->url($products->lastPage()),
+                'prev' => $products->previousPageUrl(),
+                'next' => $products->nextPageUrl(),
+            ]
+        ]);
     }
-    public function show(Product $product){
+
+    /**
+     * Display the specified product.
+     */
+    public function show(Product $product): JsonResponse
+    {
         $product->load(['category', 'brand']);
-        return response()->json($product);
+
+        return response()->json([
+            'success' => true,
+            'data' => $product
+        ]);
     }
-    public function store(StoreProductRequest $request){
+
+    /**
+     * Store a newly created product.
+     */
+    public function store(StoreProductRequest $request): JsonResponse
+    {
         try {
             $data = $request->validated();
-            
+
             // Auto-generate slug from name
             $slug = Str::slug($data['name']);
-            // Ensure unique slug
             $originalSlug = $slug;
             $count = 1;
             while (Product::where('slug', $slug)->exists()) {
@@ -40,36 +118,50 @@ class ProductController extends Controller
             $product = Product::create($data);
 
             return response()->json([
+                'success' => true,
                 'message' => 'Product created successfully',
-                'product' => $product->load(['category', 'brand'])
+                'data' => $product->load(['category', 'brand'])
             ], 201);
 
         } catch (\Exception $e) {
             return response()->json([
+                'success' => false,
                 'message' => 'Failed to create product',
                 'error' => $e->getMessage()
             ], 500);
         }
     }
-    public function getFormData(): JsonResponse{
+
+    /**
+     * Get form data (categories and brands).
+     */
+    public function getFormData(): JsonResponse
+    {
         $categories = Category::where('status', 'active')->get();
         $brands = Brand::where('status', 'active')->get();
 
         return response()->json([
-            'categories' => $categories,
-            'brands' => $brands
+            'success' => true,
+            'data' => [
+                'categories' => $categories,
+                'brands' => $brands
+            ]
         ]);
     }
-    public function updateStatus(Product $product){
+
+    /**
+     * Toggle product status between active and inactive.
+     */
+    public function updateStatus(Product $product): JsonResponse
+    {
         try {
-            // تبديل الحالة بين active و inactive
             $newStatus = $product->status === 'active' ? 'inactive' : 'active';
             $product->update(['status' => $newStatus]);
 
             return response()->json([
                 'success' => true,
                 'message' => 'Product status updated successfully',
-                'product' => $product->load(['category', 'brand'])
+                'data' => $product->load(['category', 'brand'])
             ]);
 
         } catch (\Exception $e) {
@@ -80,54 +172,72 @@ class ProductController extends Controller
             ], 500);
         }
     }
-    public function update(UpdateProductRequest $request, Product $product): JsonResponse{
-        // البيانات أصبحت مُتحقق منها تلقائياً عبر الـ Form Request
-        $data = $request->validated();
 
-        // Handle image upload if provided
-        if ($request->hasFile('image')) {
-            // Delete old image if exists
-            if ($product->image_url) {
-                $oldImagePath = str_replace('/storage', 'public', $product->image_url);
-                Storage::delete($oldImagePath);
+    /**
+     * Update the specified product.
+     */
+    public function update(UpdateProductRequest $request, Product $product): JsonResponse
+    {
+        try {
+            $data = $request->validated();
+
+            // Handle image upload if provided
+            if ($request->hasFile('image')) {
+                // Delete old image if exists
+                if ($product->image_url) {
+                    $oldImagePath = str_replace('/storage', 'public', $product->image_url);
+                    Storage::delete($oldImagePath);
+                }
+
+                // Store new image
+                $imagePath = $request->file('image')->store('products', 'public');
+                $data['image_url'] = Storage::url($imagePath);
             }
-            
-            // Store new image
-            $imagePath = $request->file('image')->store('products', 'public');
-            $data['image_url'] = Storage::url($imagePath);
-        }
 
-        // Handle gallery images if provided
-        if ($request->hasFile('gallery')) {
-            $galleryPaths = [];
-            foreach ($request->file('gallery') as $image) {
-                $path = $image->store('products/gallery', 'public');
-                $galleryPaths[] = Storage::url($path);
+            // Handle gallery images if provided
+            if ($request->hasFile('gallery')) {
+                $galleryPaths = [];
+                foreach ($request->file('gallery') as $image) {
+                    $path = $image->store('products/gallery', 'public');
+                    $galleryPaths[] = Storage::url($path);
+                }
+                $data['gallery'] = array_merge($product->gallery ?? [], $galleryPaths);
             }
-            $data['gallery'] = array_merge($product->gallery ?? [], $galleryPaths);
+
+            $product->update($data);
+            $product->load(['category', 'brand']);
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Product updated successfully',
+                'data' => $product
+            ]);
+
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Failed to update product',
+                'error' => $e->getMessage()
+            ], 500);
         }
-
-        // Update the product
-        $product->update($data);
-
-        // Load relationships
-        $product->load(['category', 'brand']);
-
-        return response()->json([
-            'message' => 'Product updated successfully',
-            'product' => $product
-        ], 200);
     }
-    public function destroy(Product $product){
+
+    /**
+     * Remove the specified product.
+     */
+    public function destroy(Product $product): JsonResponse
+    {
         try {
             $product->delete();
 
             return response()->json([
+                'success' => true,
                 'message' => 'Product deleted successfully'
             ]);
 
         } catch (\Exception $e) {
             return response()->json([
+                'success' => false,
                 'message' => 'Failed to delete product',
                 'error' => $e->getMessage()
             ], 500);
