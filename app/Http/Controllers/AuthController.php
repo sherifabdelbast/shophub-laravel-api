@@ -2,16 +2,16 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\Auth\LoginRequest;
+use App\Http\Requests\Auth\RegisterRequest;
+use App\Http\Resources\UserResource;
 use App\Models\User;
-use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-use Laravel\Socialite\Facades\Socialite;
 use Illuminate\Support\Str;
-use App\Http\Requests\Auth\RegisterRequest;
-use App\Http\Requests\Auth\LoginRequest;
-use App\Http\Requests\Auth\UpdateProfileRequest;
+use Laravel\Socialite\Facades\Socialite;
 
 class AuthController extends Controller
 {
@@ -28,7 +28,6 @@ class AuthController extends Controller
                 'gender' => $request->gender,
                 'phone' => $request->phone,
                 'birthday' => $request->birthday,
-                'address' => $request->address,
                 'password' => Hash::make($request->password),
             ]);
 
@@ -37,14 +36,14 @@ class AuthController extends Controller
             return response()->json([
                 'success' => true,
                 'token' => $token,
-                'user' => $this->formatUserResponse($user),
-                'message' => 'User registered successfully'
+                'user' => new UserResource($user),
+                'message' => 'User registered successfully',
             ], 201);
         } catch (\Exception $e) {
             return response()->json([
                 'success' => false,
                 'message' => 'Registration failed',
-                'error' => $e->getMessage()
+                'error' => $e->getMessage(),
             ], 500);
         }
     }
@@ -64,57 +63,14 @@ class AuthController extends Controller
             return response()->json([
                 'success' => true,
                 'token' => $token,
-                'user' => $this->formatUserResponse($user),
-                'message' => 'Login successful'
+                'user' => new UserResource($user),
+                'message' => 'Login successful',
             ]);
         } catch (\Exception $e) {
             return response()->json([
                 'success' => false,
                 'message' => 'Login failed',
-                'error' => $e->getMessage()
-            ], 500);
-        }
-    }
-
-    /**
-     * Get authenticated user profile.
-     */
-    public function profile(Request $request): JsonResponse
-    {
-        try {
-            $user = $request->user();
-
-            return response()->json([
-                'success' => true,
-                'user' => $this->formatUserResponse($user)
-            ]);
-        } catch (\Exception $e) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Failed to get profile',
-                'error' => $e->getMessage()
-            ], 500);
-        }
-    }
-
-    /**
-     * Update authenticated user profile.
-     */
-    public function updateProfile(UpdateProfileRequest $request): JsonResponse
-    {
-        try {
-            $user = $request->user();
-            $user->update($request->validated());
-
-            return response()->json([
-                'success' => true,
-                'message' => 'Profile updated successfully',
-                'user' => $this->formatUserResponse($user->fresh()),
-            ]);
-        } catch (\Exception $e) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Server error: ' . $e->getMessage(),
+                'error' => $e->getMessage(),
             ], 500);
         }
     }
@@ -129,12 +85,12 @@ class AuthController extends Controller
 
             return response()->json([
                 'success' => true,
-                'message' => 'Logged out successfully'
+                'message' => 'Logged out successfully',
             ]);
         } catch (\Exception $e) {
             return response()->json([
                 'success' => false,
-                'message' => 'Logout failed'
+                'message' => 'Logout failed',
             ], 500);
         }
     }
@@ -152,7 +108,7 @@ class AuthController extends Controller
                 throw new \Exception('Google Client ID is missing');
             }
 
-            $authUrl = "https://accounts.google.com/o/oauth2/v2/auth?" . http_build_query([
+            $authUrl = 'https://accounts.google.com/o/oauth2/v2/auth?'.http_build_query([
                 'client_id' => $clientId,
                 'redirect_uri' => $redirectUri,
                 'response_type' => 'code',
@@ -163,12 +119,12 @@ class AuthController extends Controller
 
             return response()->json([
                 'success' => true,
-                'url' => $authUrl
+                'url' => $authUrl,
             ]);
         } catch (\Exception $e) {
             return response()->json([
                 'success' => false,
-                'message' => 'Google OAuth configuration error'
+                'message' => 'Google OAuth configuration error',
             ], 500);
         }
     }
@@ -179,10 +135,10 @@ class AuthController extends Controller
     public function handleGoogleCallback(Request $request): JsonResponse
     {
         try {
-            if (!$request->has('code')) {
+            if (! $request->has('code')) {
                 return response()->json([
                     'success' => false,
-                    'message' => 'Authorization code not found'
+                    'message' => 'Authorization code not found',
                 ], 400);
             }
 
@@ -190,7 +146,7 @@ class AuthController extends Controller
 
             $user = User::where('email', $googleUser->getEmail())->first();
 
-            if (!$user) {
+            if (! $user) {
                 $nameParts = explode(' ', $googleUser->getName(), 2);
                 $user = User::create([
                     'first_name' => $nameParts[0] ?? 'User',
@@ -203,7 +159,6 @@ class AuthController extends Controller
                     'gender' => 'male',
                     'phone' => '',
                     'birthday' => now()->subYears(20)->format('Y-m-d'),
-                    'address' => '',
                 ]);
             } else {
                 $user->update([
@@ -217,34 +172,15 @@ class AuthController extends Controller
             return response()->json([
                 'success' => true,
                 'token' => $token,
-                'user' => $this->formatUserResponse($user),
-                'message' => 'Google login successful'
+                'user' => new UserResource($user),
+                'message' => 'Google login successful',
             ]);
         } catch (\Exception $e) {
             return response()->json([
                 'success' => false,
                 'message' => 'Google login failed',
-                'error' => $e->getMessage()
+                'error' => $e->getMessage(),
             ], 500);
         }
-    }
-
-    /**
-     * Format user data for API response.
-     */
-    private function formatUserResponse(User $user): array
-    {
-        return [
-            'id' => $user->id,
-            'first_name' => $user->first_name,
-            'last_name' => $user->last_name,
-            'name' => $user->full_name,
-            'email' => $user->email,
-            'gender' => $user->gender,
-            'phone' => $user->phone,
-            'birthday' => $user->birthday,
-            'address' => $user->address,
-            'email_verified_at' => $user->email_verified_at,
-        ];
     }
 }

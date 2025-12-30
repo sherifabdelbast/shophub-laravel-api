@@ -3,14 +3,14 @@
 namespace App\Http\Controllers\Product;
 
 use App\Http\Controllers\Controller;
-use App\Models\Product;
-use App\Models\Category;
-use App\Models\Brand;
+use App\Http\Requests\Product\ProductIndexRequest;
 use App\Http\Requests\Product\StoreProductRequest;
 use App\Http\Requests\Product\UpdateProductRequest;
-use App\Http\Requests\Product\ProductIndexRequest;
+use App\Http\Resources\ProductResource;
+use App\Models\Brand;
+use App\Models\Category;
+use App\Models\Product;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
@@ -28,8 +28,8 @@ class ProductController extends Controller
             $search = $request->search;
             $query->where(function ($q) use ($search) {
                 $q->where('name', 'like', "%{$search}%")
-                  ->orWhere('description', 'like', "%{$search}%")
-                  ->orWhere('sku', 'like', "%{$search}%");
+                    ->orWhere('description', 'like', "%{$search}%")
+                    ->orWhere('sku', 'like', "%{$search}%");
             });
         }
 
@@ -67,7 +67,7 @@ class ProductController extends Controller
 
         return response()->json([
             'success' => true,
-            'data' => $products->items(),
+            'data' => ProductResource::collection($products->items()),
             'meta' => [
                 'current_page' => $products->currentPage(),
                 'last_page' => $products->lastPage(),
@@ -81,7 +81,7 @@ class ProductController extends Controller
                 'last' => $products->url($products->lastPage()),
                 'prev' => $products->previousPageUrl(),
                 'next' => $products->nextPageUrl(),
-            ]
+            ],
         ]);
     }
 
@@ -94,7 +94,7 @@ class ProductController extends Controller
 
         return response()->json([
             'success' => true,
-            'data' => $product
+            'data' => new ProductResource($product),
         ]);
     }
 
@@ -111,7 +111,7 @@ class ProductController extends Controller
             $originalSlug = $slug;
             $count = 1;
             while (Product::where('slug', $slug)->exists()) {
-                $slug = $originalSlug . '-' . $count++;
+                $slug = $originalSlug.'-'.$count++;
             }
             $data['slug'] = $slug;
 
@@ -120,14 +120,14 @@ class ProductController extends Controller
             return response()->json([
                 'success' => true,
                 'message' => 'Product created successfully',
-                'data' => $product->load(['category', 'brand'])
+                'data' => new ProductResource($product->load(['category', 'brand'])),
             ], 201);
 
         } catch (\Exception $e) {
             return response()->json([
                 'success' => false,
                 'message' => 'Failed to create product',
-                'error' => $e->getMessage()
+                'error' => $e->getMessage(),
             ], 500);
         }
     }
@@ -144,8 +144,8 @@ class ProductController extends Controller
             'success' => true,
             'data' => [
                 'categories' => $categories,
-                'brands' => $brands
-            ]
+                'brands' => $brands,
+            ],
         ]);
     }
 
@@ -161,14 +161,14 @@ class ProductController extends Controller
             return response()->json([
                 'success' => true,
                 'message' => 'Product status updated successfully',
-                'data' => $product->load(['category', 'brand'])
+                'data' => new ProductResource($product->load(['category', 'brand'])),
             ]);
 
         } catch (\Exception $e) {
             return response()->json([
                 'success' => false,
                 'message' => 'Failed to update product status',
-                'error' => $e->getMessage()
+                'error' => $e->getMessage(),
             ], 500);
         }
     }
@@ -210,14 +210,14 @@ class ProductController extends Controller
             return response()->json([
                 'success' => true,
                 'message' => 'Product updated successfully',
-                'data' => $product
+                'data' => new ProductResource($product),
             ]);
 
         } catch (\Exception $e) {
             return response()->json([
                 'success' => false,
                 'message' => 'Failed to update product',
-                'error' => $e->getMessage()
+                'error' => $e->getMessage(),
             ], 500);
         }
     }
@@ -232,14 +232,14 @@ class ProductController extends Controller
 
             return response()->json([
                 'success' => true,
-                'message' => 'Product deleted successfully'
+                'message' => 'Product deleted successfully',
             ]);
 
         } catch (\Exception $e) {
             return response()->json([
                 'success' => false,
                 'message' => 'Failed to delete product',
-                'error' => $e->getMessage()
+                'error' => $e->getMessage(),
             ], 500);
         }
     }
