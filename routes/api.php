@@ -72,11 +72,15 @@ Route::prefix('auth')->middleware('throttle:10,1')->group(function () {
 // ==========================================================================
 Route::middleware('auth:sanctum')->group(function () {
 
-    // User Profile Routes
+    // Authentication Routes
     Route::prefix('auth')->group(function () {
-        Route::get('/profile', [AuthController::class, 'profile']);
         Route::post('/logout', [AuthController::class, 'logout']);
-        Route::put('/update-profile', [AuthController::class, 'updateProfile']);
+    });
+
+    // User Profile Routes
+    Route::prefix('profile')->group(function () {
+        Route::get('/', [ProfileController::class, 'show']);
+        Route::put('/', [ProfileController::class, 'update']);
     });
 
     // Address Management
