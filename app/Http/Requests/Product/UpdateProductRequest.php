@@ -24,8 +24,7 @@ class UpdateProductRequest extends FormRequest
      */
     public function rules(): array
     {
-        $product = $this->route('product');
-        $productId = $product instanceof \App\Models\Product ? $product->id : $product;
+        $productId = $this->getProductId();
 
         return [
             'name' => ['sometimes', 'string', 'max:255'],
@@ -79,6 +78,26 @@ class UpdateProductRequest extends FormRequest
             'message' => 'Validation error',
             'errors' => $validator->errors()
         ], 422));
+    }
+
+    /**
+     * Get the product ID from the route.
+     */
+    private function getProductId(): ?int
+    {
+        $product = $this->route('product');
+
+        // If model binding resolved to Product instance
+        if ($product instanceof \App\Models\Product) {
+            return $product->id;
+        }
+
+        // If raw ID was passed
+        if (is_numeric($product)) {
+            return (int) $product;
+        }
+
+        return null;
     }
 }
 

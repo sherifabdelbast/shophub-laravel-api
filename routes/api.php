@@ -89,9 +89,9 @@ Route::prefix('admin')
         Route::prefix('products')->group(function () {
             Route::get('/', [ProductController::class, 'index']);
             Route::get('/form/data', [ProductController::class, 'getFormData']);
-            Route::post('/create', [ProductController::class, 'store']);
+            Route::post('/', [ProductController::class, 'store']);
             Route::get('/{product}', [ProductController::class, 'show']);
-            Route::put('/edit/{product}', [ProductController::class, 'update']);
+            Route::put('/{product}', [ProductController::class, 'update']);
             Route::patch('/{product}/status', [ProductController::class, 'updateStatus']);
             Route::delete('/{product}', [ProductController::class, 'destroy']);
         });
