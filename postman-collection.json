@@ -1,0 +1,3627 @@
+{
+    "variable": [
+        {
+            "id": "baseUrl",
+            "key": "baseUrl",
+            "type": "string",
+            "name": "string",
+            "value": "http:\/\/localhost:8000"
+        }
+    ],
+    "info": {
+        "name": "Laravel API Documentation",
+        "_postman_id": "ecb6afd1-0e7f-489d-950d-43484289a762",
+        "description": "ShopHub API - E-commerce backend API for Angular frontend",
+        "schema": "https:\/\/schema.getpostman.com\/json\/collection\/v2.1.0\/collection.json"
+    },
+    "item": [
+        {
+            "name": "Endpoints",
+            "description": "",
+            "item": [
+                {
+                    "name": "Display a paginated listing of products with filters.",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "v1\/products",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/v1\/products"
+                        },
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\"per_page\":1,\"page\":22,\"search\":\"g\",\"category_id\":16,\"brand_id\":16,\"status\":\"inactive\",\"min_price\":39,\"max_price\":84,\"sort_by\":\"price\",\"sort_order\":\"desc\"}"
+                        },
+                        "description": "",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": [
+                        {
+                            "header": [
+                                {
+                                    "key": "cache-control",
+                                    "value": "no-cache, private"
+                                },
+                                {
+                                    "key": "content-type",
+                                    "value": "application\/json"
+                                }
+                            ],
+                            "code": 422,
+                            "body": "{\"success\":false,\"message\":\"Validation error\",\"errors\":{\"category_id\":[\"The selected category does not exist.\"],\"brand_id\":[\"The selected brand does not exist.\"]}}",
+                            "name": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "Get form data (categories and brands).",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "v1\/products\/form\/data",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/v1\/products\/form\/data"
+                        },
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": "",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": [
+                        {
+                            "header": [
+                                {
+                                    "key": "cache-control",
+                                    "value": "no-cache, private"
+                                },
+                                {
+                                    "key": "content-type",
+                                    "value": "application\/json"
+                                }
+                            ],
+                            "code": 200,
+                            "body": "{\"success\":true,\"data\":{\"categories\":[{\"id\":1,\"name\":\"Ut\",\"slug\":\"ut\",\"description\":\"Magnam dolorem quod nihil voluptas perspiciatis labore voluptate occaecati animi reprehenderit id.\",\"parent_id\":null,\"image_url\":\"https:\\\/\\\/via.placeholder.com\\\/400x400.png\\\/0000aa?text=categories+laborum\",\"status\":\"active\",\"created_at\":\"2025-12-25T13:00:10.000000Z\",\"updated_at\":\"2025-12-25T13:00:10.000000Z\",\"level\":0,\"sort_order\":0,\"icon\":null,\"deleted_at\":null},{\"id\":2,\"name\":\"Ab\",\"slug\":\"ab\",\"description\":\"Rerum non velit ut qui qui eius temporibus impedit fugiat.\",\"parent_id\":null,\"image_url\":\"https:\\\/\\\/via.placeholder.com\\\/400x400.png\\\/006633?text=categories+ratione\",\"status\":\"active\",\"created_at\":\"2025-12-25T13:00:10.000000Z\",\"updated_at\":\"2025-12-25T13:00:10.000000Z\",\"level\":0,\"sort_order\":0,\"icon\":null,\"deleted_at\":null},{\"id\":3,\"name\":\"Nam\",\"slug\":\"nam\",\"description\":\"Officiis ut expedita nihil impedit necessitatibus qui.\",\"parent_id\":null,\"image_url\":\"https:\\\/\\\/via.placeholder.com\\\/400x400.png\\\/006600?text=categories+modi\",\"status\":\"active\",\"created_at\":\"2025-12-25T13:00:10.000000Z\",\"updated_at\":\"2025-12-25T13:00:10.000000Z\",\"level\":0,\"sort_order\":0,\"icon\":null,\"deleted_at\":null},{\"id\":4,\"name\":\"Iste\",\"slug\":\"iste\",\"description\":\"Omnis optio rerum accusamus pariatur dolorem provident alias quia reprehenderit dignissimos.\",\"parent_id\":null,\"image_url\":\"https:\\\/\\\/via.placeholder.com\\\/400x400.png\\\/00ff22?text=categories+accusantium\",\"status\":\"active\",\"created_at\":\"2025-12-25T13:00:10.000000Z\",\"updated_at\":\"2025-12-25T13:00:10.000000Z\",\"level\":0,\"sort_order\":0,\"icon\":null,\"deleted_at\":null},{\"id\":5,\"name\":\"Molestias\",\"slug\":\"molestias\",\"description\":\"Omnis architecto non officia assumenda quis tenetur accusamus quo.\",\"parent_id\":null,\"image_url\":\"https:\\\/\\\/via.placeholder.com\\\/400x400.png\\\/00ff88?text=categories+et\",\"status\":\"active\",\"created_at\":\"2025-12-25T13:00:10.000000Z\",\"updated_at\":\"2025-12-25T13:00:10.000000Z\",\"level\":0,\"sort_order\":0,\"icon\":null,\"deleted_at\":null}],\"brands\":[{\"id\":1,\"name\":\"Lehner-Lehner\",\"slug\":\"lehner-lehner\",\"description\":\"Velit id pariatur voluptas commodi voluptatibus aut.\",\"logo_url\":\"https:\\\/\\\/via.placeholder.com\\\/200x200.png\\\/008833?text=brands+incidunt\",\"website\":\"http:\\\/\\\/steuber.com\\\/\",\"status\":\"active\",\"created_at\":\"2025-12-25T13:00:10.000000Z\",\"updated_at\":\"2025-12-25T13:00:10.000000Z\",\"sort_order\":0,\"deleted_at\":null},{\"id\":2,\"name\":\"Blanda Inc\",\"slug\":\"blanda-inc\",\"description\":\"Totam inventore esse ipsum repellat et sapiente quod maiores.\",\"logo_url\":\"https:\\\/\\\/via.placeholder.com\\\/200x200.png\\\/001155?text=brands+voluptatem\",\"website\":\"http:\\\/\\\/corkery.com\\\/et-tenetur-omnis-iste-optio.html\",\"status\":\"active\",\"created_at\":\"2025-12-25T13:00:10.000000Z\",\"updated_at\":\"2025-12-25T13:00:10.000000Z\",\"sort_order\":0,\"deleted_at\":null},{\"id\":3,\"name\":\"Halvorson-Effertz\",\"slug\":\"halvorson-effertz\",\"description\":\"Quis doloribus deleniti maxime quia modi dolorum earum sapiente.\",\"logo_url\":\"https:\\\/\\\/via.placeholder.com\\\/200x200.png\\\/005588?text=brands+magnam\",\"website\":\"https:\\\/\\\/becker.org\\\/recusandae-provident-sit-numquam-ut-similique-sunt-unde.html\",\"status\":\"active\",\"created_at\":\"2025-12-25T13:00:10.000000Z\",\"updated_at\":\"2025-12-25T13:00:10.000000Z\",\"sort_order\":0,\"deleted_at\":null},{\"id\":4,\"name\":\"Cruickshank, Von and Schaden\",\"slug\":\"cruickshank-von-and-schaden\",\"description\":\"Esse repudiandae repudiandae eum laudantium molestias ullam consequatur a perferendis in.\",\"logo_url\":\"https:\\\/\\\/via.placeholder.com\\\/200x200.png\\\/006677?text=brands+officiis\",\"website\":\"http:\\\/\\\/franecki.biz\\\/\",\"status\":\"active\",\"created_at\":\"2025-12-25T13:00:10.000000Z\",\"updated_at\":\"2025-12-25T13:00:10.000000Z\",\"sort_order\":0,\"deleted_at\":null},{\"id\":5,\"name\":\"Feeney-Langosh\",\"slug\":\"feeney-langosh\",\"description\":\"Repellendus aut et quo vel ut hic praesentium quos eveniet.\",\"logo_url\":\"https:\\\/\\\/via.placeholder.com\\\/200x200.png\\\/007700?text=brands+omnis\",\"website\":\"http:\\\/\\\/www.lockman.org\\\/voluptatum-aliquid-hic-et-quasi-eaque-voluptate.html\",\"status\":\"active\",\"created_at\":\"2025-12-25T13:00:10.000000Z\",\"updated_at\":\"2025-12-25T13:00:10.000000Z\",\"sort_order\":0,\"deleted_at\":null}]}}",
+                            "name": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "Display the specified product.",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "v1\/products\/:product_id",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/v1\/products\/:product_id",
+                            "variable": [
+                                {
+                                    "id": "product_id",
+                                    "key": "product_id",
+                                    "value": "1",
+                                    "description": "The ID of the product."
+                                }
+                            ]
+                        },
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": "",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": [
+                        {
+                            "header": [
+                                {
+                                    "key": "cache-control",
+                                    "value": "no-cache, private"
+                                },
+                                {
+                                    "key": "content-type",
+                                    "value": "application\/json"
+                                }
+                            ],
+                            "code": 200,
+                            "body": "{\"success\":true,\"data\":{\"id\":1,\"sku\":\"SKU-371VA\",\"name\":\"quas id\",\"slug\":\"quas-id-6638\",\"short_description\":null,\"description\":\"Earum doloremque suscipit modi ea voluptas voluptate deserunt reiciendis hic.\",\"price\":\"427.73\",\"discount_price\":\"100.94\",\"discount_percentage\":null,\"final_price\":\"100.94\",\"image_url\":\"https:\\\/\\\/via.placeholder.com\\\/400x400.png\\\/00bb22?text=products+nihil\",\"rating\":\"3.00\",\"reviews_count\":0,\"is_featured\":false,\"stock_status\":\"in_stock\",\"category\":{\"id\":3,\"name\":\"Nam\",\"slug\":\"nam\"},\"brand\":{\"id\":3,\"name\":\"Halvorson-Effertz\",\"slug\":\"halvorson-effertz\"}}}",
+                            "name": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "Get product reviews.",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "v1\/products\/:product_id\/reviews",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/v1\/products\/:product_id\/reviews",
+                            "variable": [
+                                {
+                                    "id": "product_id",
+                                    "key": "product_id",
+                                    "value": "1",
+                                    "description": "The ID of the product."
+                                }
+                            ]
+                        },
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": "",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": [
+                        {
+                            "header": [
+                                {
+                                    "key": "cache-control",
+                                    "value": "no-cache, private"
+                                },
+                                {
+                                    "key": "content-type",
+                                    "value": "application\/json"
+                                }
+                            ],
+                            "code": 200,
+                            "body": "{\"success\":true,\"data\":[],\"meta\":{\"current_page\":1,\"last_page\":1,\"per_page\":10,\"total\":0}}",
+                            "name": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "GET v1\/categories",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "v1\/categories",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/v1\/categories"
+                        },
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": "",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": [
+                        {
+                            "header": [
+                                {
+                                    "key": "cache-control",
+                                    "value": "no-cache, private"
+                                },
+                                {
+                                    "key": "content-type",
+                                    "value": "application\/json"
+                                }
+                            ],
+                            "code": 200,
+                            "body": "{\"success\":true,\"data\":{\"current_page\":1,\"data\":[{\"id\":1,\"name\":\"Ut\",\"slug\":\"ut\",\"description\":\"Magnam dolorem quod nihil voluptas perspiciatis labore voluptate occaecati animi reprehenderit id.\",\"parent_id\":null,\"image_url\":\"https:\\\/\\\/via.placeholder.com\\\/400x400.png\\\/0000aa?text=categories+laborum\",\"status\":\"active\",\"created_at\":\"2025-12-25T13:00:10.000000Z\",\"updated_at\":\"2025-12-25T13:00:10.000000Z\",\"level\":0,\"sort_order\":0,\"icon\":null,\"deleted_at\":null,\"parent\":null,\"children\":[]},{\"id\":2,\"name\":\"Ab\",\"slug\":\"ab\",\"description\":\"Rerum non velit ut qui qui eius temporibus impedit fugiat.\",\"parent_id\":null,\"image_url\":\"https:\\\/\\\/via.placeholder.com\\\/400x400.png\\\/006633?text=categories+ratione\",\"status\":\"active\",\"created_at\":\"2025-12-25T13:00:10.000000Z\",\"updated_at\":\"2025-12-25T13:00:10.000000Z\",\"level\":0,\"sort_order\":0,\"icon\":null,\"deleted_at\":null,\"parent\":null,\"children\":[]},{\"id\":3,\"name\":\"Nam\",\"slug\":\"nam\",\"description\":\"Officiis ut expedita nihil impedit necessitatibus qui.\",\"parent_id\":null,\"image_url\":\"https:\\\/\\\/via.placeholder.com\\\/400x400.png\\\/006600?text=categories+modi\",\"status\":\"active\",\"created_at\":\"2025-12-25T13:00:10.000000Z\",\"updated_at\":\"2025-12-25T13:00:10.000000Z\",\"level\":0,\"sort_order\":0,\"icon\":null,\"deleted_at\":null,\"parent\":null,\"children\":[]},{\"id\":4,\"name\":\"Iste\",\"slug\":\"iste\",\"description\":\"Omnis optio rerum accusamus pariatur dolorem provident alias quia reprehenderit dignissimos.\",\"parent_id\":null,\"image_url\":\"https:\\\/\\\/via.placeholder.com\\\/400x400.png\\\/00ff22?text=categories+accusantium\",\"status\":\"active\",\"created_at\":\"2025-12-25T13:00:10.000000Z\",\"updated_at\":\"2025-12-25T13:00:10.000000Z\",\"level\":0,\"sort_order\":0,\"icon\":null,\"deleted_at\":null,\"parent\":null,\"children\":[]},{\"id\":5,\"name\":\"Molestias\",\"slug\":\"molestias\",\"description\":\"Omnis architecto non officia assumenda quis tenetur accusamus quo.\",\"parent_id\":null,\"image_url\":\"https:\\\/\\\/via.placeholder.com\\\/400x400.png\\\/00ff88?text=categories+et\",\"status\":\"active\",\"created_at\":\"2025-12-25T13:00:10.000000Z\",\"updated_at\":\"2025-12-25T13:00:10.000000Z\",\"level\":0,\"sort_order\":0,\"icon\":null,\"deleted_at\":null,\"parent\":null,\"children\":[]}],\"first_page_url\":\"http:\\\/\\\/localhost:8000\\\/v1\\\/categories?page=1\",\"from\":1,\"last_page\":1,\"last_page_url\":\"http:\\\/\\\/localhost:8000\\\/v1\\\/categories?page=1\",\"links\":[{\"url\":null,\"label\":\"&laquo; Previous\",\"page\":null,\"active\":false},{\"url\":\"http:\\\/\\\/localhost:8000\\\/v1\\\/categories?page=1\",\"label\":\"1\",\"page\":1,\"active\":true},{\"url\":null,\"label\":\"Next &raquo;\",\"page\":null,\"active\":false}],\"next_page_url\":null,\"path\":\"http:\\\/\\\/localhost:8000\\\/v1\\\/categories\",\"per_page\":15,\"prev_page_url\":null,\"to\":5,\"total\":5}}",
+                            "name": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "GET v1\/categories\/parent-categories",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "v1\/categories\/parent-categories",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/v1\/categories\/parent-categories"
+                        },
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": "",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": [
+                        {
+                            "header": [
+                                {
+                                    "key": "cache-control",
+                                    "value": "no-cache, private"
+                                },
+                                {
+                                    "key": "content-type",
+                                    "value": "application\/json"
+                                }
+                            ],
+                            "code": 200,
+                            "body": "{\"success\":true,\"data\":[{\"id\":1,\"name\":\"Ut\"},{\"id\":2,\"name\":\"Ab\"},{\"id\":3,\"name\":\"Nam\"},{\"id\":4,\"name\":\"Iste\"},{\"id\":5,\"name\":\"Molestias\"}]}",
+                            "name": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "GET v1\/categories\/{category_id}",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "v1\/categories\/:category_id",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/v1\/categories\/:category_id",
+                            "variable": [
+                                {
+                                    "id": "category_id",
+                                    "key": "category_id",
+                                    "value": "1",
+                                    "description": "The ID of the category."
+                                }
+                            ]
+                        },
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": "",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": [
+                        {
+                            "header": [
+                                {
+                                    "key": "cache-control",
+                                    "value": "no-cache, private"
+                                },
+                                {
+                                    "key": "content-type",
+                                    "value": "application\/json"
+                                }
+                            ],
+                            "code": 200,
+                            "body": "{\"success\":true,\"data\":{\"id\":1,\"name\":\"Ut\",\"slug\":\"ut\",\"description\":\"Magnam dolorem quod nihil voluptas perspiciatis labore voluptate occaecati animi reprehenderit id.\",\"parent_id\":null,\"image_url\":\"https:\\\/\\\/via.placeholder.com\\\/400x400.png\\\/0000aa?text=categories+laborum\",\"status\":\"active\",\"created_at\":\"2025-12-25T13:00:10.000000Z\",\"updated_at\":\"2025-12-25T13:00:10.000000Z\",\"level\":0,\"sort_order\":0,\"icon\":null,\"deleted_at\":null,\"parent\":null,\"children\":[]}}",
+                            "name": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "GET v1\/brands",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "v1\/brands",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/v1\/brands"
+                        },
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": "",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": [
+                        {
+                            "header": [
+                                {
+                                    "key": "cache-control",
+                                    "value": "no-cache, private"
+                                },
+                                {
+                                    "key": "content-type",
+                                    "value": "application\/json"
+                                }
+                            ],
+                            "code": 200,
+                            "body": "{\"success\":true,\"data\":{\"current_page\":1,\"data\":[{\"id\":1,\"name\":\"Lehner-Lehner\",\"slug\":\"lehner-lehner\",\"description\":\"Velit id pariatur voluptas commodi voluptatibus aut.\",\"logo_url\":\"https:\\\/\\\/via.placeholder.com\\\/200x200.png\\\/008833?text=brands+incidunt\",\"website\":\"http:\\\/\\\/steuber.com\\\/\",\"status\":\"active\",\"created_at\":\"2025-12-25T13:00:10.000000Z\",\"updated_at\":\"2025-12-25T13:00:10.000000Z\",\"sort_order\":0,\"deleted_at\":null},{\"id\":2,\"name\":\"Blanda Inc\",\"slug\":\"blanda-inc\",\"description\":\"Totam inventore esse ipsum repellat et sapiente quod maiores.\",\"logo_url\":\"https:\\\/\\\/via.placeholder.com\\\/200x200.png\\\/001155?text=brands+voluptatem\",\"website\":\"http:\\\/\\\/corkery.com\\\/et-tenetur-omnis-iste-optio.html\",\"status\":\"active\",\"created_at\":\"2025-12-25T13:00:10.000000Z\",\"updated_at\":\"2025-12-25T13:00:10.000000Z\",\"sort_order\":0,\"deleted_at\":null},{\"id\":3,\"name\":\"Halvorson-Effertz\",\"slug\":\"halvorson-effertz\",\"description\":\"Quis doloribus deleniti maxime quia modi dolorum earum sapiente.\",\"logo_url\":\"https:\\\/\\\/via.placeholder.com\\\/200x200.png\\\/005588?text=brands+magnam\",\"website\":\"https:\\\/\\\/becker.org\\\/recusandae-provident-sit-numquam-ut-similique-sunt-unde.html\",\"status\":\"active\",\"created_at\":\"2025-12-25T13:00:10.000000Z\",\"updated_at\":\"2025-12-25T13:00:10.000000Z\",\"sort_order\":0,\"deleted_at\":null},{\"id\":4,\"name\":\"Cruickshank, Von and Schaden\",\"slug\":\"cruickshank-von-and-schaden\",\"description\":\"Esse repudiandae repudiandae eum laudantium molestias ullam consequatur a perferendis in.\",\"logo_url\":\"https:\\\/\\\/via.placeholder.com\\\/200x200.png\\\/006677?text=brands+officiis\",\"website\":\"http:\\\/\\\/franecki.biz\\\/\",\"status\":\"active\",\"created_at\":\"2025-12-25T13:00:10.000000Z\",\"updated_at\":\"2025-12-25T13:00:10.000000Z\",\"sort_order\":0,\"deleted_at\":null},{\"id\":5,\"name\":\"Feeney-Langosh\",\"slug\":\"feeney-langosh\",\"description\":\"Repellendus aut et quo vel ut hic praesentium quos eveniet.\",\"logo_url\":\"https:\\\/\\\/via.placeholder.com\\\/200x200.png\\\/007700?text=brands+omnis\",\"website\":\"http:\\\/\\\/www.lockman.org\\\/voluptatum-aliquid-hic-et-quasi-eaque-voluptate.html\",\"status\":\"active\",\"created_at\":\"2025-12-25T13:00:10.000000Z\",\"updated_at\":\"2025-12-25T13:00:10.000000Z\",\"sort_order\":0,\"deleted_at\":null}],\"first_page_url\":\"http:\\\/\\\/localhost:8000\\\/v1\\\/brands?page=1\",\"from\":1,\"last_page\":1,\"last_page_url\":\"http:\\\/\\\/localhost:8000\\\/v1\\\/brands?page=1\",\"links\":[{\"url\":null,\"label\":\"&laquo; Previous\",\"page\":null,\"active\":false},{\"url\":\"http:\\\/\\\/localhost:8000\\\/v1\\\/brands?page=1\",\"label\":\"1\",\"page\":1,\"active\":true},{\"url\":null,\"label\":\"Next &raquo;\",\"page\":null,\"active\":false}],\"next_page_url\":null,\"path\":\"http:\\\/\\\/localhost:8000\\\/v1\\\/brands\",\"per_page\":10,\"prev_page_url\":null,\"to\":5,\"total\":5},\"message\":\"Brands retrieved successfully\"}",
+                            "name": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "Display the specified brand",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "v1\/brands\/:brand_id",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/v1\/brands\/:brand_id",
+                            "variable": [
+                                {
+                                    "id": "brand_id",
+                                    "key": "brand_id",
+                                    "value": "1",
+                                    "description": "The ID of the brand."
+                                }
+                            ]
+                        },
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": "",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": [
+                        {
+                            "header": [
+                                {
+                                    "key": "cache-control",
+                                    "value": "no-cache, private"
+                                },
+                                {
+                                    "key": "content-type",
+                                    "value": "application\/json"
+                                }
+                            ],
+                            "code": 200,
+                            "body": "{\"success\":true,\"data\":{\"id\":1,\"name\":\"Lehner-Lehner\",\"slug\":\"lehner-lehner\",\"description\":\"Velit id pariatur voluptas commodi voluptatibus aut.\",\"logo_url\":\"https:\\\/\\\/via.placeholder.com\\\/200x200.png\\\/008833?text=brands+incidunt\",\"website\":\"http:\\\/\\\/steuber.com\\\/\",\"status\":\"active\",\"created_at\":\"2025-12-25T13:00:10.000000Z\",\"updated_at\":\"2025-12-25T13:00:10.000000Z\",\"sort_order\":0,\"deleted_at\":null},\"message\":\"Brand retrieved successfully\"}",
+                            "name": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "Handle user registration.",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "v1\/auth\/register",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/v1\/auth\/register"
+                        },
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\"first_name\":\"b\",\"last_name\":\"n\",\"email\":\"ashly64@example.com\",\"gender\":\"male\",\"birthday\":\"2022-01-23\",\"phone\":\"ngzmiyvdljnikhwa\",\"password\":\"\\\/#iw\\\/kXaz\"}"
+                        },
+                        "description": "",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Handle user login.",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "v1\/auth\/login",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/v1\/auth\/login"
+                        },
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\"email\":\"gbailey@example.net\",\"password\":\"|]|{+-\"}"
+                        },
+                        "description": "",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "POST v1\/auth\/forgot-password",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "v1\/auth\/forgot-password",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/v1\/auth\/forgot-password"
+                        },
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\"email\":\"gbailey@example.net\"}"
+                        },
+                        "description": "",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "POST v1\/auth\/reset-password",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "v1\/auth\/reset-password",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/v1\/auth\/reset-password"
+                        },
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\"token\":\"architecto\",\"email\":\"zbailey@example.net\",\"password\":\"-0pBNvYgxw\"}"
+                        },
+                        "description": "",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Redirect to Google OAuth.",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "v1\/auth\/google",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/v1\/auth\/google"
+                        },
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": "",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": [
+                        {
+                            "header": [
+                                {
+                                    "key": "cache-control",
+                                    "value": "no-cache, private"
+                                },
+                                {
+                                    "key": "content-type",
+                                    "value": "application\/json"
+                                },
+                                {
+                                    "key": "x-ratelimit-limit",
+                                    "value": "10"
+                                },
+                                {
+                                    "key": "x-ratelimit-remaining",
+                                    "value": "9"
+                                }
+                            ],
+                            "code": 200,
+                            "body": "{\"success\":true,\"url\":\"https:\\\/\\\/accounts.google.com\\\/o\\\/oauth2\\\/v2\\\/auth?client_id=270319989827-h5aa09un0albvl6ogpgfks60p8d7kks5.apps.googleusercontent.com&redirect_uri=http%3A%2F%2Flocalhost%3A4200%2Fauth%2Fgoogle%2Fcallback&response_type=code&scope=openid+email+profile&access_type=online&prompt=select_account\"}",
+                            "name": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "Handle Google OAuth callback.",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "v1\/auth\/google\/callback",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/v1\/auth\/google\/callback"
+                        },
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": "",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": [
+                        {
+                            "header": [
+                                {
+                                    "key": "cache-control",
+                                    "value": "no-cache, private"
+                                },
+                                {
+                                    "key": "content-type",
+                                    "value": "application\/json"
+                                },
+                                {
+                                    "key": "x-ratelimit-limit",
+                                    "value": "10"
+                                },
+                                {
+                                    "key": "x-ratelimit-remaining",
+                                    "value": "9"
+                                }
+                            ],
+                            "code": 400,
+                            "body": "{\"success\":false,\"message\":\"Authorization code not found\"}",
+                            "name": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "Handle user logout.",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "v1\/auth\/logout",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/v1\/auth\/logout"
+                        },
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": "",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Get authenticated user profile.",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "v1\/profile",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/v1\/profile"
+                        },
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": "",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": [
+                        {
+                            "header": [
+                                {
+                                    "key": "cache-control",
+                                    "value": "no-cache, private"
+                                },
+                                {
+                                    "key": "content-type",
+                                    "value": "application\/json"
+                                }
+                            ],
+                            "code": 401,
+                            "body": "{\"message\":\"Unauthenticated.\"}",
+                            "name": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "Update authenticated user profile.",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "v1\/profile",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/v1\/profile"
+                        },
+                        "method": "PUT",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\"first_name\":\"b\",\"last_name\":\"n\",\"email\":\"ashly64@example.com\",\"phone\":\"vdljnikhwaykcmyu\",\"gender\":\"male\",\"birthday\":\"2022-01-23\"}"
+                        },
+                        "description": "",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Get user's addresses.",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "v1\/addresses",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/v1\/addresses"
+                        },
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": "",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": [
+                        {
+                            "header": [
+                                {
+                                    "key": "cache-control",
+                                    "value": "no-cache, private"
+                                },
+                                {
+                                    "key": "content-type",
+                                    "value": "application\/json"
+                                }
+                            ],
+                            "code": 401,
+                            "body": "{\"message\":\"Unauthenticated.\"}",
+                            "name": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "Store a new address.",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "v1\/addresses",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/v1\/addresses"
+                        },
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\"type\":\"both\",\"label\":\"b\",\"first_name\":\"n\",\"last_name\":\"g\",\"phone\":\"zmiyvdljnikhwayk\",\"email\":\"lyric80@example.com\",\"street_line_1\":\"p\",\"street_line_2\":\"w\",\"city\":\"l\",\"state_province\":\"v\",\"postal_code\":\"qwrsitcpscqldzsn\",\"country\":\"rw\",\"delivery_instructions\":\"t\",\"is_default\":false}"
+                        },
+                        "description": "",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Display the specified address.",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "v1\/addresses\/:address_id",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/v1\/addresses\/:address_id",
+                            "variable": [
+                                {
+                                    "id": "address_id",
+                                    "key": "address_id",
+                                    "value": "16",
+                                    "description": "The ID of the address."
+                                }
+                            ]
+                        },
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": "",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": [
+                        {
+                            "header": [
+                                {
+                                    "key": "cache-control",
+                                    "value": "no-cache, private"
+                                },
+                                {
+                                    "key": "content-type",
+                                    "value": "application\/json"
+                                }
+                            ],
+                            "code": 401,
+                            "body": "{\"message\":\"Unauthenticated.\"}",
+                            "name": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "Update the specified address.",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "v1\/addresses\/:address_id",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/v1\/addresses\/:address_id",
+                            "variable": [
+                                {
+                                    "id": "address_id",
+                                    "key": "address_id",
+                                    "value": "16",
+                                    "description": "The ID of the address."
+                                }
+                            ]
+                        },
+                        "method": "PUT",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\"type\":\"shipping\",\"label\":\"b\",\"first_name\":\"n\",\"last_name\":\"g\",\"phone\":\"zmiyvdljnikhwayk\",\"email\":\"lyric80@example.com\",\"street_line_1\":\"p\",\"street_line_2\":\"w\",\"city\":\"l\",\"state_province\":\"v\",\"postal_code\":\"qwrsitcpscqldzsn\",\"country\":\"rw\",\"delivery_instructions\":\"t\",\"is_default\":false}"
+                        },
+                        "description": "",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Remove the specified address.",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "v1\/addresses\/:address_id",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/v1\/addresses\/:address_id",
+                            "variable": [
+                                {
+                                    "id": "address_id",
+                                    "key": "address_id",
+                                    "value": "16",
+                                    "description": "The ID of the address."
+                                }
+                            ]
+                        },
+                        "method": "DELETE",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": "",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Set address as default.",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "v1\/addresses\/:address_id\/set-default",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/v1\/addresses\/:address_id\/set-default",
+                            "variable": [
+                                {
+                                    "id": "address_id",
+                                    "key": "address_id",
+                                    "value": "16",
+                                    "description": "The ID of the address."
+                                }
+                            ]
+                        },
+                        "method": "PATCH",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": "",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Get user's cart.",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "v1\/cart",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/v1\/cart"
+                        },
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": "",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": [
+                        {
+                            "header": [
+                                {
+                                    "key": "cache-control",
+                                    "value": "no-cache, private"
+                                },
+                                {
+                                    "key": "content-type",
+                                    "value": "application\/json"
+                                }
+                            ],
+                            "code": 401,
+                            "body": "{\"message\":\"Unauthenticated.\"}",
+                            "name": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "Add item to cart.",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "v1\/cart",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/v1\/cart"
+                        },
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\"product_id\":16,\"quantity\":22}"
+                        },
+                        "description": "",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Update cart item quantity.",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "v1\/cart\/:cartItem",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/v1\/cart\/:cartItem",
+                            "variable": [
+                                {
+                                    "id": "cartItem",
+                                    "key": "cartItem",
+                                    "value": "architecto",
+                                    "description": ""
+                                }
+                            ]
+                        },
+                        "method": "PUT",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\"quantity\":1}"
+                        },
+                        "description": "",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Remove item from cart.",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "v1\/cart\/:cartItem",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/v1\/cart\/:cartItem",
+                            "variable": [
+                                {
+                                    "id": "cartItem",
+                                    "key": "cartItem",
+                                    "value": "architecto",
+                                    "description": ""
+                                }
+                            ]
+                        },
+                        "method": "DELETE",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": "",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Clear entire cart.",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "v1\/cart",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/v1\/cart"
+                        },
+                        "method": "DELETE",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": "",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Get user's wishlist.",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "v1\/wishlist",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/v1\/wishlist"
+                        },
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": "",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": [
+                        {
+                            "header": [
+                                {
+                                    "key": "cache-control",
+                                    "value": "no-cache, private"
+                                },
+                                {
+                                    "key": "content-type",
+                                    "value": "application\/json"
+                                }
+                            ],
+                            "code": 401,
+                            "body": "{\"message\":\"Unauthenticated.\"}",
+                            "name": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "Add product to wishlist.",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "v1\/wishlist",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/v1\/wishlist"
+                        },
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\"product_id\":16}"
+                        },
+                        "description": "",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Remove product from wishlist.",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "v1\/wishlist\/:wishlist",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/v1\/wishlist\/:wishlist",
+                            "variable": [
+                                {
+                                    "id": "wishlist",
+                                    "key": "wishlist",
+                                    "value": "architecto",
+                                    "description": "The wishlist."
+                                }
+                            ]
+                        },
+                        "method": "DELETE",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": "",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Check if product is in wishlist.",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "v1\/wishlist\/check\/:product",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/v1\/wishlist\/check\/:product",
+                            "variable": [
+                                {
+                                    "id": "product",
+                                    "key": "product",
+                                    "value": "architecto",
+                                    "description": ""
+                                }
+                            ]
+                        },
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": "",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": [
+                        {
+                            "header": [
+                                {
+                                    "key": "cache-control",
+                                    "value": "no-cache, private"
+                                },
+                                {
+                                    "key": "content-type",
+                                    "value": "application\/json"
+                                }
+                            ],
+                            "code": 401,
+                            "body": "{\"message\":\"Unauthenticated.\"}",
+                            "name": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "Get user's orders.",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "v1\/orders",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/v1\/orders"
+                        },
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": "",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": [
+                        {
+                            "header": [
+                                {
+                                    "key": "cache-control",
+                                    "value": "no-cache, private"
+                                },
+                                {
+                                    "key": "content-type",
+                                    "value": "application\/json"
+                                }
+                            ],
+                            "code": 401,
+                            "body": "{\"message\":\"Unauthenticated.\"}",
+                            "name": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "Create new order from cart.",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "v1\/orders",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/v1\/orders"
+                        },
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\"shipping_address\":{\"first_name\":\"b\",\"last_name\":\"n\",\"phone\":\"gzmiyvdljnikhway\",\"street_line_1\":\"k\",\"city\":\"c\",\"state_province\":\"m\",\"postal_code\":\"yuwpwlvqwrsitcps\",\"country\":\"cq\"},\"shipping_method_id\":16,\"coupon_code\":\"n\",\"customer_notes\":\"g\"}"
+                        },
+                        "description": "",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Get order details.",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "v1\/orders\/:order_id",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/v1\/orders\/:order_id",
+                            "variable": [
+                                {
+                                    "id": "order_id",
+                                    "key": "order_id",
+                                    "value": "16",
+                                    "description": "The ID of the order."
+                                }
+                            ]
+                        },
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": "",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": [
+                        {
+                            "header": [
+                                {
+                                    "key": "cache-control",
+                                    "value": "no-cache, private"
+                                },
+                                {
+                                    "key": "content-type",
+                                    "value": "application\/json"
+                                }
+                            ],
+                            "code": 401,
+                            "body": "{\"message\":\"Unauthenticated.\"}",
+                            "name": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "Cancel order.",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "v1\/orders\/:order_id\/cancel",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/v1\/orders\/:order_id\/cancel",
+                            "variable": [
+                                {
+                                    "id": "order_id",
+                                    "key": "order_id",
+                                    "value": "16",
+                                    "description": "The ID of the order."
+                                }
+                            ]
+                        },
+                        "method": "PATCH",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": "",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Process payment for an order.",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "v1\/payments",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/v1\/payments"
+                        },
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\"order_id\":16,\"payment_method\":\"stripe\"}"
+                        },
+                        "description": "",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Get payment details.",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "v1\/payments\/:payment_id",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/v1\/payments\/:payment_id",
+                            "variable": [
+                                {
+                                    "id": "payment_id",
+                                    "key": "payment_id",
+                                    "value": "16",
+                                    "description": "The ID of the payment."
+                                }
+                            ]
+                        },
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": "",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": [
+                        {
+                            "header": [
+                                {
+                                    "key": "cache-control",
+                                    "value": "no-cache, private"
+                                },
+                                {
+                                    "key": "content-type",
+                                    "value": "application\/json"
+                                }
+                            ],
+                            "code": 401,
+                            "body": "{\"message\":\"Unauthenticated.\"}",
+                            "name": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "Get order payments.",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "v1\/payments\/order\/:order_id",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/v1\/payments\/order\/:order_id",
+                            "variable": [
+                                {
+                                    "id": "order_id",
+                                    "key": "order_id",
+                                    "value": "16",
+                                    "description": "The ID of the order."
+                                }
+                            ]
+                        },
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": "",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": [
+                        {
+                            "header": [
+                                {
+                                    "key": "cache-control",
+                                    "value": "no-cache, private"
+                                },
+                                {
+                                    "key": "content-type",
+                                    "value": "application\/json"
+                                }
+                            ],
+                            "code": 401,
+                            "body": "{\"message\":\"Unauthenticated.\"}",
+                            "name": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "Create a review.",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "v1\/reviews",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/v1\/reviews"
+                        },
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "multipart\/form-data"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "formdata",
+                            "formdata": [
+                                {
+                                    "key": "product_id",
+                                    "value": "16",
+                                    "type": "text",
+                                    "description": "The <code>id<\/code> of an existing record in the products table."
+                                },
+                                {
+                                    "key": "order_id",
+                                    "value": "16",
+                                    "type": "text",
+                                    "description": "The <code>id<\/code> of an existing record in the orders table."
+                                },
+                                {
+                                    "key": "rating",
+                                    "value": "2",
+                                    "type": "text",
+                                    "description": "Must be at least 1. Must not be greater than 5."
+                                },
+                                {
+                                    "key": "title",
+                                    "value": "g",
+                                    "type": "text",
+                                    "description": "Must not be greater than 255 characters."
+                                },
+                                {
+                                    "key": "comment",
+                                    "value": "z",
+                                    "type": "text",
+                                    "description": "Must not be greater than 2000 characters."
+                                },
+                                {
+                                    "key": "images[]",
+                                    "src": [],
+                                    "type": "file"
+                                }
+                            ]
+                        },
+                        "description": "",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Update review.",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "v1\/reviews\/:review_id",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/v1\/reviews\/:review_id",
+                            "variable": [
+                                {
+                                    "id": "review_id",
+                                    "key": "review_id",
+                                    "value": "16",
+                                    "description": "The ID of the review."
+                                }
+                            ]
+                        },
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "multipart\/form-data"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "formdata",
+                            "formdata": [
+                                {
+                                    "key": "rating",
+                                    "value": "1",
+                                    "type": "text",
+                                    "description": "Must be at least 1. Must not be greater than 5."
+                                },
+                                {
+                                    "key": "title",
+                                    "value": "n",
+                                    "type": "text",
+                                    "description": "Must not be greater than 255 characters."
+                                },
+                                {
+                                    "key": "comment",
+                                    "value": "g",
+                                    "type": "text",
+                                    "description": "Must not be greater than 2000 characters."
+                                },
+                                {
+                                    "key": "images[]",
+                                    "src": [],
+                                    "type": "file"
+                                },
+                                {
+                                    "key": "_method",
+                                    "value": "PUT",
+                                    "type": "text"
+                                }
+                            ]
+                        },
+                        "description": "",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Delete review.",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "v1\/reviews\/:review_id",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/v1\/reviews\/:review_id",
+                            "variable": [
+                                {
+                                    "id": "review_id",
+                                    "key": "review_id",
+                                    "value": "16",
+                                    "description": "The ID of the review."
+                                }
+                            ]
+                        },
+                        "method": "DELETE",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": "",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Mark review as helpful.",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "v1\/reviews\/:review_id\/helpful",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/v1\/reviews\/:review_id\/helpful",
+                            "variable": [
+                                {
+                                    "id": "review_id",
+                                    "key": "review_id",
+                                    "value": "16",
+                                    "description": "The ID of the review."
+                                }
+                            ]
+                        },
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": "",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Validate coupon code.",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "v1\/coupons\/validate",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/v1\/coupons\/validate"
+                        },
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\"code\":\"b\",\"subtotal\":39}"
+                        },
+                        "description": "",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Get active shipping methods (Public).",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "v1\/shipping-methods",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/v1\/shipping-methods"
+                        },
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": "",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": [
+                        {
+                            "header": [
+                                {
+                                    "key": "cache-control",
+                                    "value": "no-cache, private"
+                                },
+                                {
+                                    "key": "content-type",
+                                    "value": "application\/json"
+                                }
+                            ],
+                            "code": 401,
+                            "body": "{\"message\":\"Unauthenticated.\"}",
+                            "name": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "Display a paginated listing of products with filters.",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "v1\/admin\/products",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/v1\/admin\/products"
+                        },
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\"per_page\":1,\"page\":22,\"search\":\"g\",\"category_id\":16,\"brand_id\":16,\"status\":\"active\",\"min_price\":39,\"max_price\":84,\"sort_by\":\"name\",\"sort_order\":\"desc\"}"
+                        },
+                        "description": "",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": [
+                        {
+                            "header": [
+                                {
+                                    "key": "cache-control",
+                                    "value": "no-cache, private"
+                                },
+                                {
+                                    "key": "content-type",
+                                    "value": "application\/json"
+                                }
+                            ],
+                            "code": 401,
+                            "body": "{\"message\":\"Unauthenticated.\"}",
+                            "name": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "Get form data (categories and brands).",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "v1\/admin\/products\/form\/data",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/v1\/admin\/products\/form\/data"
+                        },
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": "",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": [
+                        {
+                            "header": [
+                                {
+                                    "key": "cache-control",
+                                    "value": "no-cache, private"
+                                },
+                                {
+                                    "key": "content-type",
+                                    "value": "application\/json"
+                                }
+                            ],
+                            "code": 401,
+                            "body": "{\"message\":\"Unauthenticated.\"}",
+                            "name": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "Store a newly created product.",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "v1\/admin\/products",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/v1\/admin\/products"
+                        },
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "multipart\/form-data"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "formdata",
+                            "formdata": [
+                                {
+                                    "key": "name",
+                                    "value": "b",
+                                    "type": "text",
+                                    "description": "Must not be greater than 255 characters."
+                                },
+                                {
+                                    "key": "description",
+                                    "value": "Eius et animi quos velit et.",
+                                    "type": "text",
+                                    "description": ""
+                                },
+                                {
+                                    "key": "category_id",
+                                    "value": "architecto",
+                                    "type": "text",
+                                    "description": "The <code>id<\/code> of an existing record in the categories table."
+                                },
+                                {
+                                    "key": "brand_id",
+                                    "value": "architecto",
+                                    "type": "text",
+                                    "description": "The <code>id<\/code> of an existing record in the brands table."
+                                },
+                                {
+                                    "key": "price",
+                                    "value": "39",
+                                    "type": "text",
+                                    "description": "Must be at least 0."
+                                },
+                                {
+                                    "key": "discount_price",
+                                    "value": "84",
+                                    "type": "text",
+                                    "description": "Must be at least 0."
+                                },
+                                {
+                                    "key": "stock",
+                                    "value": "12",
+                                    "type": "text",
+                                    "description": "Must be at least 0."
+                                },
+                                {
+                                    "key": "sku",
+                                    "value": "architecto",
+                                    "type": "text",
+                                    "description": ""
+                                },
+                                {
+                                    "key": "status",
+                                    "value": "active",
+                                    "type": "text",
+                                    "description": ""
+                                },
+                                {
+                                    "key": "image_url",
+                                    "src": [],
+                                    "type": "file"
+                                },
+                                {
+                                    "key": "gallery[]",
+                                    "src": [],
+                                    "type": "file"
+                                }
+                            ]
+                        },
+                        "description": "",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Display the specified product.",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "v1\/admin\/products\/:product_id",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/v1\/admin\/products\/:product_id",
+                            "variable": [
+                                {
+                                    "id": "product_id",
+                                    "key": "product_id",
+                                    "value": "1",
+                                    "description": "The ID of the product."
+                                }
+                            ]
+                        },
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": "",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": [
+                        {
+                            "header": [
+                                {
+                                    "key": "cache-control",
+                                    "value": "no-cache, private"
+                                },
+                                {
+                                    "key": "content-type",
+                                    "value": "application\/json"
+                                }
+                            ],
+                            "code": 401,
+                            "body": "{\"message\":\"Unauthenticated.\"}",
+                            "name": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "Update the specified product.",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "v1\/admin\/products\/:product_id",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/v1\/admin\/products\/:product_id",
+                            "variable": [
+                                {
+                                    "id": "product_id",
+                                    "key": "product_id",
+                                    "value": "1",
+                                    "description": "The ID of the product."
+                                }
+                            ]
+                        },
+                        "method": "PUT",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\"name\":\"b\",\"description\":\"Eius et animi quos velit et.\",\"price\":60,\"discount_price\":42,\"stock\":37,\"sku\":\"architecto\",\"image_url\":\"http:\\\/\\\/bailey.com\\\/\",\"gallery\":[\"http:\\\/\\\/rempel.com\\\/sunt-nihil-accusantium-harum-mollitia\"],\"rating\":0,\"status\":\"active\"}"
+                        },
+                        "description": "",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Toggle product status between active and inactive.",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "v1\/admin\/products\/:product_id\/status",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/v1\/admin\/products\/:product_id\/status",
+                            "variable": [
+                                {
+                                    "id": "product_id",
+                                    "key": "product_id",
+                                    "value": "1",
+                                    "description": "The ID of the product."
+                                }
+                            ]
+                        },
+                        "method": "PATCH",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": "",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Remove the specified product.",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "v1\/admin\/products\/:product_id",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/v1\/admin\/products\/:product_id",
+                            "variable": [
+                                {
+                                    "id": "product_id",
+                                    "key": "product_id",
+                                    "value": "1",
+                                    "description": "The ID of the product."
+                                }
+                            ]
+                        },
+                        "method": "DELETE",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": "",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "GET v1\/admin\/categories",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "v1\/admin\/categories",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/v1\/admin\/categories"
+                        },
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": "",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": [
+                        {
+                            "header": [
+                                {
+                                    "key": "cache-control",
+                                    "value": "no-cache, private"
+                                },
+                                {
+                                    "key": "content-type",
+                                    "value": "application\/json"
+                                }
+                            ],
+                            "code": 401,
+                            "body": "{\"message\":\"Unauthenticated.\"}",
+                            "name": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "GET v1\/admin\/categories\/parent-categories",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "v1\/admin\/categories\/parent-categories",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/v1\/admin\/categories\/parent-categories"
+                        },
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": "",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": [
+                        {
+                            "header": [
+                                {
+                                    "key": "cache-control",
+                                    "value": "no-cache, private"
+                                },
+                                {
+                                    "key": "content-type",
+                                    "value": "application\/json"
+                                }
+                            ],
+                            "code": 401,
+                            "body": "{\"message\":\"Unauthenticated.\"}",
+                            "name": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "POST v1\/admin\/categories",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "v1\/admin\/categories",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/v1\/admin\/categories"
+                        },
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "multipart\/form-data"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "formdata",
+                            "formdata": [
+                                {
+                                    "key": "name",
+                                    "value": "b",
+                                    "type": "text",
+                                    "description": "Must not be greater than 255 characters."
+                                },
+                                {
+                                    "key": "description",
+                                    "value": "Eius et animi quos velit et.",
+                                    "type": "text",
+                                    "description": ""
+                                },
+                                {
+                                    "key": "status",
+                                    "value": "inactive",
+                                    "type": "text",
+                                    "description": ""
+                                },
+                                {
+                                    "key": "image",
+                                    "src": [],
+                                    "type": "file"
+                                }
+                            ]
+                        },
+                        "description": "",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "GET v1\/admin\/categories\/{category_id}",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "v1\/admin\/categories\/:category_id",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/v1\/admin\/categories\/:category_id",
+                            "variable": [
+                                {
+                                    "id": "category_id",
+                                    "key": "category_id",
+                                    "value": "1",
+                                    "description": "The ID of the category."
+                                }
+                            ]
+                        },
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": "",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": [
+                        {
+                            "header": [
+                                {
+                                    "key": "cache-control",
+                                    "value": "no-cache, private"
+                                },
+                                {
+                                    "key": "content-type",
+                                    "value": "application\/json"
+                                }
+                            ],
+                            "code": 401,
+                            "body": "{\"message\":\"Unauthenticated.\"}",
+                            "name": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "PUT v1\/admin\/categories\/{category_id}",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "v1\/admin\/categories\/:category_id",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/v1\/admin\/categories\/:category_id",
+                            "variable": [
+                                {
+                                    "id": "category_id",
+                                    "key": "category_id",
+                                    "value": "1",
+                                    "description": "The ID of the category."
+                                }
+                            ]
+                        },
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "multipart\/form-data"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "formdata",
+                            "formdata": [
+                                {
+                                    "key": "description",
+                                    "value": "Eius et animi quos velit et.",
+                                    "type": "text",
+                                    "description": "Must not be greater than 500 characters."
+                                },
+                                {
+                                    "key": "status",
+                                    "value": "active",
+                                    "type": "text",
+                                    "description": ""
+                                },
+                                {
+                                    "key": "image",
+                                    "src": [],
+                                    "type": "file"
+                                },
+                                {
+                                    "key": "_method",
+                                    "value": "PUT",
+                                    "type": "text"
+                                }
+                            ]
+                        },
+                        "description": "",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "PATCH v1\/admin\/categories\/{category_id}\/status",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "v1\/admin\/categories\/:category_id\/status",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/v1\/admin\/categories\/:category_id\/status",
+                            "variable": [
+                                {
+                                    "id": "category_id",
+                                    "key": "category_id",
+                                    "value": "1",
+                                    "description": "The ID of the category."
+                                }
+                            ]
+                        },
+                        "method": "PATCH",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\"status\":\"inactive\"}"
+                        },
+                        "description": "",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "DELETE v1\/admin\/categories\/{category_id}",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "v1\/admin\/categories\/:category_id",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/v1\/admin\/categories\/:category_id",
+                            "variable": [
+                                {
+                                    "id": "category_id",
+                                    "key": "category_id",
+                                    "value": "1",
+                                    "description": "The ID of the category."
+                                }
+                            ]
+                        },
+                        "method": "DELETE",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": "",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "GET v1\/admin\/brands",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "v1\/admin\/brands",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/v1\/admin\/brands"
+                        },
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": "",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": [
+                        {
+                            "header": [
+                                {
+                                    "key": "cache-control",
+                                    "value": "no-cache, private"
+                                },
+                                {
+                                    "key": "content-type",
+                                    "value": "application\/json"
+                                }
+                            ],
+                            "code": 401,
+                            "body": "{\"message\":\"Unauthenticated.\"}",
+                            "name": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "Store a newly created brand",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "v1\/admin\/brands",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/v1\/admin\/brands"
+                        },
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": "",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Display the specified brand",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "v1\/admin\/brands\/:brand_id",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/v1\/admin\/brands\/:brand_id",
+                            "variable": [
+                                {
+                                    "id": "brand_id",
+                                    "key": "brand_id",
+                                    "value": "1",
+                                    "description": "The ID of the brand."
+                                }
+                            ]
+                        },
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": "",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": [
+                        {
+                            "header": [
+                                {
+                                    "key": "cache-control",
+                                    "value": "no-cache, private"
+                                },
+                                {
+                                    "key": "content-type",
+                                    "value": "application\/json"
+                                }
+                            ],
+                            "code": 401,
+                            "body": "{\"message\":\"Unauthenticated.\"}",
+                            "name": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "Update the specified brand",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "v1\/admin\/brands\/:brand_id",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/v1\/admin\/brands\/:brand_id",
+                            "variable": [
+                                {
+                                    "id": "brand_id",
+                                    "key": "brand_id",
+                                    "value": "1",
+                                    "description": "The ID of the brand."
+                                }
+                            ]
+                        },
+                        "method": "PUT",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": "",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Update brand status",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "v1\/admin\/brands\/:brand_id\/status",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/v1\/admin\/brands\/:brand_id\/status",
+                            "variable": [
+                                {
+                                    "id": "brand_id",
+                                    "key": "brand_id",
+                                    "value": "1",
+                                    "description": "The ID of the brand."
+                                }
+                            ]
+                        },
+                        "method": "PATCH",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": "",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Remove the specified brand",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "v1\/admin\/brands\/:brand_id",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/v1\/admin\/brands\/:brand_id",
+                            "variable": [
+                                {
+                                    "id": "brand_id",
+                                    "key": "brand_id",
+                                    "value": "1",
+                                    "description": "The ID of the brand."
+                                }
+                            ]
+                        },
+                        "method": "DELETE",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": "",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Display a listing of users.",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "v1\/admin\/users",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/v1\/admin\/users"
+                        },
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": "",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": [
+                        {
+                            "header": [
+                                {
+                                    "key": "cache-control",
+                                    "value": "no-cache, private"
+                                },
+                                {
+                                    "key": "content-type",
+                                    "value": "application\/json"
+                                }
+                            ],
+                            "code": 401,
+                            "body": "{\"message\":\"Unauthenticated.\"}",
+                            "name": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "Store a newly created user (Admin only).",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "v1\/admin\/users",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/v1\/admin\/users"
+                        },
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\"first_name\":\"b\",\"last_name\":\"n\",\"email\":\"ashly64@example.com\",\"password\":\"pBNvYg\",\"gender\":\"female\",\"phone\":\"hwaykcmyuwpwlvqw\",\"birthday\":\"2022-01-23\",\"address\":\"n\",\"role\":\"admin\",\"is_active\":false}"
+                        },
+                        "description": "",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Display the specified user.",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "v1\/admin\/users\/:user_id",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/v1\/admin\/users\/:user_id",
+                            "variable": [
+                                {
+                                    "id": "user_id",
+                                    "key": "user_id",
+                                    "value": "1",
+                                    "description": "The ID of the user."
+                                }
+                            ]
+                        },
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": "",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": [
+                        {
+                            "header": [
+                                {
+                                    "key": "cache-control",
+                                    "value": "no-cache, private"
+                                },
+                                {
+                                    "key": "content-type",
+                                    "value": "application\/json"
+                                }
+                            ],
+                            "code": 401,
+                            "body": "{\"message\":\"Unauthenticated.\"}",
+                            "name": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "Update the specified user.",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "v1\/admin\/users\/:user_id",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/v1\/admin\/users\/:user_id",
+                            "variable": [
+                                {
+                                    "id": "user_id",
+                                    "key": "user_id",
+                                    "value": "1",
+                                    "description": "The ID of the user."
+                                }
+                            ]
+                        },
+                        "method": "PUT",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\"first_name\":\"b\",\"last_name\":\"n\",\"email\":\"ashly64@example.com\",\"gender\":\"female\",\"phone\":\"vdljnikhwaykcmyu\",\"birthday\":\"2025-12-30T19:59:27\",\"address\":\"w\",\"role\":\"admin\",\"is_active\":false}"
+                        },
+                        "description": "",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "DELETE v1\/admin\/users\/{user_id}",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "v1\/admin\/users\/:user_id",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/v1\/admin\/users\/:user_id",
+                            "variable": [
+                                {
+                                    "id": "user_id",
+                                    "key": "user_id",
+                                    "value": "1",
+                                    "description": "The ID of the user."
+                                }
+                            ]
+                        },
+                        "method": "DELETE",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": "",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Get all coupons (Admin only).",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "v1\/admin\/coupons",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/v1\/admin\/coupons"
+                        },
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": "",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": [
+                        {
+                            "header": [
+                                {
+                                    "key": "cache-control",
+                                    "value": "no-cache, private"
+                                },
+                                {
+                                    "key": "content-type",
+                                    "value": "application\/json"
+                                }
+                            ],
+                            "code": 401,
+                            "body": "{\"message\":\"Unauthenticated.\"}",
+                            "name": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "Create coupon (Admin only).",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "v1\/admin\/coupons",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/v1\/admin\/coupons"
+                        },
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\"code\":\"b\",\"description\":\"Et animi quos velit et fugiat.\",\"type\":\"fixed\",\"value\":42,\"min_purchase\":37,\"max_discount\":9,\"usage_limit\":2,\"per_user_limit\":35,\"valid_from\":\"2025-12-30T19:59:27\",\"valid_to\":\"2052-01-23\",\"is_active\":false}"
+                        },
+                        "description": "",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Get coupon details (Admin only).",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "v1\/admin\/coupons\/:coupon_id",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/v1\/admin\/coupons\/:coupon_id",
+                            "variable": [
+                                {
+                                    "id": "coupon_id",
+                                    "key": "coupon_id",
+                                    "value": "16",
+                                    "description": "The ID of the coupon."
+                                }
+                            ]
+                        },
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": "",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": [
+                        {
+                            "header": [
+                                {
+                                    "key": "cache-control",
+                                    "value": "no-cache, private"
+                                },
+                                {
+                                    "key": "content-type",
+                                    "value": "application\/json"
+                                }
+                            ],
+                            "code": 401,
+                            "body": "{\"message\":\"Unauthenticated.\"}",
+                            "name": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "Update coupon (Admin only).",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "v1\/admin\/coupons\/:coupon_id",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/v1\/admin\/coupons\/:coupon_id",
+                            "variable": [
+                                {
+                                    "id": "coupon_id",
+                                    "key": "coupon_id",
+                                    "value": "16",
+                                    "description": "The ID of the coupon."
+                                }
+                            ]
+                        },
+                        "method": "PUT",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\"code\":\"b\",\"description\":\"Et animi quos velit et fugiat.\",\"type\":\"percentage\",\"value\":42,\"min_purchase\":37,\"max_discount\":9,\"usage_limit\":2,\"per_user_limit\":35,\"valid_from\":\"2025-12-30T19:59:27\",\"valid_to\":\"2052-01-23\",\"is_active\":false}"
+                        },
+                        "description": "",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Delete coupon (Admin only).",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "v1\/admin\/coupons\/:coupon_id",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/v1\/admin\/coupons\/:coupon_id",
+                            "variable": [
+                                {
+                                    "id": "coupon_id",
+                                    "key": "coupon_id",
+                                    "value": "16",
+                                    "description": "The ID of the coupon."
+                                }
+                            ]
+                        },
+                        "method": "DELETE",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": "",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Get all shipping methods (Admin only).",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "v1\/admin\/shipping-methods",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/v1\/admin\/shipping-methods"
+                        },
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": "",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": [
+                        {
+                            "header": [
+                                {
+                                    "key": "cache-control",
+                                    "value": "no-cache, private"
+                                },
+                                {
+                                    "key": "content-type",
+                                    "value": "application\/json"
+                                }
+                            ],
+                            "code": 401,
+                            "body": "{\"message\":\"Unauthenticated.\"}",
+                            "name": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "Create shipping method (Admin only).",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "v1\/admin\/shipping-methods",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/v1\/admin\/shipping-methods"
+                        },
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\"name\":\"b\",\"description\":\"Et animi quos velit et fugiat.\",\"cost\":42,\"estimated_days_min\":40,\"estimated_days_max\":4,\"is_active\":false,\"sort_order\":52}"
+                        },
+                        "description": "",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Get shipping method details (Admin only).",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "v1\/admin\/shipping-methods\/:shippingMethod_id",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/v1\/admin\/shipping-methods\/:shippingMethod_id",
+                            "variable": [
+                                {
+                                    "id": "shippingMethod_id",
+                                    "key": "shippingMethod_id",
+                                    "value": "16",
+                                    "description": "The ID of the shippingMethod."
+                                }
+                            ]
+                        },
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": "",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": [
+                        {
+                            "header": [
+                                {
+                                    "key": "cache-control",
+                                    "value": "no-cache, private"
+                                },
+                                {
+                                    "key": "content-type",
+                                    "value": "application\/json"
+                                }
+                            ],
+                            "code": 401,
+                            "body": "{\"message\":\"Unauthenticated.\"}",
+                            "name": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "Update shipping method (Admin only).",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "v1\/admin\/shipping-methods\/:shippingMethod_id",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/v1\/admin\/shipping-methods\/:shippingMethod_id",
+                            "variable": [
+                                {
+                                    "id": "shippingMethod_id",
+                                    "key": "shippingMethod_id",
+                                    "value": "16",
+                                    "description": "The ID of the shippingMethod."
+                                }
+                            ]
+                        },
+                        "method": "PUT",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\"name\":\"b\",\"description\":\"Et animi quos velit et fugiat.\",\"cost\":42,\"estimated_days_min\":40,\"estimated_days_max\":4,\"is_active\":true,\"sort_order\":52}"
+                        },
+                        "description": "",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Delete shipping method (Admin only).",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "v1\/admin\/shipping-methods\/:shippingMethod_id",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/v1\/admin\/shipping-methods\/:shippingMethod_id",
+                            "variable": [
+                                {
+                                    "id": "shippingMethod_id",
+                                    "key": "shippingMethod_id",
+                                    "value": "16",
+                                    "description": "The ID of the shippingMethod."
+                                }
+                            ]
+                        },
+                        "method": "DELETE",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": "",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Get all reviews (Admin only).",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "v1\/admin\/reviews",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/v1\/admin\/reviews"
+                        },
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": "",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": [
+                        {
+                            "header": [
+                                {
+                                    "key": "cache-control",
+                                    "value": "no-cache, private"
+                                },
+                                {
+                                    "key": "content-type",
+                                    "value": "application\/json"
+                                }
+                            ],
+                            "code": 401,
+                            "body": "{\"message\":\"Unauthenticated.\"}",
+                            "name": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "Approve review (Admin only).",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "v1\/admin\/reviews\/:review_id\/approve",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/v1\/admin\/reviews\/:review_id\/approve",
+                            "variable": [
+                                {
+                                    "id": "review_id",
+                                    "key": "review_id",
+                                    "value": "16",
+                                    "description": "The ID of the review."
+                                }
+                            ]
+                        },
+                        "method": "PATCH",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": "",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Reject review (Admin only).",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "v1\/admin\/reviews\/:review_id\/reject",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/v1\/admin\/reviews\/:review_id\/reject",
+                            "variable": [
+                                {
+                                    "id": "review_id",
+                                    "key": "review_id",
+                                    "value": "16",
+                                    "description": "The ID of the review."
+                                }
+                            ]
+                        },
+                        "method": "PATCH",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": "",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Process refund (Admin only - will be in admin routes).",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "v1\/admin\/payments\/:payment_id\/refund",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/v1\/admin\/payments\/:payment_id\/refund",
+                            "variable": [
+                                {
+                                    "id": "payment_id",
+                                    "key": "payment_id",
+                                    "value": "16",
+                                    "description": "The ID of the payment."
+                                }
+                            ]
+                        },
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": "",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": []
+                }
+            ]
+        }
+    ],
+    "auth": {
+        "type": "bearer",
+        "bearer": [
+            {
+                "key": "Authorization",
+                "type": "string"
+            }
+        ]
+    }
+}
