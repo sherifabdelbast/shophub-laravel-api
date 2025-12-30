@@ -2,8 +2,8 @@
 
 namespace App\Http\Requests\Auth;
 
-use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Contracts\Validation\Validator;
+use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
 
 class RegisterRequest extends FormRequest
@@ -30,7 +30,6 @@ class RegisterRequest extends FormRequest
             'gender' => ['required', 'string', 'in:male,female'],
             'birthday' => ['required', 'date', 'before:today'],
             'phone' => ['required', 'string', 'min:8', 'max:20'],
-            'address' => ['required', 'string', 'min:5', 'max:255'],
             'password' => ['required', 'string', 'min:6'],
         ];
     }
@@ -54,8 +53,6 @@ class RegisterRequest extends FormRequest
             'birthday.before' => 'Birthday must be a date before today.',
             'phone.required' => 'Phone number is required.',
             'phone.min' => 'Phone number must be at least 8 characters.',
-            'address.required' => 'Address is required.',
-            'address.min' => 'Address must be at least 5 characters.',
             'password.required' => 'Password is required.',
             'password.min' => 'Password must be at least 6 characters.',
         ];
@@ -71,8 +68,7 @@ class RegisterRequest extends FormRequest
         throw new HttpResponseException(response()->json([
             'success' => false,
             'message' => 'Validation error',
-            'errors' => $validator->errors()
+            'errors' => $validator->errors(),
         ], 422));
     }
 }
-
