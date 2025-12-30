@@ -4,40 +4,23 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Validator;
 use Laravel\Socialite\Facades\Socialite;
 use Illuminate\Support\Str;
-use Illuminate\Support\Facades\Password; // ← صحح هذا السطر
-use Illuminate\Auth\Events\PasswordReset; 
-use Illuminate\Support\Facades\Log; // ← أضف هذا للسجلات
+use App\Http\Requests\Auth\RegisterRequest;
+use App\Http\Requests\Auth\LoginRequest;
+use App\Http\Requests\Auth\UpdateProfileRequest;
 
 class AuthController extends Controller
 {
-
-    public function register(Request $request)
+    /**
+     * Handle user registration.
+     */
+    public function register(RegisterRequest $request): JsonResponse
     {
         try {
-            $validator = Validator::make($request->all(), [
-                'first_name' => 'required|string|max:255',
-                'last_name' => 'required|string|max:255',
-                'email' => 'required|string|email|max:255|unique:users',
-                'gender' => 'required|string|in:male,female', // 👈 جديد
-                'birthday' => 'required|date|before:today', // 👈 جديد
-                'phone' => 'required|string|min:8|max:20', // 👈 جديد
-                'address' => 'required|string|min:5|max:255', // 👈 جديد
-                'password' => 'required|string|min:6', // تغيير من 8 إلى 6 لتتناسب مع Angular
-            ]);
-
-            if ($validator->fails()) {
-                return response()->json([
-                    'success' => false,
-                    'message' => 'Validation error',
-                    'errors' => $validator->errors()
-                ], 422);
-            }
-
             $user = User::create([
                 'first_name' => $request->first_name,
                 'last_name' => $request->last_name,
@@ -54,18 +37,7 @@ class AuthController extends Controller
             return response()->json([
                 'success' => true,
                 'token' => $token,
-                'user' => [
-                    'id' => $user->id,
-                    'first_name' => $user->first_name,
-                    'last_name' => $user->last_name,
-                    'name' => $user->full_name,
-                    'gender' => $user->gender,
-                    'phone' => $user->phone,
-                    'birthday' => $user->birthday,
-                    'address' => $user->address,
-                    'email' => $user->email,
-                    'email_verified_at' => $user->email_verified_at,
-                ],
+                'user' => $this->formatUserResponse($user),
                 'message' => 'User registered successfully'
             ], 201);
         } catch (\Exception $e) {
@@ -76,59 +48,15 @@ class AuthController extends Controller
             ], 500);
         }
     }
-    public function profile(Request $request)
+
+    /**
+     * Handle user login.
+     */
+    public function login(LoginRequest $request): JsonResponse
     {
         try {
-            $user = $request->user();
-            
-            return response()->json([
-                'success' => true,
-                'user' => [
-                    'id' => $user->id,
-                    'first_name' => $user->first_name,
-                    'last_name' => $user->last_name,
-                    'name' => $user->full_name,
-                    'email' => $user->email,
-                    'gender' => $user->gender,
-                    'phone' => $user->phone,
-                    'birthday' => $user->birthday,
-                    'address' => $user->address,
-                    'email_verified_at' => $user->email_verified_at,
-                ]
-            ]);
-        } catch (\Exception $e) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Failed to get profile',
-                'error' => $e->getMessage()
-            ], 500);
-        }
-    }
-
-    public function login(Request $request)
-    {
-        try {
-            $validator = Validator::make($request->all(), [
-                'email' => 'required|email',
-                'password' => 'required',
-            ]);
-
-            if ($validator->fails()) {
-                return response()->json([
-                    'success' => false,
-                    'message' => 'Validation error',
-                    'errors' => $validator->errors()
-                ], 422);
-            }
-
-            $credentials = $request->only('email', 'password');
-
-            if (!Auth::attempt($credentials)) {
-                return response()->json([
-                    'success' => false,
-                    'message' => 'Invalid email or password'
-                ], 401);
-            }
+            // Authenticate using the LoginRequest (includes rate limiting)
+            $request->authenticate();
 
             $user = Auth::user();
             $token = $user->createToken('auth-token')->plainTextToken;
@@ -136,18 +64,7 @@ class AuthController extends Controller
             return response()->json([
                 'success' => true,
                 'token' => $token,
-                'user' => [
-                    'id' => $user->id,
-                    'first_name' => $user->first_name,
-                    'last_name' => $user->last_name,
-                    'name' => $user->full_name,
-                    'email' => $user->email,
-                    'gender' => $user->gender,
-                    'phone' => $user->phone,
-                    'birthday' => $user->birthday,
-                    'address' => $user->address,
-                    'email_verified_at' => $user->email_verified_at,
-                ],
+                'user' => $this->formatUserResponse($user),
                 'message' => 'Login successful'
             ]);
         } catch (\Exception $e) {
@@ -158,34 +75,41 @@ class AuthController extends Controller
             ], 500);
         }
     }
-    public function updateProfile(Request $request)
+
+    /**
+     * Get authenticated user profile.
+     */
+    public function profile(Request $request): JsonResponse
     {
         try {
             $user = $request->user();
 
-            $validator = Validator::make($request->all(), [
-                'first_name' => 'required|string|max:255',
-                'last_name' => 'required|string|max:255',
-                'email' => 'required|email|unique:users,email,' . $user->id,
-                'phone' => 'nullable|string|max:20',
-                'address' => 'nullable|string|max:255',
-                'gender' => 'nullable|in:male,female',
-                'birthday' => 'nullable|date|before:today',
+            return response()->json([
+                'success' => true,
+                'user' => $this->formatUserResponse($user)
             ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Failed to get profile',
+                'error' => $e->getMessage()
+            ], 500);
+        }
+    }
 
-            if ($validator->fails()) {
-                return response()->json([
-                    'success' => false,
-                    'errors' => $validator->errors(),
-                ], 422);
-            }
-
-            $user->update($validator->validated());
+    /**
+     * Update authenticated user profile.
+     */
+    public function updateProfile(UpdateProfileRequest $request): JsonResponse
+    {
+        try {
+            $user = $request->user();
+            $user->update($request->validated());
 
             return response()->json([
                 'success' => true,
                 'message' => 'Profile updated successfully',
-                'user' => $user,
+                'user' => $this->formatUserResponse($user->fresh()),
             ]);
         } catch (\Exception $e) {
             return response()->json([
@@ -194,7 +118,11 @@ class AuthController extends Controller
             ], 500);
         }
     }
-    public function logout(Request $request)
+
+    /**
+     * Handle user logout.
+     */
+    public function logout(Request $request): JsonResponse
     {
         try {
             $request->user()->currentAccessToken()->delete();
@@ -210,7 +138,11 @@ class AuthController extends Controller
             ], 500);
         }
     }
-    public function redirectToGoogle()
+
+    /**
+     * Redirect to Google OAuth.
+     */
+    public function redirectToGoogle(): JsonResponse
     {
         try {
             $clientId = config('services.google.client_id');
@@ -240,7 +172,11 @@ class AuthController extends Controller
             ], 500);
         }
     }
-    public function handleGoogleCallback(Request $request)
+
+    /**
+     * Handle Google OAuth callback.
+     */
+    public function handleGoogleCallback(Request $request): JsonResponse
     {
         try {
             if (!$request->has('code')) {
@@ -281,18 +217,7 @@ class AuthController extends Controller
             return response()->json([
                 'success' => true,
                 'token' => $token,
-                'user' => [
-                    'id' => $user->id,
-                    'first_name' => $user->first_name,
-                    'last_name' => $user->last_name,
-                    'name' => $user->full_name,
-                    'email' => $user->email,
-                    'gender' => $user->gender,
-                    'phone' => $user->phone,
-                    'birthday' => $user->birthday,
-                    'address' => $user->address,
-                    'email_verified_at' => $user->email_verified_at,
-                ],
+                'user' => $this->formatUserResponse($user),
                 'message' => 'Google login successful'
             ]);
         } catch (\Exception $e) {
@@ -303,5 +228,23 @@ class AuthController extends Controller
             ], 500);
         }
     }
-}
 
+    /**
+     * Format user data for API response.
+     */
+    private function formatUserResponse(User $user): array
+    {
+        return [
+            'id' => $user->id,
+            'first_name' => $user->first_name,
+            'last_name' => $user->last_name,
+            'name' => $user->full_name,
+            'email' => $user->email,
+            'gender' => $user->gender,
+            'phone' => $user->phone,
+            'birthday' => $user->birthday,
+            'address' => $user->address,
+            'email_verified_at' => $user->email_verified_at,
+        ];
+    }
+}
