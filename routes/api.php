@@ -1,13 +1,22 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\AuthController;
-use App\Http\Controllers\Product\ProductController;
-use App\Http\Controllers\Product\CategoryController;
-use App\Http\Controllers\Product\BrandController;
-use App\Http\Controllers\UserController;
-use App\Http\Controllers\Auth\PasswordResetLinkController;
+use App\Http\Controllers\AddressController;
 use App\Http\Controllers\Auth\NewPasswordController;
+use App\Http\Controllers\Auth\PasswordResetLinkController;
+use App\Http\Controllers\AuthController;
+use App\Http\Controllers\CartController;
+use App\Http\Controllers\CouponController;
+use App\Http\Controllers\OrderController;
+use App\Http\Controllers\PaymentController;
+use App\Http\Controllers\Product\BrandController;
+use App\Http\Controllers\Product\CategoryController;
+use App\Http\Controllers\Product\ProductController;
+use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ReviewController;
+use App\Http\Controllers\ShippingMethodController;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\WishlistController;
+use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------
@@ -22,13 +31,14 @@ use App\Http\Controllers\Auth\NewPasswordController;
 |
 */
 
-//==========================================================================
+// ==========================================================================
 // PUBLIC ROUTES (No authentication required)
-//==========================================================================
+// ==========================================================================
 Route::prefix('products')->group(function () {
     Route::get('/', [ProductController::class, 'index']);
     Route::get('/form/data', [ProductController::class, 'getFormData']);
     Route::get('/{product}', [ProductController::class, 'show']);
+    Route::get('/{product}/reviews', [ReviewController::class, 'index']);
 });
 
 Route::prefix('categories')->group(function () {
@@ -42,9 +52,9 @@ Route::prefix('brands')->group(function () {
     Route::get('/{brand}', [BrandController::class, 'show']);
 });
 
-//==========================================================================
+// ==========================================================================
 // AUTHENTICATION ROUTES (Guest only - with rate limiting)
-//==========================================================================
+// ==========================================================================
 Route::prefix('auth')->middleware('throttle:10,1')->group(function () {
     // Guest routes (not authenticated)
     Route::post('/register', [AuthController::class, 'register']);
@@ -57,9 +67,9 @@ Route::prefix('auth')->middleware('throttle:10,1')->group(function () {
     Route::get('/google/callback', [AuthController::class, 'handleGoogleCallback']);
 });
 
-//==========================================================================
+// ==========================================================================
 // PROTECTED ROUTES (Authenticated users only)
-//==========================================================================
+// ==========================================================================
 Route::middleware('auth:sanctum')->group(function () {
 
     // User Profile Routes
@@ -69,15 +79,66 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::put('/update-profile', [AuthController::class, 'updateProfile']);
     });
 
-    // User-specific actions (wishlist, cart, orders, etc.) can be added here
-    // Route::prefix('wishlist')->group(function () { ... });
-    // Route::prefix('cart')->group(function () { ... });
-    // Route::prefix('orders')->group(function () { ... });
+    // Address Management
+    Route::prefix('addresses')->group(function () {
+        Route::get('/', [AddressController::class, 'index']);
+        Route::post('/', [AddressController::class, 'store']);
+        Route::get('/{address}', [AddressController::class, 'show']);
+        Route::put('/{address}', [AddressController::class, 'update']);
+        Route::delete('/{address}', [AddressController::class, 'destroy']);
+        Route::patch('/{address}/set-default', [AddressController::class, 'setDefault']);
+    });
+
+    // Cart Management
+    Route::prefix('cart')->group(function () {
+        Route::get('/', [CartController::class, 'index']);
+        Route::post('/', [CartController::class, 'store']);
+        Route::put('/{cartItem}', [CartController::class, 'update']);
+        Route::delete('/{cartItem}', [CartController::class, 'destroy']);
+        Route::delete('/', [CartController::class, 'clear']);
+    });
+
+    // Wishlist Management
+    Route::prefix('wishlist')->group(function () {
+        Route::get('/', [WishlistController::class, 'index']);
+        Route::post('/', [WishlistController::class, 'store']);
+        Route::delete('/{wishlist}', [WishlistController::class, 'destroy']);
+        Route::get('/check/{product}', [WishlistController::class, 'check']);
+    });
+
+    // Order Management
+    Route::prefix('orders')->group(function () {
+        Route::get('/', [OrderController::class, 'index']);
+        Route::post('/', [OrderController::class, 'store']);
+        Route::get('/{order}', [OrderController::class, 'show']);
+        Route::patch('/{order}/cancel', [OrderController::class, 'cancel']);
+    });
+
+    // Payment Management
+    Route::prefix('payments')->group(function () {
+        Route::post('/', [PaymentController::class, 'store']);
+        Route::get('/{payment}', [PaymentController::class, 'show']);
+        Route::get('/order/{order}', [PaymentController::class, 'getOrderPayments']);
+    });
+
+    // Review Management
+    Route::prefix('reviews')->group(function () {
+        Route::post('/', [ReviewController::class, 'store']);
+        Route::put('/{review}', [ReviewController::class, 'update']);
+        Route::delete('/{review}', [ReviewController::class, 'destroy']);
+        Route::post('/{review}/helpful', [ReviewController::class, 'markHelpful']);
+    });
+
+    // Coupon Validation
+    Route::post('/coupons/validate', [CouponController::class, 'validateCoupon']);
+
+    // Shipping Methods (Public for authenticated users)
+    Route::get('/shipping-methods', [ShippingMethodController::class, 'index']);
 });
 
-//==========================================================================
+// ==========================================================================
 // ADMIN ROUTES (Authenticated + Admin role required)
-//==========================================================================
+// ==========================================================================
 Route::prefix('admin')
     ->middleware(['auth:sanctum', 'admin'])
     ->group(function () {
@@ -102,7 +163,7 @@ Route::prefix('admin')
             Route::get('/parent-categories', [CategoryController::class, 'getParentCategories']);
             Route::post('/', [CategoryController::class, 'store']);
             Route::get('/{category}', [CategoryController::class, 'show']);
-            Route::put('/edit/{category}', [CategoryController::class, 'update']);
+            Route::put('/{category}', [CategoryController::class, 'update']);
             Route::patch('/{category}/status', [CategoryController::class, 'updateStatus']);
             Route::delete('/{category}', [CategoryController::class, 'destroy']);
         });
@@ -124,5 +185,35 @@ Route::prefix('admin')
             Route::get('/{user}', [UserController::class, 'show']);
             Route::put('/{user}', [UserController::class, 'update']);
             Route::delete('/{user}', [UserController::class, 'destroy']);
+        });
+
+        // Coupons Management
+        Route::prefix('coupons')->group(function () {
+            Route::get('/', [CouponController::class, 'index']);
+            Route::post('/', [CouponController::class, 'store']);
+            Route::get('/{coupon}', [CouponController::class, 'show']);
+            Route::put('/{coupon}', [CouponController::class, 'update']);
+            Route::delete('/{coupon}', [CouponController::class, 'destroy']);
+        });
+
+        // Shipping Methods Management
+        Route::prefix('shipping-methods')->group(function () {
+            Route::get('/', [ShippingMethodController::class, 'adminIndex']);
+            Route::post('/', [ShippingMethodController::class, 'store']);
+            Route::get('/{shippingMethod}', [ShippingMethodController::class, 'show']);
+            Route::put('/{shippingMethod}', [ShippingMethodController::class, 'update']);
+            Route::delete('/{shippingMethod}', [ShippingMethodController::class, 'destroy']);
+        });
+
+        // Reviews Management (Approve/Reject)
+        Route::prefix('reviews')->group(function () {
+            Route::get('/', [ReviewController::class, 'adminIndex']);
+            Route::patch('/{review}/approve', [ReviewController::class, 'approve']);
+            Route::patch('/{review}/reject', [ReviewController::class, 'reject']);
+        });
+
+        // Payments Management (Refund)
+        Route::prefix('payments')->group(function () {
+            Route::post('/{payment}/refund', [PaymentController::class, 'refund']);
         });
     });
