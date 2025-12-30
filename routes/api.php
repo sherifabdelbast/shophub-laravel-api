@@ -26,15 +26,14 @@ Route::prefix('auth')->group(function () {
     });
 });
 
+
 Route::prefix('products')->group(function () {
     Route::get('/', [ProductController::class, 'index']);           // GET /api/products
     Route::get('/form/data', [ProductController::class, 'getFormData']); // GET /api/products/form/data
-    Route::post('/new-product', [ProductController::class, 'store']);          // POST /api/products
     Route::get('/{product}', [ProductController::class, 'show']);        // GET /api/products/1
-    Route::put('/{product}', [ProductController::class, 'update']);      // PUT /api/products/1
-    Route::patch('/{product}/status', [ProductController::class, 'updateStatus']);    // PATCH /api/products/1/status
-    Route::delete('/{product}', [ProductController::class, 'destroy']);  // DELETE /api/products/1
+
 });
+
 //?----------------------------Admin---------------------------------------------------
 Route::prefix('admin')->group(function () {
     // Products Routes

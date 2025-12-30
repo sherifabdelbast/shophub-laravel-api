@@ -15,10 +15,11 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 class ProductController extends Controller
 {
-    public function index(){
-        $products = Product::with(['category', 'brand'])->get();
-        return response()->json($products);
-    }
+   public function index(){
+    $products = Product::with(['category', 'brand'])->paginate(2);
+    return response()->json($products);
+    } 
+
     public function show(Product $product){
         $product->load(['category', 'brand']);
         return response()->json($product);

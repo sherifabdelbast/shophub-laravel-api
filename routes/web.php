@@ -1,7 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-
+use Illuminate\Http\Request;
+use App\Http\Controllers\ProfileController;
 
 Route::middleware(['auth:sanctum'])->group(function () {
     // Get authenticated user
@@ -19,3 +20,8 @@ Route::get('/', function () {
 });
 
 require __DIR__.'/auth.php';
+
+Route::get('/',function(){
+
+    return response()->json(['message'=>'Welcome to the web routes!']);
+});
