@@ -7,11 +7,14 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Validation\Rules;
+use App\Http\Requests\User\StoreUserRequest;
+use App\Http\Requests\User\UpdateUserRequest;
 
 class UserController extends Controller
 {
-    //?Done
+    /**
+     * Display a listing of users.
+     */
     public function index(): JsonResponse
     {
         $users = User::all();
@@ -22,7 +25,40 @@ class UserController extends Controller
         ]);
     }
 
+    /**
+     * Store a newly created user (Admin only).
+     */
+    public function store(StoreUserRequest $request): JsonResponse
+    {
+        try {
+            $data = $request->validated();
+            $data['password'] = Hash::make($data['password']);
+            
+            // Set default role if not provided
+            if (!isset($data['role'])) {
+                $data['role'] = 'customer';
+            }
 
+            $user = User::create($data);
+
+            return response()->json([
+                'success' => true,
+                'message' => 'User created successfully',
+                'data' => $user
+            ], 201);
+
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Failed to create user',
+                'error' => $e->getMessage()
+            ], 500);
+        }
+    }
+
+    /**
+     * Display the specified user.
+     */
     public function show(User $user): JsonResponse
     {
         return response()->json([
@@ -31,24 +67,27 @@ class UserController extends Controller
         ]);
     }
     
-   public function update(Request $request, User $user): JsonResponse{
-    $request->validate([
-        'name' => ['required', 'string', 'max:255'],
-        'email' => ['required', 'string', 'email', 'max:255', 'unique:users,email,' . $user->id],
-        'gender' => ['required', 'in:male,female'],
-        'phone' => ['required', 'string', 'max:20'],
-        'birthday' => ['required', 'date'],
-        'address' => ['required', 'string', 'max:500'],
-    ]);
+    /**
+     * Update the specified user.
+     */
+    public function update(UpdateUserRequest $request, User $user): JsonResponse
+    {
+        try {
+            $user->update($request->validated());
 
-    $user->update($request->only(['name', 'email', 'gender', 'phone', 'birthday', 'address']));
-
-    return response()->json([
-        'success' => true,
-        'message' => 'User updated successfully',
-        'data' => $user
-    ]);
-}
+            return response()->json([
+                'success' => true,
+                'message' => 'User updated successfully',
+                'data' => $user->fresh()
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Failed to update user',
+                'error' => $e->getMessage()
+            ], 500);
+        }
+    }
 
 
     //?Done
