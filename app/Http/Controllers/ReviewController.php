@@ -14,6 +14,8 @@ class ReviewController extends Controller
 {
     /**
      * Get product reviews.
+     *
+     * @group Reviews
      */
     public function index(Request $request, Product $product): JsonResponse
     {
@@ -47,6 +49,8 @@ class ReviewController extends Controller
 
     /**
      * Create a review.
+     *
+     * @group Reviews
      */
     public function store(StoreReviewRequest $request): JsonResponse
     {
@@ -98,6 +102,8 @@ class ReviewController extends Controller
 
     /**
      * Update review.
+     *
+     * @group Reviews
      */
     public function update(UpdateReviewRequest $request, Review $review): JsonResponse
     {
@@ -151,6 +157,8 @@ class ReviewController extends Controller
 
     /**
      * Delete review.
+     *
+     * @group Reviews
      */
     public function destroy(Request $request, Review $review): JsonResponse
     {
@@ -184,6 +192,8 @@ class ReviewController extends Controller
 
     /**
      * Mark review as helpful.
+     *
+     * @group Reviews
      */
     public function markHelpful(Request $request, Review $review): JsonResponse
     {
@@ -208,6 +218,8 @@ class ReviewController extends Controller
 
     /**
      * Get all reviews (Admin only).
+     *
+     * @group Admin - Reviews
      */
     public function adminIndex(Request $request): JsonResponse
     {
@@ -244,6 +256,8 @@ class ReviewController extends Controller
 
     /**
      * Approve review (Admin only).
+     *
+     * @group Admin - Reviews
      */
     public function approve(Request $request, Review $review): JsonResponse
     {
@@ -267,6 +281,8 @@ class ReviewController extends Controller
 
     /**
      * Reject review (Admin only).
+     *
+     * @group Admin - Reviews
      */
     public function reject(Request $request, Review $review): JsonResponse
     {

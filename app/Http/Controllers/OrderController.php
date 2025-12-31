@@ -15,6 +15,8 @@ class OrderController extends Controller
 
     /**
      * Get user's orders.
+     *
+     * @group Orders
      */
     public function index(Request $request): JsonResponse
     {
@@ -45,6 +47,8 @@ class OrderController extends Controller
 
     /**
      * Create new order from cart.
+     *
+     * @group Orders
      */
     public function store(StoreOrderRequest $request): JsonResponse
     {
@@ -72,6 +76,8 @@ class OrderController extends Controller
 
     /**
      * Get order details.
+     *
+     * @group Orders
      */
     public function show(Request $request, Order $order): JsonResponse
     {
@@ -101,6 +107,8 @@ class OrderController extends Controller
 
     /**
      * Cancel order.
+     *
+     * @group Orders
      */
     public function cancel(Request $request, Order $order): JsonResponse
     {

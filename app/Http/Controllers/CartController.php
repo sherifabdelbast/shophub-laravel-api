@@ -15,6 +15,8 @@ class CartController extends Controller
 
     /**
      * Get user's cart.
+     *
+     * @group Cart
      */
     public function index(Request $request): JsonResponse
     {
@@ -40,6 +42,8 @@ class CartController extends Controller
 
     /**
      * Add item to cart.
+     *
+     * @group Cart
      */
     public function store(StoreCartRequest $request): JsonResponse
     {
@@ -65,6 +69,8 @@ class CartController extends Controller
 
     /**
      * Update cart item quantity.
+     *
+     * @group Cart
      */
     public function update(UpdateCartRequest $request, int $cartItem): JsonResponse
     {
@@ -90,6 +96,8 @@ class CartController extends Controller
 
     /**
      * Remove item from cart.
+     *
+     * @group Cart
      */
     public function destroy(Request $request, int $cartItem): JsonResponse
     {
@@ -111,6 +119,8 @@ class CartController extends Controller
 
     /**
      * Clear entire cart.
+     *
+     * @group Cart
      */
     public function clear(Request $request): JsonResponse
     {

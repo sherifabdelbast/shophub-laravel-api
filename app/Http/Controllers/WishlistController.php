@@ -12,6 +12,8 @@ class WishlistController extends Controller
 {
     /**
      * Get user's wishlist.
+     *
+     * @group Wishlist
      */
     public function index(Request $request): JsonResponse
     {
@@ -40,6 +42,8 @@ class WishlistController extends Controller
 
     /**
      * Add product to wishlist.
+     *
+     * @group Wishlist
      */
     public function store(StoreWishlistRequest $request): JsonResponse
     {
@@ -86,6 +90,8 @@ class WishlistController extends Controller
 
     /**
      * Remove product from wishlist.
+     *
+     * @group Wishlist
      */
     public function destroy(Request $request, int $wishlist): JsonResponse
     {
@@ -110,6 +116,8 @@ class WishlistController extends Controller
 
     /**
      * Check if product is in wishlist.
+     *
+     * @group Wishlist
      */
     public function check(Request $request, int $product): JsonResponse
     {

@@ -52,6 +52,14 @@ Route::prefix('brands')->group(function () {
     Route::get('/{brand}', [BrandController::class, 'show']);
 });
 
+// Shipping Methods (Public - for checkout)
+Route::prefix('shipping-methods')->group(function () {
+    Route::get('/', [ShippingMethodController::class, 'index']);
+});
+
+// Coupon Validation (Public)
+Route::post('/coupons/validate', [CouponController::class, 'validateCoupon']);
+
 // ==========================================================================
 // AUTHENTICATION ROUTES (Guest only - with rate limiting)
 // ==========================================================================
@@ -72,18 +80,15 @@ Route::prefix('auth')->middleware('throttle:10,1')->group(function () {
 // ==========================================================================
 Route::middleware('auth:sanctum')->group(function () {
 
-    // Authentication Routes
+    // User Profile Routes
     Route::prefix('auth')->group(function () {
         Route::post('/logout', [AuthController::class, 'logout']);
     });
 
-    // User Profile Routes
-    Route::prefix('profile')->group(function () {
-        Route::get('/', [ProfileController::class, 'show']);
-        Route::put('/', [ProfileController::class, 'update']);
-    });
+    Route::get('/profile', [ProfileController::class, 'show']);
+    Route::put('/profile', [ProfileController::class, 'update']);
 
-    // Address Management
+    // Addresses Management
     Route::prefix('addresses')->group(function () {
         Route::get('/', [AddressController::class, 'index']);
         Route::post('/', [AddressController::class, 'store']);
@@ -93,7 +98,7 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::patch('/{address}/set-default', [AddressController::class, 'setDefault']);
     });
 
-    // Cart Management
+    // Shopping Cart
     Route::prefix('cart')->group(function () {
         Route::get('/', [CartController::class, 'index']);
         Route::post('/', [CartController::class, 'store']);
@@ -102,7 +107,7 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::delete('/', [CartController::class, 'clear']);
     });
 
-    // Wishlist Management
+    // Wishlist
     Route::prefix('wishlist')->group(function () {
         Route::get('/', [WishlistController::class, 'index']);
         Route::post('/', [WishlistController::class, 'store']);
@@ -110,7 +115,7 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::get('/check/{product}', [WishlistController::class, 'check']);
     });
 
-    // Order Management
+    // Orders
     Route::prefix('orders')->group(function () {
         Route::get('/', [OrderController::class, 'index']);
         Route::post('/', [OrderController::class, 'store']);
@@ -118,26 +123,20 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::patch('/{order}/cancel', [OrderController::class, 'cancel']);
     });
 
-    // Payment Management
+    // Payments
     Route::prefix('payments')->group(function () {
         Route::post('/', [PaymentController::class, 'store']);
         Route::get('/{payment}', [PaymentController::class, 'show']);
         Route::get('/order/{order}', [PaymentController::class, 'getOrderPayments']);
     });
 
-    // Review Management
+    // Reviews
     Route::prefix('reviews')->group(function () {
         Route::post('/', [ReviewController::class, 'store']);
         Route::put('/{review}', [ReviewController::class, 'update']);
         Route::delete('/{review}', [ReviewController::class, 'destroy']);
         Route::post('/{review}/helpful', [ReviewController::class, 'markHelpful']);
     });
-
-    // Coupon Validation
-    Route::post('/coupons/validate', [CouponController::class, 'validateCoupon']);
-
-    // Shipping Methods (Public for authenticated users)
-    Route::get('/shipping-methods', [ShippingMethodController::class, 'index']);
 });
 
 // ==========================================================================
@@ -167,7 +166,7 @@ Route::prefix('admin')
             Route::get('/parent-categories', [CategoryController::class, 'getParentCategories']);
             Route::post('/', [CategoryController::class, 'store']);
             Route::get('/{category}', [CategoryController::class, 'show']);
-            Route::put('/{category}', [CategoryController::class, 'update']);
+            Route::put('/edit/{category}', [CategoryController::class, 'update']);
             Route::patch('/{category}/status', [CategoryController::class, 'updateStatus']);
             Route::delete('/{category}', [CategoryController::class, 'destroy']);
         });
@@ -209,15 +208,15 @@ Route::prefix('admin')
             Route::delete('/{shippingMethod}', [ShippingMethodController::class, 'destroy']);
         });
 
-        // Reviews Management (Approve/Reject)
+        // Reviews Management
         Route::prefix('reviews')->group(function () {
             Route::get('/', [ReviewController::class, 'adminIndex']);
             Route::patch('/{review}/approve', [ReviewController::class, 'approve']);
             Route::patch('/{review}/reject', [ReviewController::class, 'reject']);
         });
 
-        // Payments Management (Refund)
+        // Payments Management
         Route::prefix('payments')->group(function () {
-            Route::post('/{payment}/refund', [PaymentController::class, 'refund']);
+            Route::patch('/{payment}/refund', [PaymentController::class, 'refund']);
         });
     });

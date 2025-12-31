@@ -12,6 +12,8 @@ class ShippingMethodController extends Controller
 {
     /**
      * Get active shipping methods (Public).
+     *
+     * @group Shipping Methods
      */
     public function index(Request $request): JsonResponse
     {
@@ -39,6 +41,8 @@ class ShippingMethodController extends Controller
 
     /**
      * Get all shipping methods (Admin only).
+     *
+     * @group Admin - Shipping Methods
      */
     public function adminIndex(Request $request): JsonResponse
     {
@@ -72,6 +76,8 @@ class ShippingMethodController extends Controller
 
     /**
      * Create shipping method (Admin only).
+     *
+     * @group Admin - Shipping Methods
      */
     public function store(StoreShippingMethodRequest $request): JsonResponse
     {
@@ -94,6 +100,8 @@ class ShippingMethodController extends Controller
 
     /**
      * Get shipping method details (Admin only).
+     *
+     * @group Admin - Shipping Methods
      */
     public function show(ShippingMethod $shippingMethod): JsonResponse
     {
@@ -105,6 +113,8 @@ class ShippingMethodController extends Controller
 
     /**
      * Update shipping method (Admin only).
+     *
+     * @group Admin - Shipping Methods
      */
     public function update(UpdateShippingMethodRequest $request, ShippingMethod $shippingMethod): JsonResponse
     {
@@ -127,6 +137,8 @@ class ShippingMethodController extends Controller
 
     /**
      * Delete shipping method (Admin only).
+     *
+     * @group Admin - Shipping Methods
      */
     public function destroy(ShippingMethod $shippingMethod): JsonResponse
     {

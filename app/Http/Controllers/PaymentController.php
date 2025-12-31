@@ -15,6 +15,8 @@ class PaymentController extends Controller
 
     /**
      * Process payment for an order.
+     *
+     * @group Payments
      */
     public function store(StorePaymentRequest $request): JsonResponse
     {
@@ -57,6 +59,8 @@ class PaymentController extends Controller
 
     /**
      * Get payment details.
+     *
+     * @group Payments
      */
     public function show(Request $request, Payment $payment): JsonResponse
     {
@@ -93,6 +97,8 @@ class PaymentController extends Controller
 
     /**
      * Get order payments.
+     *
+     * @group Payments
      */
     public function getOrderPayments(Request $request, Order $order): JsonResponse
     {
@@ -129,6 +135,8 @@ class PaymentController extends Controller
 
     /**
      * Process refund (Admin only - will be in admin routes).
+     *
+     * @group Admin - Payments
      */
     public function refund(Request $request, Payment $payment): JsonResponse
     {

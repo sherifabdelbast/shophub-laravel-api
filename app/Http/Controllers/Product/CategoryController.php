@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers\Product;
+
 use App\Http\Controllers\Controller;
 use App\Models\Category;
 use Illuminate\Http\Request;
@@ -9,7 +10,12 @@ use Illuminate\Support\Str;
 
 class CategoryController extends Controller
 {
-      public function index(Request $request)
+    /**
+     * Get all categories.
+     *
+     * @group Categories
+     */
+    public function index(Request $request)
     {
         $query = Category::with(['parent', 'children']);
 
@@ -17,7 +23,7 @@ class CategoryController extends Controller
         if ($request->has('search') && $request->search != '') {
             $search = $request->search;
             $query->where('name', 'like', "%{$search}%")
-                  ->orWhere('description', 'like', "%{$search}%");
+                ->orWhere('description', 'like', "%{$search}%");
         }
 
         // Status filter
@@ -34,10 +40,15 @@ class CategoryController extends Controller
 
         return response()->json([
             'success' => true,
-            'data' => $categories
+            'data' => $categories,
         ]);
     }
 
+    /**
+     * Create a new category.
+     *
+     * @group Admin - Categories
+     */
     public function store(Request $request)
     {
         $validated = $request->validate([
@@ -45,7 +56,7 @@ class CategoryController extends Controller
             'description' => 'nullable|string',
             'parent_id' => 'nullable|exists:categories,id',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-            'status' => 'required|in:active,inactive'
+            'status' => 'required|in:active,inactive',
         ]);
 
         try {
@@ -63,84 +74,100 @@ class CategoryController extends Controller
             return response()->json([
                 'success' => true,
                 'message' => 'Category created successfully',
-                'data' => $category->load(['parent', 'children'])
+                'data' => $category->load(['parent', 'children']),
             ], 201);
 
         } catch (\Exception $e) {
             return response()->json([
                 'success' => false,
                 'message' => 'Failed to create category',
-                'error' => $e->getMessage()
+                'error' => $e->getMessage(),
             ], 500);
         }
     }
 
+    /**
+     * Get category details.
+     *
+     * @group Categories
+     */
     public function show(Category $category)
     {
         $category->load(['parent', 'children']);
+
         return response()->json([
             'success' => true,
-            'data' => $category
+            'data' => $category,
         ]);
     }
 
-public function update(Request $request, Category $category)
-{
-    $validated = $request->validate([
-        'name' => 'required|string|max:255|unique:categories,name,' . $category->id,
-        'description' => 'nullable|string|max:500',
-        'parent_id' => 'nullable|sometimes|exists:categories,id',
-        'image' => 'nullable|sometimes|image|mimes:jpeg,png,jpg,gif,webp|max:2048',
-        'status' => 'required|in:active,inactive'
-    ]);
+    /**
+     * Update category.
+     *
+     * @group Admin - Categories
+     */
+    public function update(Request $request, Category $category)
+    {
+        $validated = $request->validate([
+            'name' => 'required|string|max:255|unique:categories,name,'.$category->id,
+            'description' => 'nullable|string|max:500',
+            'parent_id' => 'nullable|sometimes|exists:categories,id',
+            'image' => 'nullable|sometimes|image|mimes:jpeg,png,jpg,gif,webp|max:2048',
+            'status' => 'required|in:active,inactive',
+        ]);
 
-    try {
-        // Generate slug if name changed
-        if ($validated['name'] !== $category->name) {
-            $validated['slug'] = Str::slug($validated['name']);
-        }
-
-        // Handle parent_id - convert empty string to null
-        if (isset($validated['parent_id']) && $validated['parent_id'] === '') {
-            $validated['parent_id'] = null;
-        }
-
-        // Handle image upload
-        if ($request->hasFile('image')) {
-            // Delete old image if exists
-            if ($category->image_url) {
-                $oldImage = str_replace('/storage/', '', $category->image_url);
-                Storage::disk('public')->delete($oldImage);
+        try {
+            // Generate slug if name changed
+            if ($validated['name'] !== $category->name) {
+                $validated['slug'] = Str::slug($validated['name']);
             }
 
-            $imagePath = $request->file('image')->store('categories', 'public');
-            $validated['image_url'] = Storage::url($imagePath);
+            // Handle parent_id - convert empty string to null
+            if (isset($validated['parent_id']) && $validated['parent_id'] === '') {
+                $validated['parent_id'] = null;
+            }
+
+            // Handle image upload
+            if ($request->hasFile('image')) {
+                // Delete old image if exists
+                if ($category->image_url) {
+                    $oldImage = str_replace('/storage/', '', $category->image_url);
+                    Storage::disk('public')->delete($oldImage);
+                }
+
+                $imagePath = $request->file('image')->store('categories', 'public');
+                $validated['image_url'] = Storage::url($imagePath);
+            }
+
+            $category->update($validated);
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Category updated successfully',
+                'data' => $category->load(['parent', 'children']),
+            ]);
+
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Failed to update category',
+                'error' => $e->getMessage(),
+            ], 500);
         }
-
-        $category->update($validated);
-
-        return response()->json([
-            'success' => true,
-            'message' => 'Category updated successfully',
-            'data' => $category->load(['parent', 'children'])
-        ]);
-
-    } catch (\Exception $e) {
-        return response()->json([
-            'success' => false,
-            'message' => 'Failed to update category',
-            'error' => $e->getMessage()
-        ], 500);
     }
-}
 
+    /**
+     * Delete category.
+     *
+     * @group Admin - Categories
+     */
     public function destroy(Category $category)
     {
         // Check if category has products or subcategories
         if ($category->products()->count() > 0 || $category->children()->count() > 0) {
             return response()->json([
                 'success' => false,
-                'message' => 'Cannot delete category. It has associated products or subcategories.'
+                'message' => 'Cannot delete category. It has associated products or subcategories.',
             ], 422);
         }
 
@@ -155,18 +182,23 @@ public function update(Request $request, Category $category)
 
             return response()->json([
                 'success' => true,
-                'message' => 'Category deleted successfully'
+                'message' => 'Category deleted successfully',
             ]);
 
         } catch (\Exception $e) {
             return response()->json([
                 'success' => false,
                 'message' => 'Failed to delete category',
-                'error' => $e->getMessage()
+                'error' => $e->getMessage(),
             ], 500);
         }
     }
 
+    /**
+     * Get parent categories.
+     *
+     * @group Categories
+     */
     public function getParentCategories()
     {
         $categories = Category::whereNull('parent_id')
@@ -175,14 +207,19 @@ public function update(Request $request, Category $category)
 
         return response()->json([
             'success' => true,
-            'data' => $categories
+            'data' => $categories,
         ]);
     }
 
+    /**
+     * Update category status.
+     *
+     * @group Admin - Categories
+     */
     public function updateStatus(Request $request, Category $category)
     {
         $validated = $request->validate([
-            'status' => 'required|in:active,inactive'
+            'status' => 'required|in:active,inactive',
         ]);
 
         $category->update($validated);
@@ -190,8 +227,7 @@ public function update(Request $request, Category $category)
         return response()->json([
             'success' => true,
             'message' => 'Category status updated successfully',
-            'data' => $category
+            'data' => $category,
         ]);
     }
-
 }

@@ -3,10 +3,8 @@
 namespace App\Http\Controllers\Product;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Product\ProductIndexRequest;
 use App\Http\Requests\Product\StoreProductRequest;
 use App\Http\Requests\Product\UpdateProductRequest;
-use App\Http\Resources\ProductResource;
 use App\Models\Brand;
 use App\Models\Category;
 use App\Models\Product;
@@ -17,89 +15,36 @@ use Illuminate\Support\Str;
 class ProductController extends Controller
 {
     /**
-     * Display a paginated listing of products with filters.
+     * Get all products.
+     *
+     * @group Products
      */
-    public function index(ProductIndexRequest $request): JsonResponse
+    public function index()
     {
-        $query = Product::with(['category', 'brand']);
+        $products = Product::with(['category', 'brand'])->get();
 
-        // Search filter
-        if ($request->filled('search')) {
-            $search = $request->search;
-            $query->where(function ($q) use ($search) {
-                $q->where('name', 'like', "%{$search}%")
-                    ->orWhere('description', 'like', "%{$search}%")
-                    ->orWhere('sku', 'like', "%{$search}%");
-            });
-        }
-
-        // Category filter
-        if ($request->filled('category_id')) {
-            $query->where('category_id', $request->category_id);
-        }
-
-        // Brand filter
-        if ($request->filled('brand_id')) {
-            $query->where('brand_id', $request->brand_id);
-        }
-
-        // Status filter
-        if ($request->filled('status')) {
-            $query->where('status', $request->status);
-        }
-
-        // Price range filter
-        if ($request->filled('min_price')) {
-            $query->where('price', '>=', $request->min_price);
-        }
-        if ($request->filled('max_price')) {
-            $query->where('price', '<=', $request->max_price);
-        }
-
-        // Sorting
-        $sortBy = $request->input('sort_by', 'created_at');
-        $sortOrder = $request->input('sort_order', 'desc');
-        $query->orderBy($sortBy, $sortOrder);
-
-        // Pagination
-        $perPage = $request->input('per_page', 15);
-        $products = $query->paginate($perPage);
-
-        return response()->json([
-            'success' => true,
-            'data' => ProductResource::collection($products->items()),
-            'meta' => [
-                'current_page' => $products->currentPage(),
-                'last_page' => $products->lastPage(),
-                'per_page' => $products->perPage(),
-                'total' => $products->total(),
-                'from' => $products->firstItem(),
-                'to' => $products->lastItem(),
-            ],
-            'links' => [
-                'first' => $products->url(1),
-                'last' => $products->url($products->lastPage()),
-                'prev' => $products->previousPageUrl(),
-                'next' => $products->nextPageUrl(),
-            ],
-        ]);
+        return response()->json($products);
     }
 
     /**
-     * Display the specified product.
+     * Get product details.
+     *
+     * @group Products
      */
-    public function show(Product $product): JsonResponse
+    public function show(Product $product)
     {
         $product->load(['category', 'brand']);
 
         return response()->json([
             'success' => true,
-            'data' => new ProductResource($product),
+            'data' => $product,
         ]);
     }
 
     /**
      * Store a newly created product.
+     *
+     * @group Admin - Products
      */
     public function store(StoreProductRequest $request): JsonResponse
     {
@@ -120,7 +65,7 @@ class ProductController extends Controller
             return response()->json([
                 'success' => true,
                 'message' => 'Product created successfully',
-                'data' => new ProductResource($product->load(['category', 'brand'])),
+                'data' => $product->load(['category', 'brand']),
             ], 201);
 
         } catch (\Exception $e) {
@@ -134,6 +79,9 @@ class ProductController extends Controller
 
     /**
      * Get form data (categories and brands).
+     *
+     * @group Products
+     * @group Admin - Products
      */
     public function getFormData(): JsonResponse
     {
@@ -151,6 +99,8 @@ class ProductController extends Controller
 
     /**
      * Toggle product status between active and inactive.
+     *
+     * @group Admin - Products
      */
     public function updateStatus(Product $product): JsonResponse
     {
@@ -161,7 +111,7 @@ class ProductController extends Controller
             return response()->json([
                 'success' => true,
                 'message' => 'Product status updated successfully',
-                'data' => new ProductResource($product->load(['category', 'brand'])),
+                'data' => $product->load(['category', 'brand']),
             ]);
 
         } catch (\Exception $e) {
@@ -175,6 +125,8 @@ class ProductController extends Controller
 
     /**
      * Update the specified product.
+     *
+     * @group Admin - Products
      */
     public function update(UpdateProductRequest $request, Product $product): JsonResponse
     {
@@ -210,7 +162,7 @@ class ProductController extends Controller
             return response()->json([
                 'success' => true,
                 'message' => 'Product updated successfully',
-                'data' => new ProductResource($product),
+                'data' => $product,
             ]);
 
         } catch (\Exception $e) {
@@ -224,6 +176,8 @@ class ProductController extends Controller
 
     /**
      * Remove the specified product.
+     *
+     * @group Admin - Products
      */
     public function destroy(Product $product): JsonResponse
     {

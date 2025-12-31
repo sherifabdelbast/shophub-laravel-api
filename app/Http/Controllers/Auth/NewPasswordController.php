@@ -4,11 +4,16 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Password;
 
 class NewPasswordController extends Controller
 {
+    /**
+     * Reset password.
+     *
+     * @group Authentication
+     */
     public function store(Request $request)
     {
         $request->validate([
@@ -29,13 +34,13 @@ class NewPasswordController extends Controller
         if ($status === Password::PASSWORD_RESET) {
             return response()->json([
                 'success' => true,
-                'message' => __($status)
+                'message' => __($status),
             ]);
         }
 
         return response()->json([
             'success' => false,
-            'message' => __($status)
+            'message' => __($status),
         ], 400);
     }
 }

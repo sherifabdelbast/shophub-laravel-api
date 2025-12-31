@@ -11,6 +11,8 @@ class ProfileController extends Controller
 {
     /**
      * Get authenticated user profile.
+     *
+     * @group Profile
      */
     public function show(Request $request): JsonResponse
     {
@@ -32,6 +34,8 @@ class ProfileController extends Controller
 
     /**
      * Update authenticated user profile.
+     *
+     * @group Profile
      */
     public function update(UpdateProfileRequest $request): JsonResponse
     {

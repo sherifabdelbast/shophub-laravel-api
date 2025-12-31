@@ -16,6 +16,8 @@ class CouponController extends Controller
 
     /**
      * Validate coupon code.
+     *
+     * @group Coupons
      */
     public function validateCoupon(ValidateCouponRequest $request): JsonResponse
     {
@@ -54,6 +56,8 @@ class CouponController extends Controller
 
     /**
      * Get all coupons (Admin only).
+     *
+     * @group Admin - Coupons
      */
     public function index(Request $request): JsonResponse
     {
@@ -90,6 +94,8 @@ class CouponController extends Controller
 
     /**
      * Create coupon (Admin only).
+     *
+     * @group Admin - Coupons
      */
     public function store(StoreCouponRequest $request): JsonResponse
     {
@@ -112,6 +118,8 @@ class CouponController extends Controller
 
     /**
      * Get coupon details (Admin only).
+     *
+     * @group Admin - Coupons
      */
     public function show(Coupon $coupon): JsonResponse
     {
@@ -123,6 +131,8 @@ class CouponController extends Controller
 
     /**
      * Update coupon (Admin only).
+     *
+     * @group Admin - Coupons
      */
     public function update(UpdateCouponRequest $request, Coupon $coupon): JsonResponse
     {
@@ -145,6 +155,8 @@ class CouponController extends Controller
 
     /**
      * Delete coupon (Admin only).
+     *
+     * @group Admin - Coupons
      */
     public function destroy(Coupon $coupon): JsonResponse
     {

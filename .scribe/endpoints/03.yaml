@@ -1,0 +1,183 @@
+name: Brands
+description: ''
+endpoints:
+  -
+    custom: []
+    httpMethods:
+      - GET
+    uri: v1/brands
+    metadata:
+      custom: []
+      groupName: Brands
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Get all brands.'
+      description: ''
+      authenticated: false
+      deprecated: false
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: '{"success":true,"data":{"current_page":1,"data":[{"id":1,"name":"Lehner-Lehner","slug":"lehner-lehner","description":"Velit id pariatur voluptas commodi voluptatibus aut.","logo_url":"https:\/\/via.placeholder.com\/200x200.png\/008833?text=brands+incidunt","website":"http:\/\/steuber.com\/","status":"active","created_at":"2025-12-25T13:00:10.000000Z","updated_at":"2025-12-25T13:00:10.000000Z","sort_order":0,"deleted_at":null},{"id":2,"name":"Blanda Inc","slug":"blanda-inc","description":"Totam inventore esse ipsum repellat et sapiente quod maiores.","logo_url":"https:\/\/via.placeholder.com\/200x200.png\/001155?text=brands+voluptatem","website":"http:\/\/corkery.com\/et-tenetur-omnis-iste-optio.html","status":"active","created_at":"2025-12-25T13:00:10.000000Z","updated_at":"2025-12-25T13:00:10.000000Z","sort_order":0,"deleted_at":null},{"id":3,"name":"Halvorson-Effertz","slug":"halvorson-effertz","description":"Quis doloribus deleniti maxime quia modi dolorum earum sapiente.","logo_url":"https:\/\/via.placeholder.com\/200x200.png\/005588?text=brands+magnam","website":"https:\/\/becker.org\/recusandae-provident-sit-numquam-ut-similique-sunt-unde.html","status":"active","created_at":"2025-12-25T13:00:10.000000Z","updated_at":"2025-12-25T13:00:10.000000Z","sort_order":0,"deleted_at":null},{"id":4,"name":"Cruickshank, Von and Schaden","slug":"cruickshank-von-and-schaden","description":"Esse repudiandae repudiandae eum laudantium molestias ullam consequatur a perferendis in.","logo_url":"https:\/\/via.placeholder.com\/200x200.png\/006677?text=brands+officiis","website":"http:\/\/franecki.biz\/","status":"active","created_at":"2025-12-25T13:00:10.000000Z","updated_at":"2025-12-25T13:00:10.000000Z","sort_order":0,"deleted_at":null},{"id":5,"name":"Feeney-Langosh","slug":"feeney-langosh","description":"Repellendus aut et quo vel ut hic praesentium quos eveniet.","logo_url":"https:\/\/via.placeholder.com\/200x200.png\/007700?text=brands+omnis","website":"http:\/\/www.lockman.org\/voluptatum-aliquid-hic-et-quasi-eaque-voluptate.html","status":"active","created_at":"2025-12-25T13:00:10.000000Z","updated_at":"2025-12-25T13:00:10.000000Z","sort_order":0,"deleted_at":null}],"first_page_url":"http:\/\/localhost:8000\/v1\/brands?page=1","from":1,"last_page":1,"last_page_url":"http:\/\/localhost:8000\/v1\/brands?page=1","links":[{"url":null,"label":"&laquo; Previous","page":null,"active":false},{"url":"http:\/\/localhost:8000\/v1\/brands?page=1","label":"1","page":1,"active":true},{"url":null,"label":"Next &raquo;","page":null,"active":false}],"next_page_url":null,"path":"http:\/\/localhost:8000\/v1\/brands","per_page":10,"prev_page_url":null,"to":5,"total":5},"message":"Brands retrieved successfully"}'
+        headers:
+          cache-control: 'no-cache, private'
+          content-type: application/json
+        description: null
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - GET
+    uri: 'v1/brands/{brand_id}'
+    metadata:
+      custom: []
+      groupName: Brands
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Display the specified brand.'
+      description: ''
+      authenticated: false
+      deprecated: false
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      brand_id:
+        custom: []
+        name: brand_id
+        description: 'The ID of the brand.'
+        required: true
+        example: 1
+        type: integer
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      brand_id: 1
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 200
+        content: '{"success":true,"data":{"id":1,"name":"Lehner-Lehner","slug":"lehner-lehner","description":"Velit id pariatur voluptas commodi voluptatibus aut.","logo_url":"https:\/\/via.placeholder.com\/200x200.png\/008833?text=brands+incidunt","website":"http:\/\/steuber.com\/","status":"active","created_at":"2025-12-25T13:00:10.000000Z","updated_at":"2025-12-25T13:00:10.000000Z","sort_order":0,"deleted_at":null},"message":"Brand retrieved successfully"}'
+        headers:
+          cache-control: 'no-cache, private'
+          content-type: application/json
+        description: null
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - GET
+    uri: v1/admin/brands
+    metadata:
+      custom: []
+      groupName: Brands
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Get all brands.'
+      description: ''
+      authenticated: false
+      deprecated: false
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 401
+        content: '{"message":"Unauthenticated."}'
+        headers:
+          cache-control: 'no-cache, private'
+          content-type: application/json
+        description: null
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+  -
+    custom: []
+    httpMethods:
+      - GET
+    uri: 'v1/admin/brands/{brand_id}'
+    metadata:
+      custom: []
+      groupName: Brands
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Display the specified brand.'
+      description: ''
+      authenticated: false
+      deprecated: false
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      brand_id:
+        custom: []
+        name: brand_id
+        description: 'The ID of the brand.'
+        required: true
+        example: 1
+        type: integer
+        enumValues: []
+        exampleWasSpecified: false
+        nullable: false
+        deprecated: false
+    cleanUrlParameters:
+      brand_id: 1
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        custom: []
+        status: 401
+        content: '{"message":"Unauthenticated."}'
+        headers:
+          cache-control: 'no-cache, private'
+          content-type: application/json
+        description: null
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null

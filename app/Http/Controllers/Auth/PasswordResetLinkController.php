@@ -8,6 +8,11 @@ use Illuminate\Support\Facades\Password;
 
 class PasswordResetLinkController extends Controller
 {
+    /**
+     * Send password reset link.
+     *
+     * @group Authentication
+     */
     public function store(Request $request)
     {
         $request->validate(['email' => 'required|email']);
@@ -17,13 +22,13 @@ class PasswordResetLinkController extends Controller
         if ($status === Password::RESET_LINK_SENT) {
             return response()->json([
                 'success' => true,
-                'message' => __($status)
+                'message' => __($status),
             ]);
         }
 
         return response()->json([
             'success' => false,
-            'message' => __($status)
+            'message' => __($status),
         ], 400);
     }
 }

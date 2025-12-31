@@ -17,6 +17,8 @@ class AuthController extends Controller
 {
     /**
      * Handle user registration.
+     *
+     * @group Authentication
      */
     public function register(RegisterRequest $request): JsonResponse
     {
@@ -50,6 +52,8 @@ class AuthController extends Controller
 
     /**
      * Handle user login.
+     *
+     * @group Authentication
      */
     public function login(LoginRequest $request): JsonResponse
     {
@@ -77,6 +81,8 @@ class AuthController extends Controller
 
     /**
      * Handle user logout.
+     *
+     * @group Authentication
      */
     public function logout(Request $request): JsonResponse
     {
@@ -97,6 +103,8 @@ class AuthController extends Controller
 
     /**
      * Redirect to Google OAuth.
+     *
+     * @group Authentication
      */
     public function redirectToGoogle(): JsonResponse
     {
@@ -131,6 +139,8 @@ class AuthController extends Controller
 
     /**
      * Handle Google OAuth callback.
+     *
+     * @group Authentication
      */
     public function handleGoogleCallback(Request $request): JsonResponse
     {

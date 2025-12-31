@@ -13,6 +13,8 @@ class AddressController extends Controller
 {
     /**
      * Get user's addresses.
+     *
+     * @group Addresses
      */
     public function index(Request $request): JsonResponse
     {
@@ -37,6 +39,8 @@ class AddressController extends Controller
 
     /**
      * Store a new address.
+     *
+     * @group Addresses
      */
     public function store(StoreAddressRequest $request): JsonResponse
     {
@@ -68,6 +72,8 @@ class AddressController extends Controller
 
     /**
      * Display the specified address.
+     *
+     * @group Addresses
      */
     public function show(Request $request, Address $address): JsonResponse
     {
@@ -87,6 +93,8 @@ class AddressController extends Controller
 
     /**
      * Update the specified address.
+     *
+     * @group Addresses
      */
     public function update(UpdateAddressRequest $request, Address $address): JsonResponse
     {
@@ -126,6 +134,8 @@ class AddressController extends Controller
 
     /**
      * Remove the specified address.
+     *
+     * @group Addresses
      */
     public function destroy(Request $request, Address $address): JsonResponse
     {
@@ -155,6 +165,8 @@ class AddressController extends Controller
 
     /**
      * Set address as default.
+     *
+     * @group Addresses
      */
     public function setDefault(Request $request, Address $address): JsonResponse
     {
