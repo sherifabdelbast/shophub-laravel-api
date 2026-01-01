@@ -47,8 +47,10 @@ return new class extends Migration
             $table->index('created_at');
             $table->index('status');
             
-            if(config('database.default') !== 'sqlite')
-            $table->fullText(['name', 'description']);
+            // Only create fulltext index on databases that support it (MySQL, MariaDB, PostgreSQL)
+            if (Schema::getConnection()->getDriverName() !== 'sqlite') {
+                $table->fullText(['name', 'description']);
+            }
         });
     }
 
@@ -64,7 +66,9 @@ return new class extends Migration
             $table->dropIndex(['rating']);
             $table->dropIndex(['created_at']);
             $table->dropIndex(['status']);
-            $table->dropFullText(['name', 'description']);
+            if (Schema::getConnection()->getDriverName() !== 'sqlite') {
+                $table->dropFullText(['name', 'description']);
+            }
             $table->dropSoftDeletes();
             
             $table->dropColumn([
