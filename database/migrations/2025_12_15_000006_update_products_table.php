@@ -47,7 +47,7 @@ return new class extends Migration
             $table->index('created_at');
             $table->index('status');
             
-            // Fulltext search
+            if(config('database.default') !== 'sqlite')
             $table->fullText(['name', 'description']);
         });
     }
