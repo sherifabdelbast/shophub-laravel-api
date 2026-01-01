@@ -55,15 +55,17 @@ jobs:
       - name: Copy environment file
         run: cp .env.example .env
 
+      - name: Configure database
+        run: |
+          sed -i 's/DB_CONNECTION=.*/DB_CONNECTION=pgsql/' .env
+          sed -i 's/DB_HOST=.*/DB_HOST=127.0.0.1/' .env
+          sed -i 's/DB_PORT=.*/DB_PORT=5432/' .env
+          sed -i 's/DB_DATABASE=.*/DB_DATABASE=shophub_test/' .env
+          sed -i 's/DB_USERNAME=.*/DB_USERNAME=shophub/' .env
+          sed -i 's/DB_PASSWORD=.*/DB_PASSWORD=shophub/' .env
+
       - name: Generate app key
         run: php artisan key:generate
 
       - name: Execute tests
-        env:
-          DB_CONNECTION: pgsql
-          DB_HOST: 127.0.0.1
-          DB_PORT: 5432
-          DB_DATABASE: shophub_test
-          DB_USERNAME: shophub
-          DB_PASSWORD: shophub
         run: php artisan test
