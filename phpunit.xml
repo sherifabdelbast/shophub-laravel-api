@@ -28,7 +28,7 @@
         <env name="DB_DATABASE" value="shophub_test"/>
         <env name="DB_USERNAME" value="shophub"/>
         <env name="DB_PASSWORD" value="shophub"/>
-        <env name="MAIL_MAILER" value="array"/>
+        <env name="MAIL_MAILER" value="log"/>
         <env name="QUEUE_CONNECTION" value="sync"/>
         <env name="SESSION_DRIVER" value="array"/>
         <env name="PULSE_ENABLED" value="false"/>
