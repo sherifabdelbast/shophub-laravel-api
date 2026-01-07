@@ -65,7 +65,10 @@ jobs:
           sed -i 's/DB_PASSWORD=.*/DB_PASSWORD=shophub/' .env
 
       - name: Generate app key
-        run: php artisan key:generate
+        run: php artisan key:generate --no-interaction
+
+      - name: Run database migrations
+        run: php artisan migrate --force
 
       - name: Execute tests
         run: php artisan test

@@ -57,26 +57,19 @@ class AuthController extends Controller
      */
     public function login(LoginRequest $request): JsonResponse
     {
-        try {
-            // Authenticate using the LoginRequest (includes rate limiting)
-            $request->authenticate();
+        // Authenticate using the LoginRequest (includes rate limiting)
+        // HttpResponseException will be thrown for invalid credentials (401)
+        $request->authenticate();
 
-            $user = Auth::user();
-            $token = $user->createToken('auth-token')->plainTextToken;
+        $user = Auth::user();
+        $token = $user->createToken('auth-token')->plainTextToken;
 
-            return response()->json([
-                'success' => true,
-                'token' => $token,
-                'user' => new UserResource($user),
-                'message' => 'Login successful',
-            ]);
-        } catch (\Exception $e) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Login failed',
-                'error' => $e->getMessage(),
-            ], 500);
-        }
+        return response()->json([
+            'success' => true,
+            'token' => $token,
+            'user' => new UserResource($user),
+            'message' => 'Login successful',
+        ]);
     }
 
     /**

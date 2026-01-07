@@ -12,36 +12,57 @@ class AuthenticationTest extends TestCase
 
     public function test_users_can_authenticate_using_the_login_screen(): void
     {
-        $user = User::factory()->create();
+        $user = User::factory()->create([
+            'password' => bcrypt('password'),
+        ]);
 
-        $response = $this->post('/login', [
+        $response = $this->postJson('/v1/auth/login', [
             'email' => $user->email,
             'password' => 'password',
         ]);
 
-        $this->assertAuthenticated();
-        $response->assertNoContent();
+        $response->assertStatus(200)
+            ->assertJsonStructure([
+                'success',
+                'token',
+                'user',
+                'message',
+            ])
+            ->assertJson(['success' => true]);
+
+        $this->assertNotNull($response->json('token'));
     }
 
     public function test_users_can_not_authenticate_with_invalid_password(): void
     {
-        $user = User::factory()->create();
+        $user = User::factory()->create([
+            'password' => bcrypt('password'),
+        ]);
 
-        $this->post('/login', [
+        $response = $this->postJson('/v1/auth/login', [
             'email' => $user->email,
             'password' => 'wrong-password',
         ]);
 
-        $this->assertGuest();
+        $response->assertStatus(401)
+            ->assertJson([
+                'success' => false,
+                'message' => 'Invalid email or password',
+            ]);
     }
 
     public function test_users_can_logout(): void
     {
         $user = User::factory()->create();
+        $token = $user->createToken('test-token')->plainTextToken;
 
-        $response = $this->actingAs($user)->post('/logout');
+        $response = $this->withHeader('Authorization', "Bearer {$token}")
+            ->postJson('/v1/auth/logout');
 
-        $this->assertGuest();
-        $response->assertNoContent();
+        $response->assertStatus(200)
+            ->assertJson([
+                'success' => true,
+                'message' => 'Logged out successfully',
+            ]);
     }
 }
