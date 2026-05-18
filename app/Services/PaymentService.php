@@ -14,17 +14,20 @@ class PaymentService
      */
     public function processPayment(Order $order, string $paymentMethod, array $paymentData = []): Payment
     {
-        if ($order->payment_status === 'paid') {
-            throw new \DomainException('Order is already paid');
-        }
-
         if (! config('payment.fake_gateway')) {
             throw new \RuntimeException('Payment gateway not configured');
         }
 
         return DB::transaction(function () use ($order, $paymentMethod, $paymentData) {
-            // Fake gateway: simulated success. Enabled only via config('payment.fake_gateway').
+            // Lock the order row so concurrent payment attempts are serialized
+            // and the already-paid check cannot be raced.
+            $order = Order::whereKey($order->id)->lockForUpdate()->firstOrFail();
 
+            if ($order->payment_status === 'paid') {
+                throw new \DomainException('Order is already paid');
+            }
+
+            // Fake gateway: simulated success. Enabled only via config('payment.fake_gateway').
             $payment = Payment::create([
                 'order_id' => $order->id,
                 'transaction_id' => 'TXN-'.strtoupper(Str::random(20)),
@@ -36,7 +39,6 @@ class PaymentService
                 'paid_at' => now(),
             ]);
 
-            // Update order payment status
             $order->update([
                 'payment_status' => 'paid',
                 'payment_method' => $paymentMethod,
