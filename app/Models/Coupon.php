@@ -2,8 +2,10 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Coupon extends Model
 {
@@ -37,18 +39,18 @@ class Coupon extends Model
     }
 
     // Relationships
-    public function orders()
+    public function orders(): HasMany
     {
         return $this->hasMany(Order::class);
     }
 
-    public function usage()
+    public function usage(): HasMany
     {
         return $this->hasMany(CouponUsage::class);
     }
 
     // Scopes
-    public function scopeActive($query)
+    public function scopeActive(Builder $query): Builder
     {
         return $query->where('is_active', true)
             ->where(function ($q) {

@@ -2,8 +2,11 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Product extends Model
@@ -60,58 +63,58 @@ class Product extends Model
     }
 
     // Relationships
-    public function category()
+    public function category(): BelongsTo
     {
         return $this->belongsTo(Category::class);
     }
 
-    public function brand()
+    public function brand(): BelongsTo
     {
         return $this->belongsTo(Brand::class);
     }
 
-    public function images()
+    public function images(): HasMany
     {
         return $this->hasMany(ProductImage::class)->orderBy('sort_order');
     }
 
-    public function reviews()
+    public function reviews(): HasMany
     {
         return $this->hasMany(Review::class);
     }
 
-    public function cartItems()
+    public function cartItems(): HasMany
     {
         return $this->hasMany(CartItem::class);
     }
 
-    public function orderItems()
+    public function orderItems(): HasMany
     {
         return $this->hasMany(OrderItem::class);
     }
 
-    public function wishlists()
+    public function wishlists(): HasMany
     {
         return $this->hasMany(Wishlist::class);
     }
 
     // Scopes
-    public function scopeActive($query)
+    public function scopeActive(Builder $query): Builder
     {
         return $query->where('status', 'active');
     }
 
-    public function scopeFeatured($query)
+    public function scopeFeatured(Builder $query): Builder
     {
         return $query->where('is_featured', true);
     }
 
-    public function scopeInStock($query)
+    public function scopeInStock(Builder $query): Builder
     {
         return $query->where('stock_status', 'in_stock');
     }
 
-    public function scopeSearch($query, $term)
+    public function scopeSearch(Builder $query, string $term): Builder
     {
         return $query->whereFullText(['name', 'description'], $term);
     }

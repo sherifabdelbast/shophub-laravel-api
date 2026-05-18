@@ -15,21 +15,13 @@ class EnsureUserIsAdmin
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if (!$request->user()) {
+        if (! $request->user()->isAdmin()) {
             return response()->json([
                 'success' => false,
-                'message' => 'Unauthenticated.'
-            ], 401);
-        }
-
-        if (!$request->user()->isAdmin()) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Access denied. Admin privileges required.'
+                'message' => 'Access denied. Admin privileges required.',
             ], 403);
         }
 
         return $next($request);
     }
 }
-
