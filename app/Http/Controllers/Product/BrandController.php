@@ -139,8 +139,8 @@ class BrandController extends Controller
                 'name' => 'required|string|max:255',
                 'slug' => 'nullable|string|max:255',
                 'description' => 'nullable|string',
-                'logo_url' => 'nullable|string',
-                'website' => 'nullable|string',
+                'logo_url' => 'nullable|url|max:255',
+                'website' => 'nullable|url|max:255',
                 'status' => 'nullable|in:active,inactive',
             ]);
 
@@ -152,6 +152,12 @@ class BrandController extends Controller
                 'data' => $brand,
             ], 200);
 
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Validation failed',
+                'errors' => $e->errors(),
+            ], 422);
         } catch (\Exception $e) {
             return response()->json([
                 'success' => false,

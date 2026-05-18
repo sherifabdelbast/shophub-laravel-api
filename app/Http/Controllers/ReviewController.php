@@ -313,20 +313,18 @@ class ReviewController extends Controller
      */
     private function updateProductRating(int $productId): void
     {
-        $approvedReviews = Review::where('product_id', $productId)
+        $stats = Review::where('product_id', $productId)
             ->where('status', 'approved')
-            ->get();
+            ->selectRaw('COUNT(*) as reviews_count, AVG(rating) as average_rating')
+            ->first();
 
-        if ($approvedReviews->isEmpty()) {
+        if (! $stats || (int) $stats->reviews_count === 0) {
             return;
         }
 
-        $averageRating = $approvedReviews->avg('rating');
-        $reviewsCount = $approvedReviews->count();
-
         Product::where('id', $productId)->update([
-            'rating' => round($averageRating, 2),
-            'reviews_count' => $reviewsCount,
+            'rating' => round((float) $stats->average_rating, 2),
+            'reviews_count' => (int) $stats->reviews_count,
         ]);
     }
 }

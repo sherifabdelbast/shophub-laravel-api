@@ -27,6 +27,7 @@ class Review extends Model
         return [
             'images' => 'array',
             'verified_purchase' => 'boolean',
+            'rating' => 'integer',
         ];
     }
 
@@ -57,4 +58,3 @@ class Review extends Model
         return $query->where('verified_purchase', true);
     }
 }
-

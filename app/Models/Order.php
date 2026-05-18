@@ -113,7 +113,7 @@ class Order extends Model
         return in_array($this->status, ['pending', 'processing']);
     }
 
-    public function canRefund()
+    public function canRefund(): bool
     {
         return $this->isPaid() && ! $this->isDelivered();
     }
