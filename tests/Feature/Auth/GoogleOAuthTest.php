@@ -55,4 +55,26 @@ class GoogleOAuthTest extends TestCase
         $this->assertNull($user->birthday);
         $this->assertNull($user->phone);
     }
+
+    public function test_repeated_oauth_callback_does_not_duplicate_the_account(): void
+    {
+        $socialiteUser = Mockery::mock(\Laravel\Socialite\Contracts\User::class);
+        $socialiteUser->shouldReceive('getEmail')->andReturn('repeat@example.com');
+        $socialiteUser->shouldReceive('getName')->andReturn('Repeat User');
+        $socialiteUser->shouldReceive('getId')->andReturn('google-repeat');
+
+        $provider = Mockery::mock(Provider::class);
+        $provider->shouldReceive('stateless')->andReturnSelf();
+        $provider->shouldReceive('user')->andReturn($socialiteUser);
+
+        Socialite::shouldReceive('driver')->with('google')->andReturn($provider);
+
+        foreach (['stateone', 'statetwo'] as $state) {
+            Cache::put("oauth_state_{$state}", true, now()->addMinutes(10));
+            $this->getJson("/v1/auth/google/callback?code=some-code&state={$state}")
+                ->assertStatus(200);
+        }
+
+        $this->assertSame(1, User::where('email', 'repeat@example.com')->count());
+    }
 }

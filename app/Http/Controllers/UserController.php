@@ -44,18 +44,16 @@ class UserController extends Controller
         try {
             $data = $request->validated();
             $data['password'] = Hash::make($data['password']);
+            $data['role'] = $data['role'] ?? 'customer';
 
-            // Set default role if not provided
-            if (! isset($data['role'])) {
-                $data['role'] = 'customer';
-            }
-
-            $user = User::create($data);
+            // forceCreate: admin endpoint may set the guarded role / is_active
+            // fields. Input is already whitelisted by StoreUserRequest.
+            $user = User::forceCreate($data);
 
             return response()->json([
                 'success' => true,
                 'message' => 'User created successfully',
-                'data' => $user,
+                'data' => new UserResource($user),
             ], 201);
 
         } catch (\Exception $e) {
@@ -87,12 +85,14 @@ class UserController extends Controller
     public function update(UpdateUserRequest $request, User $user): JsonResponse
     {
         try {
-            $user->update($request->validated());
+            // forceFill: admin endpoint may set the guarded role / is_active
+            // fields. Input is already whitelisted by UpdateUserRequest.
+            $user->forceFill($request->validated())->save();
 
             return response()->json([
                 'success' => true,
                 'message' => 'User updated successfully',
-                'data' => $user->fresh(),
+                'data' => new UserResource($user->fresh()),
             ]);
         } catch (\Exception $e) {
             return response()->json([

@@ -158,25 +158,36 @@ class AuthController extends Controller
 
             $googleUser = Socialite::driver('google')->stateless()->user();
 
-            $user = User::where('email', $googleUser->getEmail())->first();
+            $nameParts = explode(' ', $googleUser->getName(), 2);
 
-            if (! $user) {
-                $nameParts = explode(' ', $googleUser->getName(), 2);
-                $user = User::create([
+            // createOrFirst is atomic against the email unique constraint —
+            // concurrent callbacks cannot create duplicate accounts.
+            $user = User::createOrFirst(
+                ['email' => $googleUser->getEmail()],
+                [
                     'first_name' => $nameParts[0] ?? 'User',
                     'last_name' => $nameParts[1] ?? '',
-                    'email' => $googleUser->getEmail(),
                     'password' => Hash::make(Str::random(24)),
                     'provider' => 'google',
                     'provider_id' => $googleUser->getId(),
                     'email_verified_at' => now(),
-                ]);
-            } else {
-                $user->update([
-                    'provider' => 'google',
-                    'provider_id' => $googleUser->getId(),
-                ]);
+                ]
+            );
+
+            // Refuse to re-link an account already bound to a different
+            // Google identity.
+            if ($user->provider_id && $user->provider_id !== $googleUser->getId()) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'This email is already linked to a different Google account',
+                ], 409);
             }
+
+            // Link the social account (no-op for a freshly created user).
+            $user->update([
+                'provider' => 'google',
+                'provider_id' => $googleUser->getId(),
+            ]);
 
             $token = $user->createToken('auth-token')->plainTextToken;
 
