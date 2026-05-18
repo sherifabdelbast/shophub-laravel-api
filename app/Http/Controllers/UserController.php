@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\User\StoreUserRequest;
 use App\Http\Requests\User\UpdateUserRequest;
+use App\Http\Resources\UserResource;
 use App\Models\User;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
@@ -15,13 +17,20 @@ class UserController extends Controller
      *
      * @group Admin - Users
      */
-    public function index(): JsonResponse
+    public function index(Request $request): JsonResponse
     {
-        $users = User::all();
+        $perPage = min((int) $request->get('per_page', 15), 100);
+        $users = User::query()->latest()->paginate($perPage);
 
         return response()->json([
             'success' => true,
-            'data' => $users,
+            'data' => UserResource::collection($users->items()),
+            'meta' => [
+                'current_page' => $users->currentPage(),
+                'last_page' => $users->lastPage(),
+                'per_page' => $users->perPage(),
+                'total' => $users->total(),
+            ],
         ]);
     }
 
@@ -66,7 +75,7 @@ class UserController extends Controller
     {
         return response()->json([
             'success' => true,
-            'data' => $user,
+            'data' => new UserResource($user),
         ]);
     }
 

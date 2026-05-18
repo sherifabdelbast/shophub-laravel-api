@@ -26,7 +26,7 @@ class ReviewController extends Controller
                     $query->select('id', 'first_name', 'last_name');
                 }])
                 ->latest()
-                ->paginate($request->get('per_page', 10));
+                ->paginate(min((int) $request->get('per_page', 10), 100));
 
             return response()->json([
                 'success' => true,
@@ -228,7 +228,7 @@ class ReviewController extends Controller
                     $query->where('product_id', $request->product_id);
                 })
                 ->latest()
-                ->paginate($request->get('per_page', 15));
+                ->paginate(min((int) $request->get('per_page', 15), 100));
 
             return response()->json([
                 'success' => true,

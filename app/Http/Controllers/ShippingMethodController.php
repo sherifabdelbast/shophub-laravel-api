@@ -52,7 +52,7 @@ class ShippingMethodController extends Controller
                 })
                 ->orderBy('sort_order')
                 ->orderBy('name')
-                ->paginate($request->get('per_page', 15));
+                ->paginate(min((int) $request->get('per_page', 15), 100));
 
             return response()->json([
                 'success' => true,

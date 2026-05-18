@@ -24,7 +24,7 @@ class OrderController extends Controller
             $orders = Order::where('user_id', $request->user()->id)
                 ->with(['items', 'shippingMethod'])
                 ->latest()
-                ->paginate($request->get('per_page', 15));
+                ->paginate(min((int) $request->get('per_page', 15), 100));
 
             return response()->json([
                 'success' => true,

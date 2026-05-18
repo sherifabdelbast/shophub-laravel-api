@@ -36,7 +36,7 @@ class CategoryController extends Controller
             $query->where('parent_id', $request->parent_id);
         }
 
-        $categories = $query->latest()->paginate($request->get('per_page', 15));
+        $categories = $query->latest()->paginate(min((int) $request->get('per_page', 15), 100));
 
         return response()->json([
             'success' => true,

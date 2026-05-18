@@ -3,8 +3,10 @@
 namespace App\Http\Controllers\Product;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Product\ProductIndexRequest;
 use App\Http\Requests\Product\StoreProductRequest;
 use App\Http\Requests\Product\UpdateProductRequest;
+use App\Http\Resources\ProductResource;
 use App\Models\Brand;
 use App\Models\Category;
 use App\Models\Product;
@@ -19,11 +21,57 @@ class ProductController extends Controller
      *
      * @group Products
      */
-    public function index()
+    public function index(ProductIndexRequest $request): JsonResponse
     {
-        $products = Product::with(['category', 'brand'])->get();
+        $query = Product::with(['category', 'brand']);
 
-        return response()->json($products);
+        if ($request->filled('search')) {
+            $search = $request->validated('search');
+            $query->where(function ($q) use ($search) {
+                $q->where('name', 'like', "%{$search}%")
+                    ->orWhere('description', 'like', "%{$search}%");
+            });
+        }
+
+        if ($request->filled('category_id')) {
+            $query->where('category_id', $request->category_id);
+        }
+
+        if ($request->filled('brand_id')) {
+            $query->where('brand_id', $request->brand_id);
+        }
+
+        if ($request->filled('status')) {
+            $query->where('status', $request->status);
+        }
+
+        if ($request->filled('min_price')) {
+            $query->where('price', '>=', $request->min_price);
+        }
+
+        if ($request->filled('max_price')) {
+            $query->where('price', '<=', $request->max_price);
+        }
+
+        // sort_by / sort_order are whitelisted by ProductIndexRequest validation.
+        $query->orderBy(
+            $request->validated('sort_by', 'created_at'),
+            $request->validated('sort_order', 'desc')
+        );
+
+        // per_page is capped at 100 by ProductIndexRequest validation.
+        $products = $query->paginate($request->validated('per_page', 15));
+
+        return response()->json([
+            'success' => true,
+            'data' => ProductResource::collection($products->items()),
+            'meta' => [
+                'current_page' => $products->currentPage(),
+                'last_page' => $products->lastPage(),
+                'per_page' => $products->perPage(),
+                'total' => $products->total(),
+            ],
+        ]);
     }
 
     /**
