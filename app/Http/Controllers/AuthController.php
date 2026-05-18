@@ -46,7 +46,6 @@ class AuthController extends Controller
             return response()->json([
                 'success' => false,
                 'message' => 'Registration failed',
-                'error' => $e->getMessage(),
             ], 500);
         }
     }
@@ -191,7 +190,6 @@ class AuthController extends Controller
             return response()->json([
                 'success' => false,
                 'message' => 'Google login failed',
-                'error' => $e->getMessage(),
             ], 500);
         }
     }

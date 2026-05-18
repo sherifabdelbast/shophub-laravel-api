@@ -17,11 +17,11 @@ class CartService
 
         // Check stock availability
         if (! $product->isInStock()) {
-            throw new \Exception('Product is out of stock');
+            throw new \DomainException('Product is out of stock');
         }
 
         if ($product->stock < $quantity) {
-            throw new \Exception('Insufficient stock available');
+            throw new \DomainException('Insufficient stock available');
         }
 
         // Get current price (use discount price if available)
@@ -37,7 +37,7 @@ class CartService
             $newQuantity = $cartItem->quantity + $quantity;
 
             if ($product->stock < $newQuantity) {
-                throw new \Exception('Insufficient stock available');
+                throw new \DomainException('Insufficient stock available');
             }
 
             $cartItem->update([
@@ -68,17 +68,17 @@ class CartService
             ->findOrFail($cartItemId);
 
         if ($quantity <= 0) {
-            throw new \Exception('Quantity must be greater than 0');
+            throw new \DomainException('Quantity must be greater than 0');
         }
 
         $product = $cartItem->product;
 
         if (! $product->isInStock()) {
-            throw new \Exception('Product is out of stock');
+            throw new \DomainException('Product is out of stock');
         }
 
         if ($product->stock < $quantity) {
-            throw new \Exception('Insufficient stock available');
+            throw new \DomainException('Insufficient stock available');
         }
 
         $cartItem->update([

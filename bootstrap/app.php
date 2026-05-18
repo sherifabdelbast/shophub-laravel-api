@@ -25,5 +25,8 @@ return Application::configure(basePath: dirname(__DIR__))
         //
     })
     ->withExceptions(function (Exceptions $exceptions): void {
-        //
+        // Always render API (/v1/*) errors as JSON, never as an HTML page.
+        $exceptions->shouldRenderJsonWhen(
+            fn ($request, $e) => $request->is('v1/*') || $request->expectsJson()
+        );
     })->create();

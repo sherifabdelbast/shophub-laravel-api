@@ -27,7 +27,6 @@ class ProfileController extends Controller
             return response()->json([
                 'success' => false,
                 'message' => 'Failed to get profile',
-                'error' => $e->getMessage(),
             ], 500);
         }
     }
@@ -51,7 +50,7 @@ class ProfileController extends Controller
         } catch (\Exception $e) {
             return response()->json([
                 'success' => false,
-                'message' => 'Server error: '.$e->getMessage(),
+                'message' => 'Failed to update profile',
             ], 500);
         }
     }

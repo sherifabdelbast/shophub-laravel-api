@@ -49,11 +49,16 @@ class PaymentController extends Controller
                     'paid_at' => $payment->paid_at,
                 ],
             ], 201);
-        } catch (\Exception $e) {
+        } catch (\DomainException $e) {
             return response()->json([
                 'success' => false,
                 'message' => $e->getMessage(),
             ], 400);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Failed to process payment',
+            ], 500);
         }
     }
 
@@ -90,7 +95,6 @@ class PaymentController extends Controller
             return response()->json([
                 'success' => false,
                 'message' => 'Failed to retrieve payment',
-                'error' => $e->getMessage(),
             ], 500);
         }
     }
@@ -128,7 +132,6 @@ class PaymentController extends Controller
             return response()->json([
                 'success' => false,
                 'message' => 'Failed to retrieve payments',
-                'error' => $e->getMessage(),
             ], 500);
         }
     }
@@ -160,11 +163,22 @@ class PaymentController extends Controller
                     'status' => $refundedPayment->status,
                 ],
             ]);
-        } catch (\Exception $e) {
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Validation failed',
+                'errors' => $e->errors(),
+            ], 422);
+        } catch (\DomainException $e) {
             return response()->json([
                 'success' => false,
                 'message' => $e->getMessage(),
             ], 400);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Failed to process refund',
+            ], 500);
         }
     }
 }

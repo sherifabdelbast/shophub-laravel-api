@@ -72,7 +72,6 @@ class ProductController extends Controller
             return response()->json([
                 'success' => false,
                 'message' => 'Failed to create product',
-                'error' => $e->getMessage(),
             ], 500);
         }
     }
@@ -118,7 +117,6 @@ class ProductController extends Controller
             return response()->json([
                 'success' => false,
                 'message' => 'Failed to update product status',
-                'error' => $e->getMessage(),
             ], 500);
         }
     }
@@ -169,7 +167,6 @@ class ProductController extends Controller
             return response()->json([
                 'success' => false,
                 'message' => 'Failed to update product',
-                'error' => $e->getMessage(),
             ], 500);
         }
     }
@@ -193,7 +190,6 @@ class ProductController extends Controller
             return response()->json([
                 'success' => false,
                 'message' => 'Failed to delete product',
-                'error' => $e->getMessage(),
             ], 500);
         }
     }

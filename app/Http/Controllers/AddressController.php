@@ -32,7 +32,6 @@ class AddressController extends Controller
             return response()->json([
                 'success' => false,
                 'message' => 'Failed to retrieve addresses',
-                'error' => $e->getMessage(),
             ], 500);
         }
     }
@@ -65,7 +64,6 @@ class AddressController extends Controller
             return response()->json([
                 'success' => false,
                 'message' => 'Failed to create address',
-                'error' => $e->getMessage(),
             ], 500);
         }
     }
@@ -127,7 +125,6 @@ class AddressController extends Controller
             return response()->json([
                 'success' => false,
                 'message' => 'Failed to update address',
-                'error' => $e->getMessage(),
             ], 500);
         }
     }
@@ -158,7 +155,6 @@ class AddressController extends Controller
             return response()->json([
                 'success' => false,
                 'message' => 'Failed to delete address',
-                'error' => $e->getMessage(),
             ], 500);
         }
     }
@@ -196,7 +192,6 @@ class AddressController extends Controller
             return response()->json([
                 'success' => false,
                 'message' => 'Failed to set default address',
-                'error' => $e->getMessage(),
             ], 500);
         }
     }

@@ -14,7 +14,7 @@ class PaymentService
     public function processPayment(Order $order, string $paymentMethod, array $paymentData = []): Payment
     {
         if ($order->payment_status === 'paid') {
-            throw new \Exception('Order is already paid');
+            throw new \DomainException('Order is already paid');
         }
 
         if (! config('payment.fake_gateway')) {
@@ -51,7 +51,7 @@ class PaymentService
     public function processRefund(Payment $payment, ?string $amount = null): Payment
     {
         if ($payment->status !== 'completed') {
-            throw new \Exception('Only completed payments can be refunded');
+            throw new \DomainException('Only completed payments can be refunded');
         }
 
         $refundAmount = $amount !== null
@@ -59,11 +59,11 @@ class PaymentService
             : bcadd((string) $payment->amount, '0', 2);
 
         if (bccomp($refundAmount, '0', 2) <= 0) {
-            throw new \Exception('Refund amount must be greater than zero');
+            throw new \DomainException('Refund amount must be greater than zero');
         }
 
         if (bccomp($refundAmount, (string) $payment->amount, 2) > 0) {
-            throw new \Exception('Refund amount cannot exceed the original payment amount');
+            throw new \DomainException('Refund amount cannot exceed the original payment amount');
         }
 
         return DB::transaction(function () use ($payment, $refundAmount) {

@@ -40,7 +40,6 @@ class OrderController extends Controller
             return response()->json([
                 'success' => false,
                 'message' => 'Failed to retrieve orders',
-                'error' => $e->getMessage(),
             ], 500);
         }
     }
@@ -66,11 +65,16 @@ class OrderController extends Controller
                 'message' => 'Order created successfully',
                 'data' => new OrderResource($order),
             ], 201);
-        } catch (\Exception $e) {
+        } catch (\DomainException $e) {
             return response()->json([
                 'success' => false,
                 'message' => $e->getMessage(),
             ], 400);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Failed to create order',
+            ], 500);
         }
     }
 
@@ -100,7 +104,6 @@ class OrderController extends Controller
             return response()->json([
                 'success' => false,
                 'message' => 'Failed to retrieve order',
-                'error' => $e->getMessage(),
             ], 500);
         }
     }
@@ -128,11 +131,22 @@ class OrderController extends Controller
                 'message' => 'Order cancelled successfully',
                 'data' => new OrderResource($order->load(['items', 'shippingMethod'])),
             ]);
-        } catch (\Exception $e) {
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Validation failed',
+                'errors' => $e->errors(),
+            ], 422);
+        } catch (\DomainException $e) {
             return response()->json([
                 'success' => false,
                 'message' => $e->getMessage(),
             ], 400);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Failed to cancel order',
+            ], 500);
         }
     }
 }

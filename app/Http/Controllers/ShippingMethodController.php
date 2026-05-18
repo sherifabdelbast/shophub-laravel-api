@@ -34,7 +34,6 @@ class ShippingMethodController extends Controller
             return response()->json([
                 'success' => false,
                 'message' => 'Failed to retrieve shipping methods',
-                'error' => $e->getMessage(),
             ], 500);
         }
     }
@@ -69,7 +68,6 @@ class ShippingMethodController extends Controller
             return response()->json([
                 'success' => false,
                 'message' => 'Failed to retrieve shipping methods',
-                'error' => $e->getMessage(),
             ], 500);
         }
     }
@@ -93,7 +91,6 @@ class ShippingMethodController extends Controller
             return response()->json([
                 'success' => false,
                 'message' => 'Failed to create shipping method',
-                'error' => $e->getMessage(),
             ], 500);
         }
     }
@@ -130,7 +127,6 @@ class ShippingMethodController extends Controller
             return response()->json([
                 'success' => false,
                 'message' => 'Failed to update shipping method',
-                'error' => $e->getMessage(),
             ], 500);
         }
     }
@@ -161,7 +157,6 @@ class ShippingMethodController extends Controller
             return response()->json([
                 'success' => false,
                 'message' => 'Failed to delete shipping method',
-                'error' => $e->getMessage(),
             ], 500);
         }
     }

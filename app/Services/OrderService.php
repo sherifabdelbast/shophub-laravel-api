@@ -36,7 +36,7 @@ class OrderService
                 ->get();
 
             if ($cartItems->isEmpty()) {
-                throw new \Exception('Cart is empty');
+                throw new \DomainException('Cart is empty');
             }
 
             $productIds = $cartItems->pluck('product_id')->unique()->all();
@@ -57,15 +57,15 @@ class OrderService
                 $product = $lockedProducts->get($cartItem->product_id);
 
                 if (! $product) {
-                    throw new \Exception("Product {$cartItem->product_id} not found");
+                    throw new \DomainException("Product {$cartItem->product_id} not found");
                 }
 
                 if (! $product->isInStock()) {
-                    throw new \Exception("Product {$product->name} is out of stock");
+                    throw new \DomainException("Product {$product->name} is out of stock");
                 }
 
                 if ($product->stock < $cartItem->quantity) {
-                    throw new \Exception("Insufficient stock for {$product->name}");
+                    throw new \DomainException("Insufficient stock for {$product->name}");
                 }
 
                 $itemPrice = (string) $product->finalPrice();
@@ -106,7 +106,7 @@ class OrderService
                     $discount = $coupon->calculateDiscount($subtotal);
                     $couponId = $coupon->id;
                 } else {
-                    throw new \Exception('Invalid or expired coupon code');
+                    throw new \DomainException('Invalid or expired coupon code');
                 }
             }
 
@@ -172,11 +172,11 @@ class OrderService
     public function cancelOrder(Order $order, User $user, ?string $reason = null): Order
     {
         if ($order->user_id !== $user->id) {
-            throw new \Exception('Unauthorized');
+            throw new \DomainException('Unauthorized');
         }
 
         if (! $order->canCancel()) {
-            throw new \Exception('This order cannot be cancelled');
+            throw new \DomainException('This order cannot be cancelled');
         }
 
         return DB::transaction(function () use ($order, $reason) {

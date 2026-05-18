@@ -35,7 +35,6 @@ class WishlistController extends Controller
             return response()->json([
                 'success' => false,
                 'message' => 'Failed to retrieve wishlist',
-                'error' => $e->getMessage(),
             ], 500);
         }
     }
@@ -83,7 +82,6 @@ class WishlistController extends Controller
             return response()->json([
                 'success' => false,
                 'message' => 'Failed to add to wishlist',
-                'error' => $e->getMessage(),
             ], 500);
         }
     }
@@ -109,7 +107,6 @@ class WishlistController extends Controller
             return response()->json([
                 'success' => false,
                 'message' => 'Failed to remove from wishlist',
-                'error' => $e->getMessage(),
             ], 400);
         }
     }
@@ -136,7 +133,6 @@ class WishlistController extends Controller
             return response()->json([
                 'success' => false,
                 'message' => 'Failed to check wishlist',
-                'error' => $e->getMessage(),
             ], 500);
         }
     }

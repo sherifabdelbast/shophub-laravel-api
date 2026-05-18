@@ -35,7 +35,6 @@ class CartController extends Controller
             return response()->json([
                 'success' => false,
                 'message' => 'Failed to retrieve cart',
-                'error' => $e->getMessage(),
             ], 500);
         }
     }
@@ -59,11 +58,16 @@ class CartController extends Controller
                 'message' => 'Item added to cart successfully',
                 'data' => new CartItemResource($cartItem),
             ], 201);
-        } catch (\Exception $e) {
+        } catch (\DomainException $e) {
             return response()->json([
                 'success' => false,
                 'message' => $e->getMessage(),
             ], 400);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Failed to add item to cart',
+            ], 500);
         }
     }
 
@@ -86,11 +90,16 @@ class CartController extends Controller
                 'message' => 'Cart item updated successfully',
                 'data' => new CartItemResource($cartItem),
             ]);
-        } catch (\Exception $e) {
+        } catch (\DomainException $e) {
             return response()->json([
                 'success' => false,
                 'message' => $e->getMessage(),
             ], 400);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Failed to update cart item',
+            ], 500);
         }
     }
 
@@ -112,7 +121,6 @@ class CartController extends Controller
             return response()->json([
                 'success' => false,
                 'message' => 'Failed to remove item from cart',
-                'error' => $e->getMessage(),
             ], 400);
         }
     }
@@ -135,7 +143,6 @@ class CartController extends Controller
             return response()->json([
                 'success' => false,
                 'message' => 'Failed to clear cart',
-                'error' => $e->getMessage(),
             ], 500);
         }
     }

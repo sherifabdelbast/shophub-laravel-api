@@ -42,7 +42,6 @@ class ReviewController extends Controller
             return response()->json([
                 'success' => false,
                 'message' => 'Failed to retrieve reviews',
-                'error' => $e->getMessage(),
             ], 500);
         }
     }
@@ -95,7 +94,6 @@ class ReviewController extends Controller
             return response()->json([
                 'success' => false,
                 'message' => 'Failed to create review',
-                'error' => $e->getMessage(),
             ], 500);
         }
     }
@@ -150,7 +148,6 @@ class ReviewController extends Controller
             return response()->json([
                 'success' => false,
                 'message' => 'Failed to update review',
-                'error' => $e->getMessage(),
             ], 500);
         }
     }
@@ -185,7 +182,6 @@ class ReviewController extends Controller
             return response()->json([
                 'success' => false,
                 'message' => 'Failed to delete review',
-                'error' => $e->getMessage(),
             ], 500);
         }
     }
@@ -211,7 +207,6 @@ class ReviewController extends Controller
             return response()->json([
                 'success' => false,
                 'message' => 'Failed to mark review as helpful',
-                'error' => $e->getMessage(),
             ], 500);
         }
     }
@@ -249,7 +244,6 @@ class ReviewController extends Controller
             return response()->json([
                 'success' => false,
                 'message' => 'Failed to retrieve reviews',
-                'error' => $e->getMessage(),
             ], 500);
         }
     }
@@ -274,7 +268,6 @@ class ReviewController extends Controller
             return response()->json([
                 'success' => false,
                 'message' => 'Failed to approve review',
-                'error' => $e->getMessage(),
             ], 500);
         }
     }
@@ -299,7 +292,6 @@ class ReviewController extends Controller
             return response()->json([
                 'success' => false,
                 'message' => 'Failed to reject review',
-                'error' => $e->getMessage(),
             ], 500);
         }
     }

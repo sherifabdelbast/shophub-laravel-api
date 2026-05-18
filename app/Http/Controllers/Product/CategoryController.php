@@ -81,7 +81,6 @@ class CategoryController extends Controller
             return response()->json([
                 'success' => false,
                 'message' => 'Failed to create category',
-                'error' => $e->getMessage(),
             ], 500);
         }
     }
@@ -151,7 +150,6 @@ class CategoryController extends Controller
             return response()->json([
                 'success' => false,
                 'message' => 'Failed to update category',
-                'error' => $e->getMessage(),
             ], 500);
         }
     }
@@ -189,7 +187,6 @@ class CategoryController extends Controller
             return response()->json([
                 'success' => false,
                 'message' => 'Failed to delete category',
-                'error' => $e->getMessage(),
             ], 500);
         }
     }

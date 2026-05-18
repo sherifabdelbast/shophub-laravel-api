@@ -109,7 +109,6 @@ class BrandController extends Controller
             return response()->json([
                 'success' => false,
                 'message' => 'Failed to create brand',
-                'error' => $e->getMessage(),
             ], 500);
         }
     }
@@ -157,7 +156,6 @@ class BrandController extends Controller
             return response()->json([
                 'success' => false,
                 'message' => 'Something went wrong',
-                'errors' => $e->getMessage(),
                 'data' => null,
             ], 500);
         }
@@ -196,7 +194,6 @@ class BrandController extends Controller
             return response()->json([
                 'success' => false,
                 'message' => 'Failed to delete brand',
-                'error' => $e->getMessage(),
             ], 500);
         }
     }
@@ -231,7 +228,6 @@ class BrandController extends Controller
             return response()->json([
                 'success' => false,
                 'message' => 'Failed to update brand status',
-                'error' => $e->getMessage(),
             ], 500);
         }
     }
@@ -256,7 +252,6 @@ class BrandController extends Controller
             return response()->json([
                 'success' => false,
                 'message' => 'Failed to retrieve active brands',
-                'error' => $e->getMessage(),
             ], 500);
         }
     }

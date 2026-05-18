@@ -53,7 +53,6 @@ class UserController extends Controller
             return response()->json([
                 'success' => false,
                 'message' => 'Failed to create user',
-                'error' => $e->getMessage(),
             ], 500);
         }
     }
@@ -90,7 +89,6 @@ class UserController extends Controller
             return response()->json([
                 'success' => false,
                 'message' => 'Failed to update user',
-                'error' => $e->getMessage(),
             ], 500);
         }
     }
@@ -112,7 +110,6 @@ class UserController extends Controller
         } catch (\Exception $e) {
             return response()->json([
                 'message' => 'Failed to delete user',
-                'error' => $e->getMessage(),
             ], 500);
         }
     }

@@ -49,7 +49,6 @@ class CouponController extends Controller
             return response()->json([
                 'success' => false,
                 'message' => 'Failed to validate coupon',
-                'error' => $e->getMessage(),
             ], 500);
         }
     }
@@ -87,7 +86,6 @@ class CouponController extends Controller
             return response()->json([
                 'success' => false,
                 'message' => 'Failed to retrieve coupons',
-                'error' => $e->getMessage(),
             ], 500);
         }
     }
@@ -111,7 +109,6 @@ class CouponController extends Controller
             return response()->json([
                 'success' => false,
                 'message' => 'Failed to create coupon',
-                'error' => $e->getMessage(),
             ], 500);
         }
     }
@@ -148,7 +145,6 @@ class CouponController extends Controller
             return response()->json([
                 'success' => false,
                 'message' => 'Failed to update coupon',
-                'error' => $e->getMessage(),
             ], 500);
         }
     }
@@ -171,7 +167,6 @@ class CouponController extends Controller
             return response()->json([
                 'success' => false,
                 'message' => 'Failed to delete coupon',
-                'error' => $e->getMessage(),
             ], 500);
         }
     }
