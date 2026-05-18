@@ -7,19 +7,20 @@ return [
     | Cross-Origin Resource Sharing (CORS) Configuration
     |--------------------------------------------------------------------------
     |
-    | Here you may configure your settings for cross-origin resource sharing
-    | or "CORS". This determines what cross-origin operations may execute
-    | in web browsers. You are free to adjust these settings as needed.
-    |
-    | To learn more: https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS
+    | Token-based API (Sanctum personal access tokens). The Next.js frontend
+    | sends `Authorization: Bearer <token>` — no cookies — so credentials are
+    | not required. Allowed origins are env-driven for per-environment setup.
     |
     */
 
-    'paths' => ['v1/*', 'sanctum/csrf-cookie'],
+    'paths' => ['v1/*'],
 
     'allowed_methods' => ['*'],
 
-    'allowed_origins' =>['http://localhost:4200', 'http://127.0.0.1:4200'],
+    'allowed_origins' => array_filter(array_map(
+        'trim',
+        explode(',', (string) env('CORS_ALLOWED_ORIGINS', 'http://localhost:3000,http://127.0.0.1:3000'))
+    )),
 
     'allowed_origins_patterns' => [],
 
@@ -27,8 +28,8 @@ return [
 
     'exposed_headers' => [],
 
-    'max_age' => 0,
+    'max_age' => 86400,
 
-    'supports_credentials' => true,
+    'supports_credentials' => false,
 
 ];
