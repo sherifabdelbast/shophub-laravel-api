@@ -9,6 +9,7 @@ use App\Models\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 use Laravel\Socialite\Facades\Socialite;
@@ -109,6 +110,9 @@ class AuthController extends Controller
                 throw new \Exception('Google Client ID is missing');
             }
 
+            $state = Str::random(40);
+            Cache::put("oauth_state_{$state}", true, now()->addMinutes(10));
+
             $authUrl = 'https://accounts.google.com/o/oauth2/v2/auth?'.http_build_query([
                 'client_id' => $clientId,
                 'redirect_uri' => $redirectUri,
@@ -116,6 +120,7 @@ class AuthController extends Controller
                 'scope' => 'openid email profile',
                 'access_type' => 'online',
                 'prompt' => 'select_account',
+                'state' => $state,
             ]);
 
             return response()->json([
@@ -145,6 +150,13 @@ class AuthController extends Controller
                 ], 400);
             }
 
+            if (! $request->filled('state') || ! Cache::pull("oauth_state_{$request->state}")) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Invalid or expired OAuth state',
+                ], 400);
+            }
+
             $googleUser = Socialite::driver('google')->stateless()->user();
 
             $user = User::where('email', $googleUser->getEmail())->first();
@@ -159,9 +171,6 @@ class AuthController extends Controller
                     'provider' => 'google',
                     'provider_id' => $googleUser->getId(),
                     'email_verified_at' => now(),
-                    'gender' => 'male',
-                    'phone' => '',
-                    'birthday' => now()->subYears(20)->format('Y-m-d'),
                 ]);
             } else {
                 $user->update([

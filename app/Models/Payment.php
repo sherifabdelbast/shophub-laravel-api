@@ -14,6 +14,7 @@ class Payment extends Model
         'transaction_id',
         'payment_method',
         'amount',
+        'refunded_amount',
         'currency',
         'status',
         'gateway_response',
@@ -24,6 +25,7 @@ class Payment extends Model
     {
         return [
             'amount' => 'decimal:2',
+            'refunded_amount' => 'decimal:2',
             'gateway_response' => 'array',
             'paid_at' => 'datetime',
         ];
@@ -57,4 +59,3 @@ class Payment extends Model
         return $this->status === 'failed';
     }
 }
-

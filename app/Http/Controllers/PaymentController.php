@@ -147,7 +147,9 @@ class PaymentController extends Controller
 
             $refundedPayment = $this->paymentService->processRefund(
                 $payment,
-                $request->amount
+                $request->filled('amount')
+                    ? number_format((float) $request->amount, 2, '.', '')
+                    : null
             );
 
             return response()->json([

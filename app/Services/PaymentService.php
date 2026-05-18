@@ -17,9 +17,12 @@ class PaymentService
             throw new \Exception('Order is already paid');
         }
 
+        if (! config('payment.fake_gateway')) {
+            throw new \RuntimeException('Payment gateway not configured');
+        }
+
         return DB::transaction(function () use ($order, $paymentMethod, $paymentData) {
-            // In a real application, you would integrate with payment gateways here
-            // For now, we'll simulate payment processing
+            // Fake gateway: simulated success. Enabled only via config('payment.fake_gateway').
 
             $payment = Payment::create([
                 'order_id' => $order->id,
@@ -45,25 +48,35 @@ class PaymentService
     /**
      * Process refund for a payment.
      */
-    public function processRefund(Payment $payment, ?float $amount = null): Payment
+    public function processRefund(Payment $payment, ?string $amount = null): Payment
     {
         if ($payment->status !== 'completed') {
             throw new \Exception('Only completed payments can be refunded');
         }
 
-        $refundAmount = $amount ?? $payment->amount;
+        $refundAmount = $amount !== null
+            ? bcadd($amount, '0', 2)
+            : bcadd((string) $payment->amount, '0', 2);
 
-        // In real application, process refund through payment gateway
-        // For now, just update status
+        if (bccomp($refundAmount, '0', 2) <= 0) {
+            throw new \Exception('Refund amount must be greater than zero');
+        }
 
-        $payment->update([
-            'status' => 'refunded',
-        ]);
+        if (bccomp($refundAmount, (string) $payment->amount, 2) > 0) {
+            throw new \Exception('Refund amount cannot exceed the original payment amount');
+        }
 
-        $payment->order->update([
-            'payment_status' => 'refunded',
-        ]);
+        return DB::transaction(function () use ($payment, $refundAmount) {
+            $payment->update([
+                'status' => 'refunded',
+                'refunded_amount' => $refundAmount,
+            ]);
 
-        return $payment->fresh();
+            $payment->order->update([
+                'payment_status' => 'refunded',
+            ]);
+
+            return $payment->fresh();
+        });
     }
 }

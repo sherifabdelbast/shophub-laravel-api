@@ -57,8 +57,9 @@ Route::prefix('shipping-methods')->group(function () {
     Route::get('/', [ShippingMethodController::class, 'index']);
 });
 
-// Coupon Validation (Public)
-Route::post('/coupons/validate', [CouponController::class, 'validateCoupon']);
+// Coupon Validation (Authenticated — per-user limits require a verified user)
+Route::post('/coupons/validate', [CouponController::class, 'validateCoupon'])
+    ->middleware(['auth:sanctum', 'throttle:20,1']);
 
 // ==========================================================================
 // AUTHENTICATION ROUTES (Guest only - with rate limiting)

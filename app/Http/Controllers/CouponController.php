@@ -25,7 +25,7 @@ class CouponController extends Controller
             $result = $this->couponService->validateCoupon(
                 $request->code,
                 $request->user()->id,
-                $request->subtotal
+                number_format((float) $request->subtotal, 2, '.', '')
             );
 
             if (! $result['valid']) {

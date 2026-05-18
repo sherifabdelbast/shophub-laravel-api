@@ -18,8 +18,6 @@ class BrandController extends Controller
     public function index(Request $request)
     {
         try {
-            \Log::info('Brand index called', ['request' => $request->all()]);
-
             $query = Brand::query();
 
             // Search functionality
@@ -36,15 +34,16 @@ class BrandController extends Controller
                 $query->where('status', $request->status);
             }
 
-            // Sorting
-            $sortField = $request->get('sort_field', 'created_at');
-            $sortDirection = $request->get('sort_direction', 'desc');
+            // Sorting (whitelisted to prevent SQL injection via column names)
+            $allowedSortFields = ['name', 'created_at', 'sort_order', 'status'];
+            $sortField = in_array($request->get('sort_field'), $allowedSortFields, true)
+                ? $request->get('sort_field')
+                : 'created_at';
+            $sortDirection = $request->get('sort_direction') === 'asc' ? 'asc' : 'desc';
             $query->orderBy($sortField, $sortDirection);
 
-            $perPage = $request->get('per_page', 10);
+            $perPage = min((int) $request->get('per_page', 10), 100);
             $brands = $query->paginate($perPage);
-
-            \Log::info('Brands retrieved successfully', ['count' => $brands->count()]);
 
             return response()->json([
                 'success' => true,
@@ -53,15 +52,11 @@ class BrandController extends Controller
             ]);
 
         } catch (\Exception $e) {
-            \Log::error('Error retrieving brands', [
-                'error' => $e->getMessage(),
-                'trace' => $e->getTraceAsString(),
-            ]);
+            \Log::error('Error retrieving brands', ['error' => $e->getMessage()]);
 
             return response()->json([
                 'success' => false,
                 'message' => 'Failed to retrieve brands',
-                'error' => $e->getMessage(),
             ], 500);
         }
     }

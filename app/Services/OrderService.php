@@ -102,8 +102,8 @@ class OrderService
                     ->lockForUpdate()
                     ->first();
 
-                if ($coupon && $this->couponService->isValidForUser($coupon, $user->id, (float) $subtotal)) {
-                    $discount = (string) $coupon->calculateDiscount((float) $subtotal);
+                if ($coupon && $this->couponService->isValidForUser($coupon, $user->id, $subtotal)) {
+                    $discount = $coupon->calculateDiscount($subtotal);
                     $couponId = $coupon->id;
                 } else {
                     throw new \Exception('Invalid or expired coupon code');
