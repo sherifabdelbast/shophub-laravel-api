@@ -9,6 +9,7 @@ use App\Models\OrderItem;
 use App\Models\Product;
 use App\Models\User;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 
 class OrderService
 {
@@ -115,7 +116,7 @@ class OrderService
 
             $total = bcadd($taxBase, $tax, self::SCALE);
 
-            $orderNumber = 'ORD-'.strtoupper(uniqid());
+            $orderNumber = 'ORD-'.strtoupper(Str::random(16));
 
             $order = Order::create([
                 'order_number' => $orderNumber,

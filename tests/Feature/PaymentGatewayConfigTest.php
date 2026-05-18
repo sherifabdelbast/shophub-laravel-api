@@ -31,5 +31,6 @@ class PaymentGatewayConfigTest extends TestCase
 
         $this->assertSame('completed', $payment->status);
         $this->assertSame('paid', $order->fresh()->payment_status);
+        $this->assertMatchesRegularExpression('/^TXN-[A-Z0-9]{20}$/', $payment->transaction_id);
     }
 }

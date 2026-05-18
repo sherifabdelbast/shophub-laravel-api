@@ -5,6 +5,7 @@ namespace App\Services;
 use App\Models\Order;
 use App\Models\Payment;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 
 class PaymentService
 {
@@ -26,7 +27,7 @@ class PaymentService
 
             $payment = Payment::create([
                 'order_id' => $order->id,
-                'transaction_id' => 'TXN-'.strtoupper(uniqid()),
+                'transaction_id' => 'TXN-'.strtoupper(Str::random(20)),
                 'payment_method' => $paymentMethod,
                 'amount' => $order->total,
                 'currency' => 'USD',
