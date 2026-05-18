@@ -6,6 +6,7 @@ use App\Http\Requests\Review\StoreReviewRequest;
 use App\Http\Requests\Review\UpdateReviewRequest;
 use App\Models\Product;
 use App\Models\Review;
+use App\Models\ReviewHelpfulVote;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -194,13 +195,24 @@ class ReviewController extends Controller
     public function markHelpful(Request $request, Review $review): JsonResponse
     {
         try {
-            $review->increment('helpful_count');
+            // createOrFirst is atomic against the (review_id, user_id) unique
+            // constraint — a user can only ever count once per review.
+            $vote = ReviewHelpfulVote::createOrFirst([
+                'review_id' => $review->id,
+                'user_id' => $request->user()->id,
+            ]);
+
+            if ($vote->wasRecentlyCreated) {
+                $review->increment('helpful_count');
+            }
 
             return response()->json([
                 'success' => true,
-                'message' => 'Review marked as helpful',
+                'message' => $vote->wasRecentlyCreated
+                    ? 'Review marked as helpful'
+                    : 'You have already marked this review as helpful',
                 'data' => [
-                    'helpful_count' => $review->fresh()->helpful_count,
+                    'helpful_count' => $review->helpful_count,
                 ],
             ]);
         } catch (\Exception $e) {
