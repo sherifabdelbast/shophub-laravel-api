@@ -36,9 +36,12 @@ class CartItem extends Model
     }
 
     // Helper methods
-    public function subtotal()
+
+    /**
+     * Line subtotal as a 2-decimal string (bcmath — no float drift).
+     */
+    public function subtotal(): string
     {
-        return $this->quantity * $this->price;
+        return bcmul((string) $this->price, (string) $this->quantity, 2);
     }
 }
-

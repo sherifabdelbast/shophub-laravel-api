@@ -117,7 +117,11 @@ class CartService
             ->with(['product.category', 'product.brand'])
             ->get();
 
-        $subtotal = $items->sum(fn ($item) => $item->subtotal());
+        // bcadd accumulation — keeps the cart subtotal free of float drift.
+        $subtotal = $items->reduce(
+            fn (string $carry, $item): string => bcadd($carry, $item->subtotal(), 2),
+            '0.00'
+        );
         $itemCount = $items->sum('quantity');
 
         return [

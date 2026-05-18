@@ -127,22 +127,26 @@ class Product extends Model
         return $this->stock <= $this->low_stock_threshold && $this->stock > 0;
     }
 
-    public function hasDiscount()
+    public function hasDiscount(): bool
     {
-        return $this->discount_price !== null && $this->discount_price < $this->price;
+        return $this->discount_price !== null
+            && bccomp((string) $this->discount_price, (string) $this->price, 2) < 0;
     }
 
-    public function finalPrice()
+    public function finalPrice(): string
     {
-        return $this->hasDiscount() ? $this->discount_price : $this->price;
+        $price = $this->hasDiscount() ? $this->discount_price : $this->price;
+
+        // Normalize to a 2-decimal string regardless of source (DB cast or in-memory).
+        return bcadd((string) $price, '0', 2);
     }
 
-    public function profitMargin()
+    public function profitMargin(): ?string
     {
-        if (! $this->cost_price) {
+        if ($this->cost_price === null) {
             return null;
         }
 
-        return $this->finalPrice() - $this->cost_price;
+        return bcsub($this->finalPrice(), (string) $this->cost_price, 2);
     }
 }
