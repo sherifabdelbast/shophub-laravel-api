@@ -2974,15 +2974,15 @@
                     "request": {
                         "url": {
                             "host": "{{baseUrl}}",
-                            "path": "v1\/products\/:product_id",
+                            "path": "v1\/products\/:product_slug",
                             "query": [],
-                            "raw": "{{baseUrl}}\/v1\/products\/:product_id",
+                            "raw": "{{baseUrl}}\/v1\/products\/:product_slug",
                             "variable": [
                                 {
-                                    "id": "product_id",
-                                    "key": "product_id",
-                                    "value": "1",
-                                    "description": "The ID of the product."
+                                    "id": "product_slug",
+                                    "key": "product_slug",
+                                    "value": "aurora-desk-lamp",
+                                    "description": "The slug of the product."
                                 }
                             ]
                         },

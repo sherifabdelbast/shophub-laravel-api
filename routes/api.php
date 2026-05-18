@@ -38,6 +38,7 @@ Route::prefix('products')->group(function () {
     Route::get('/', [ProductController::class, 'index']);
     Route::get('/form/data', [ProductController::class, 'getFormData']);
     Route::get('/{product}', [ProductController::class, 'show']);
+    Route::get('/{product}/related', [ProductController::class, 'related']);
     Route::get('/{product}/reviews', [ReviewController::class, 'index']);
 });
 

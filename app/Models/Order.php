@@ -108,14 +108,13 @@ class Order extends Model
         return $this->status === 'cancelled';
     }
 
-    public function canCancel()
+    public function canCancel(): bool
     {
         return in_array($this->status, ['pending', 'processing']);
     }
 
     public function canRefund()
     {
-        return $this->isPaid() && !$this->isDelivered();
+        return $this->isPaid() && ! $this->isDelivered();
     }
 }
-

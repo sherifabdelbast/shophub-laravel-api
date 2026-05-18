@@ -198,9 +198,27 @@ class OrderService
                 $product->increment('stock', $item->quantity);
                 $product->refresh();
 
-                if ($product->stock > 0 && $product->stock_status === 'out_of_stock') {
+                // Recalculate the full three-way stock status after restock.
+                if ($product->stock <= 0) {
+                    $product->update(['stock_status' => 'out_of_stock']);
+                } elseif ($product->stock <= $product->low_stock_threshold) {
+                    $product->update(['stock_status' => 'low_stock']);
+                } else {
                     $product->update(['stock_status' => 'in_stock']);
                 }
+            }
+
+            // Release the coupon hold so the slot can be reused.
+            if ($order->coupon_id) {
+                $coupon = Coupon::whereKey($order->coupon_id)
+                    ->lockForUpdate()
+                    ->first();
+
+                if ($coupon && $coupon->used_count > 0) {
+                    $coupon->decrement('used_count');
+                }
+
+                \App\Models\CouponUsage::where('order_id', $order->id)->delete();
             }
 
             $order->update([

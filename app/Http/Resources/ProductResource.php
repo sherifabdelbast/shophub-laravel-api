@@ -25,7 +25,9 @@ class ProductResource extends JsonResource
             'discount_price' => $this->discount_price,
             'discount_percentage' => $this->discount_percentage,
             'final_price' => $this->finalPrice(),
-            'image_url' => $this->image_url,
+            'image_url' => $this->absoluteUrl($this->image_url),
+            'weight' => $this->weight,
+            'dimensions' => $this->dimensions,
             'rating' => $this->rating,
             'reviews_count' => $this->reviews_count,
             'is_featured' => $this->is_featured,
@@ -46,12 +48,30 @@ class ProductResource extends JsonResource
             }),
             'images' => $this->whenLoaded('images', function () {
                 return $this->images->map(fn ($image) => [
-                    'url' => $image->url,
+                    'url' => $this->absoluteUrl($image->url),
                     'alt_text' => $image->alt_text,
                     'is_primary' => $image->is_primary,
+                    'sort_order' => $image->sort_order,
                 ]);
             }),
             // Hidden: cost_price, low_stock_threshold, stock (exact numbers), status, meta_title, meta_description, created_at, updated_at, deleted_at
         ];
+    }
+
+    /**
+     * Convert a stored image path into an absolute URL.
+     * Leaves already-absolute URLs untouched.
+     */
+    private function absoluteUrl(?string $path): ?string
+    {
+        if ($path === null || $path === '') {
+            return null;
+        }
+
+        if (str_starts_with($path, 'http://') || str_starts_with($path, 'https://')) {
+            return $path;
+        }
+
+        return url($path);
     }
 }

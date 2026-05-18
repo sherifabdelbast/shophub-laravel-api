@@ -51,6 +51,14 @@ class Product extends Model
         ];
     }
 
+    /**
+     * Resolve route model bindings by slug instead of id.
+     */
+    public function getRouteKeyName(): string
+    {
+        return 'slug';
+    }
+
     // Relationships
     public function category()
     {
@@ -131,8 +139,10 @@ class Product extends Model
 
     public function profitMargin()
     {
-        if (!$this->cost_price) return null;
+        if (! $this->cost_price) {
+            return null;
+        }
+
         return $this->finalPrice() - $this->cost_price;
     }
 }
-

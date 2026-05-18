@@ -23,7 +23,7 @@ class ProductController extends Controller
      */
     public function index(ProductIndexRequest $request): JsonResponse
     {
-        $query = Product::with(['category', 'brand']);
+        $query = Product::with(['category', 'brand', 'images']);
 
         if ($request->filled('search')) {
             $search = $request->validated('search');
@@ -79,13 +79,33 @@ class ProductController extends Controller
      *
      * @group Products
      */
-    public function show(Product $product)
+    public function show(Product $product): JsonResponse
     {
-        $product->load(['category', 'brand']);
+        $product->load(['category', 'brand', 'images']);
 
         return response()->json([
             'success' => true,
-            'data' => $product,
+            'data' => new ProductResource($product),
+        ]);
+    }
+
+    /**
+     * Get products related to the given product (same category, excluding self).
+     *
+     * @group Products
+     */
+    public function related(Product $product): JsonResponse
+    {
+        $related = Product::with(['category', 'brand', 'images'])
+            ->where('status', 'active')
+            ->where('category_id', $product->category_id)
+            ->whereKeyNot($product->getKey())
+            ->limit(4)
+            ->get();
+
+        return response()->json([
+            'success' => true,
+            'data' => ProductResource::collection($related),
         ]);
     }
 
