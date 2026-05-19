@@ -149,4 +149,46 @@ class OrderController extends Controller
             ], 500);
         }
     }
+
+    /**
+     * List all orders (Admin only).
+     *
+     * @group Admin - Orders
+     */
+    public function adminIndex(Request $request): JsonResponse
+    {
+        $orders = Order::query()
+            ->with(['items', 'shippingMethod', 'user:id,first_name,last_name,email'])
+            ->when($request->filled('status'), fn ($q) => $q->where('status', $request->status))
+            ->when($request->filled('payment_status'), fn ($q) => $q->where('payment_status', $request->payment_status))
+            ->when($request->filled('user_id'), fn ($q) => $q->where('user_id', $request->user_id))
+            ->latest()
+            ->paginate(min((int) $request->get('per_page', 15), 100));
+
+        return response()->json([
+            'success' => true,
+            'data' => OrderResource::collection($orders->items()),
+            'meta' => [
+                'currentPage' => $orders->currentPage(),
+                'lastPage' => $orders->lastPage(),
+                'perPage' => $orders->perPage(),
+                'total' => $orders->total(),
+            ],
+        ]);
+    }
+
+    /**
+     * Show order detail (Admin only).
+     *
+     * @group Admin - Orders
+     */
+    public function adminShow(Order $order): JsonResponse
+    {
+        $order->load(['items.product', 'shippingMethod', 'coupon', 'payments', 'user:id,first_name,last_name,email']);
+
+        return response()->json([
+            'success' => true,
+            'data' => new OrderResource($order),
+        ]);
+    }
 }

@@ -22,6 +22,11 @@ class Brand extends Model
         'status',
     ];
 
+    public function getRouteKeyName(): string
+    {
+        return 'slug';
+    }
+
     // Relationships
     public function products(): HasMany
     {

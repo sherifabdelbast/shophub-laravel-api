@@ -84,6 +84,7 @@ Route::middleware('auth:sanctum')->group(function () {
 
     // User Profile Routes
     Route::prefix('auth')->group(function () {
+        Route::get('/me', [AuthController::class, 'me']);
         Route::post('/logout', [AuthController::class, 'logout']);
     });
 
@@ -148,8 +149,14 @@ Route::prefix('admin')
     ->middleware(['auth:sanctum', 'admin'])
     ->group(function () {
 
-        // Dashboard stats (optional)
-        // Route::get('/dashboard', [AdminController::class, 'dashboard']);
+        // Dashboard stats
+        Route::get('/dashboard', [\App\Http\Controllers\Admin\DashboardController::class, 'index']);
+
+        // Orders Management
+        Route::prefix('orders')->group(function () {
+            Route::get('/', [OrderController::class, 'adminIndex']);
+            Route::get('/{order}', [OrderController::class, 'adminShow']);
+        });
 
         // Products Management
         Route::prefix('products')->group(function () {

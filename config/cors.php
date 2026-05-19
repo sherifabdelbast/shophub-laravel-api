@@ -7,13 +7,13 @@ return [
     | Cross-Origin Resource Sharing (CORS) Configuration
     |--------------------------------------------------------------------------
     |
-    | Token-based API (Sanctum personal access tokens). The Next.js frontend
-    | sends `Authorization: Bearer <token>` — no cookies — so credentials are
-    | not required. Allowed origins are env-driven for per-environment setup.
+    | Sanctum SPA cookie mode: the Next.js frontend authenticates via session
+    | cookies. `supports_credentials` must be true and origins must list each
+    | frontend host exactly (wildcards are incompatible with credentials).
     |
     */
 
-    'paths' => ['v1/*'],
+    'paths' => ['v1/*', 'sanctum/csrf-cookie'],
 
     'allowed_methods' => ['*'],
 
@@ -30,6 +30,6 @@ return [
 
     'max_age' => 86400,
 
-    'supports_credentials' => false,
+    'supports_credentials' => true,
 
 ];

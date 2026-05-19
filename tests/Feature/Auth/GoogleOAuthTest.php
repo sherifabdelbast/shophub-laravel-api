@@ -14,20 +14,28 @@ class GoogleOAuthTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function test_callback_without_state_is_rejected(): void
+    public function test_callback_without_state_redirects_with_error(): void
     {
-        $response = $this->getJson('/v1/auth/google/callback?code=some-code');
+        $response = $this->get('/v1/auth/google/callback?code=some-code');
 
-        $response->assertStatus(400)
-            ->assertJson(['message' => 'Invalid or expired OAuth state']);
+        $response->assertRedirect();
+        $this->assertStringContainsString('error=invalid_state', $response->headers->get('Location'));
     }
 
-    public function test_callback_with_invalid_state_is_rejected(): void
+    public function test_callback_with_invalid_state_redirects_with_error(): void
     {
-        $response = $this->getJson('/v1/auth/google/callback?code=some-code&state=forged');
+        $response = $this->get('/v1/auth/google/callback?code=some-code&state=forged');
 
-        $response->assertStatus(400)
-            ->assertJson(['message' => 'Invalid or expired OAuth state']);
+        $response->assertRedirect();
+        $this->assertStringContainsString('error=invalid_state', $response->headers->get('Location'));
+    }
+
+    public function test_callback_without_code_redirects_with_error(): void
+    {
+        $response = $this->get('/v1/auth/google/callback');
+
+        $response->assertRedirect();
+        $this->assertStringContainsString('error=missing_code', $response->headers->get('Location'));
     }
 
     public function test_new_oauth_user_is_created_without_fabricated_data(): void
@@ -45,9 +53,10 @@ class GoogleOAuthTest extends TestCase
 
         Socialite::shouldReceive('driver')->with('google')->andReturn($provider);
 
-        $response = $this->getJson('/v1/auth/google/callback?code=some-code&state=validstate');
+        $response = $this->get('/v1/auth/google/callback?code=some-code&state=validstate');
 
-        $response->assertStatus(200)->assertJson(['success' => true]);
+        $response->assertRedirect();
+        $this->assertStringNotContainsString('error=', $response->headers->get('Location'));
 
         $user = User::where('email', 'jane@example.com')->first();
         $this->assertNotNull($user);
@@ -71,8 +80,9 @@ class GoogleOAuthTest extends TestCase
 
         foreach (['stateone', 'statetwo'] as $state) {
             Cache::put("oauth_state_{$state}", true, now()->addMinutes(10));
-            $this->getJson("/v1/auth/google/callback?code=some-code&state={$state}")
-                ->assertStatus(200);
+            $response = $this->get("/v1/auth/google/callback?code=some-code&state={$state}");
+            $response->assertRedirect();
+            $this->assertStringNotContainsString('error=', $response->headers->get('Location'));
         }
 
         $this->assertSame(1, User::where('email', 'repeat@example.com')->count());

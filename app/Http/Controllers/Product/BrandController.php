@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Product;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\BrandResource;
 use App\Models\Brand;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -47,7 +48,7 @@ class BrandController extends Controller
 
             return response()->json([
                 'success' => true,
-                'data' => $brands,
+                'data' => BrandResource::collection($brands)->response()->getData(true),
                 'message' => 'Brands retrieved successfully',
             ]);
 
@@ -95,7 +96,7 @@ class BrandController extends Controller
 
             return response()->json([
                 'success' => true,
-                'data' => $brand,
+                'data' => new BrandResource($brand),
                 'message' => 'Brand created successfully',
             ], 201);
 
@@ -122,7 +123,7 @@ class BrandController extends Controller
     {
         return response()->json([
             'success' => true,
-            'data' => $brand,
+            'data' => new BrandResource($brand),
             'message' => 'Brand retrieved successfully',
         ]);
     }
@@ -149,7 +150,7 @@ class BrandController extends Controller
             return response()->json([
                 'success' => true,
                 'message' => 'Brand updated successfully',
-                'data' => $brand,
+                'data' => new BrandResource($brand),
             ], 200);
 
         } catch (\Illuminate\Validation\ValidationException $e) {
@@ -220,7 +221,7 @@ class BrandController extends Controller
 
             return response()->json([
                 'success' => true,
-                'data' => $brand,
+                'data' => new BrandResource($brand),
                 'message' => 'Brand status updated successfully',
             ]);
 
@@ -250,7 +251,7 @@ class BrandController extends Controller
 
             return response()->json([
                 'success' => true,
-                'data' => $brands,
+                'data' => BrandResource::collection($brands),
                 'message' => 'Active brands retrieved successfully',
             ]);
 

@@ -13,13 +13,14 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware): void {
-        // Token-based API (Bearer). No SPA cookie/session middleware needed.
+        // Sanctum SPA cookie mode: stateful requests from the Next.js frontend
+        // are authenticated via session cookies (no Bearer tokens).
+        $middleware->statefulApi();
+
         $middleware->alias([
             'verified' => \App\Http\Middleware\EnsureEmailIsVerified::class,
             'admin' => \App\Http\Middleware\EnsureUserIsAdmin::class,
         ]);
-
-        //
     })
     ->withExceptions(function (Exceptions $exceptions): void {
         // Always render API (/v1/*) errors as JSON, never as an HTML page.

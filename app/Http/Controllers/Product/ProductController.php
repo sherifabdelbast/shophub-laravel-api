@@ -53,6 +53,10 @@ class ProductController extends Controller
             $query->where('price', '<=', $request->max_price);
         }
 
+        if ($request->filled('featured')) {
+            $query->where('is_featured', filter_var($request->featured, FILTER_VALIDATE_BOOLEAN));
+        }
+
         // sort_by / sort_order are whitelisted by ProductIndexRequest validation.
         $query->orderBy(
             $request->validated('sort_by', 'created_at'),

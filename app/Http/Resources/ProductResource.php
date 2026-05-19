@@ -19,19 +19,19 @@ class ProductResource extends JsonResource
             'sku' => $this->sku,
             'name' => $this->name,
             'slug' => $this->slug,
-            'short_description' => $this->short_description,
+            'shortDescription' => $this->short_description,
             'description' => $this->description,
             'price' => $this->price,
-            'discount_price' => $this->discount_price,
-            'discount_percentage' => $this->discount_percentage,
-            'final_price' => $this->finalPrice(),
-            'image_url' => $this->absoluteUrl($this->image_url),
+            'discountPrice' => $this->discount_price,
+            'discountPercentage' => $this->discount_percentage,
+            'finalPrice' => $this->finalPrice(),
+            'imageUrl' => $this->absoluteUrl($this->image_url),
             'weight' => $this->weight,
             'dimensions' => $this->dimensions,
             'rating' => $this->rating,
-            'reviews_count' => $this->reviews_count,
-            'is_featured' => $this->is_featured,
-            'stock_status' => $this->stock_status,
+            'reviewsCount' => $this->reviews_count,
+            'isFeatured' => $this->is_featured,
+            'stockStatus' => $this->stock_status,
             'category' => $this->whenLoaded('category', function () {
                 return [
                     'id' => $this->category->id,
@@ -49,9 +49,9 @@ class ProductResource extends JsonResource
             'images' => $this->whenLoaded('images', function () {
                 return $this->images->map(fn ($image) => [
                     'url' => $this->absoluteUrl($image->url),
-                    'alt_text' => $image->alt_text,
-                    'is_primary' => $image->is_primary,
-                    'sort_order' => $image->sort_order,
+                    'altText' => $image->alt_text,
+                    'isPrimary' => $image->is_primary,
+                    'sortOrder' => $image->sort_order,
                 ]);
             }),
             // Hidden: cost_price, low_stock_threshold, stock (exact numbers), status, meta_title, meta_description, created_at, updated_at, deleted_at

@@ -24,13 +24,11 @@ class RegistrationTest extends TestCase
         $response->assertStatus(201)
             ->assertJsonStructure([
                 'success',
-                'token',
                 'user',
                 'message',
             ])
             ->assertJson(['success' => true]);
 
-        $this->assertNotNull($response->json('token'));
         $this->assertDatabaseHas('users', [
             'email' => 'test@example.com',
             'first_name' => 'Test',

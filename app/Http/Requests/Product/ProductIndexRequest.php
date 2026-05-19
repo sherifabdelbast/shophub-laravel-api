@@ -2,8 +2,8 @@
 
 namespace App\Http\Requests\Product;
 
-use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Contracts\Validation\Validator;
+use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
 
 class ProductIndexRequest extends FormRequest
@@ -32,6 +32,7 @@ class ProductIndexRequest extends FormRequest
             'status' => ['sometimes', 'string', 'in:active,inactive,draft'],
             'min_price' => ['sometimes', 'numeric', 'min:0'],
             'max_price' => ['sometimes', 'numeric', 'min:0'],
+            'featured' => ['sometimes', 'boolean'],
             'sort_by' => ['sometimes', 'string', 'in:name,price,created_at,stock'],
             'sort_order' => ['sometimes', 'string', 'in:asc,desc'],
         ];
@@ -66,8 +67,7 @@ class ProductIndexRequest extends FormRequest
         throw new HttpResponseException(response()->json([
             'success' => false,
             'message' => 'Validation error',
-            'errors' => $validator->errors()
+            'errors' => $validator->errors(),
         ], 422));
     }
 }
-

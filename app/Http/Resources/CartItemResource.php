@@ -17,13 +17,12 @@ class CartItemResource extends JsonResource
         return [
             'id' => $this->id,
             'quantity' => $this->quantity,
-            'price' => $this->price,
-            'subtotal' => $this->subtotal(),
+            'price' => (float) $this->price,
+            'subtotal' => (float) $this->subtotal(),
             'product' => $this->whenLoaded('product', function () {
                 return new ProductResource($this->product);
             }),
-            'created_at' => $this->created_at,
-            // Hidden: user_id, session_id
+            'createdAt' => optional($this->created_at)->toIso8601String(),
         ];
     }
 }

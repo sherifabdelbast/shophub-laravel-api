@@ -46,7 +46,7 @@ class MediumFixesTest extends TestCase
         $admin = User::factory()->create(['role' => 'admin']);
         $brand = Brand::factory()->create();
 
-        $response = $this->actingAs($admin)->putJson("/v1/admin/brands/{$brand->id}", [
+        $response = $this->actingAs($admin)->putJson("/v1/admin/brands/{$brand->slug}", [
             'name' => $brand->name,
             'logo_url' => 'javascript:alert(1)',
         ]);

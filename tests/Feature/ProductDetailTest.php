@@ -64,7 +64,7 @@ class ProductDetailTest extends TestCase
         $response->assertStatus(200)
             ->assertJsonStructure([
                 'data' => [
-                    'images' => [['url', 'alt_text', 'is_primary', 'sort_order']],
+                    'images' => [['url', 'altText', 'isPrimary', 'sortOrder']],
                 ],
             ]);
         $this->assertCount(3, $response->json('data.images'));
@@ -76,7 +76,7 @@ class ProductDetailTest extends TestCase
 
         $response = $this->getJson("/v1/products/{$product->slug}");
 
-        $this->assertSame(url('/storage/products/x.jpg'), $response->json('data.image_url'));
+        $this->assertSame(url('/storage/products/x.jpg'), $response->json('data.imageUrl'));
     }
 
     public function test_related_returns_same_category_products_excluding_self(): void
