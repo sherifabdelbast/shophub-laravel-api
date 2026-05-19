@@ -26,9 +26,9 @@ class UserController extends Controller
             'success' => true,
             'data' => UserResource::collection($users->items()),
             'meta' => [
-                'current_page' => $users->currentPage(),
-                'last_page' => $users->lastPage(),
-                'per_page' => $users->perPage(),
+                'currentPage' => $users->currentPage(),
+                'lastPage' => $users->lastPage(),
+                'perPage' => $users->perPage(),
                 'total' => $users->total(),
             ],
         ]);

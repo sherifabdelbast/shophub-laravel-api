@@ -76,9 +76,9 @@ class CouponController extends Controller
                 'success' => true,
                 'data' => $coupons->items(),
                 'meta' => [
-                    'current_page' => $coupons->currentPage(),
-                    'last_page' => $coupons->lastPage(),
-                    'per_page' => $coupons->perPage(),
+                    'currentPage' => $coupons->currentPage(),
+                    'lastPage' => $coupons->lastPage(),
+                    'perPage' => $coupons->perPage(),
                     'total' => $coupons->total(),
                 ],
             ]);

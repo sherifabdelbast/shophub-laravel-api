@@ -33,9 +33,9 @@ class ReviewController extends Controller
                 'success' => true,
                 'data' => $reviews->items(),
                 'meta' => [
-                    'current_page' => $reviews->currentPage(),
-                    'last_page' => $reviews->lastPage(),
-                    'per_page' => $reviews->perPage(),
+                    'currentPage' => $reviews->currentPage(),
+                    'lastPage' => $reviews->lastPage(),
+                    'perPage' => $reviews->perPage(),
                     'total' => $reviews->total(),
                 ],
             ]);
@@ -246,9 +246,9 @@ class ReviewController extends Controller
                 'success' => true,
                 'data' => $reviews->items(),
                 'meta' => [
-                    'current_page' => $reviews->currentPage(),
-                    'last_page' => $reviews->lastPage(),
-                    'per_page' => $reviews->perPage(),
+                    'currentPage' => $reviews->currentPage(),
+                    'lastPage' => $reviews->lastPage(),
+                    'perPage' => $reviews->perPage(),
                     'total' => $reviews->total(),
                 ],
             ]);

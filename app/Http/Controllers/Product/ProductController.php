@@ -70,9 +70,9 @@ class ProductController extends Controller
             'success' => true,
             'data' => ProductResource::collection($products->items()),
             'meta' => [
-                'current_page' => $products->currentPage(),
-                'last_page' => $products->lastPage(),
-                'per_page' => $products->perPage(),
+                'currentPage' => $products->currentPage(),
+                'lastPage' => $products->lastPage(),
+                'perPage' => $products->perPage(),
                 'total' => $products->total(),
             ],
         ]);

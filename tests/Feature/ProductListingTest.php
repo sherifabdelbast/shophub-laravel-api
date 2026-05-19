@@ -29,10 +29,10 @@ class ProductListingTest extends TestCase
             ->assertJsonStructure([
                 'success',
                 'data',
-                'meta' => ['current_page', 'last_page', 'per_page', 'total'],
+                'meta' => ['currentPage', 'lastPage', 'perPage', 'total'],
             ])
             ->assertJsonPath('meta.total', 30)
-            ->assertJsonPath('meta.per_page', 15);
+            ->assertJsonPath('meta.perPage', 15);
 
         $this->assertCount(15, $response->json('data'));
     }
@@ -52,7 +52,7 @@ class ProductListingTest extends TestCase
 
         $response = $this->getJson('/v1/products?per_page=20');
 
-        $response->assertStatus(200)->assertJsonPath('meta.per_page', 20);
+        $response->assertStatus(200)->assertJsonPath('meta.perPage', 20);
         $this->assertCount(20, $response->json('data'));
     }
 

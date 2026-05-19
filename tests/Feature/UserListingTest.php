@@ -21,7 +21,7 @@ class UserListingTest extends TestCase
             ->assertJsonStructure([
                 'success',
                 'data',
-                'meta' => ['current_page', 'last_page', 'per_page', 'total'],
+                'meta' => ['currentPage', 'lastPage', 'perPage', 'total'],
             ])
             ->assertJsonPath('meta.total', 21);
 

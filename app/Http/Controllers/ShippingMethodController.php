@@ -58,9 +58,9 @@ class ShippingMethodController extends Controller
                 'success' => true,
                 'data' => $methods->items(),
                 'meta' => [
-                    'current_page' => $methods->currentPage(),
-                    'last_page' => $methods->lastPage(),
-                    'per_page' => $methods->perPage(),
+                    'currentPage' => $methods->currentPage(),
+                    'lastPage' => $methods->lastPage(),
+                    'perPage' => $methods->perPage(),
                     'total' => $methods->total(),
                 ],
             ]);

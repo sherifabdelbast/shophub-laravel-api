@@ -30,9 +30,9 @@ class OrderController extends Controller
                 'success' => true,
                 'data' => OrderResource::collection($orders->items()),
                 'meta' => [
-                    'current_page' => $orders->currentPage(),
-                    'last_page' => $orders->lastPage(),
-                    'per_page' => $orders->perPage(),
+                    'currentPage' => $orders->currentPage(),
+                    'lastPage' => $orders->lastPage(),
+                    'perPage' => $orders->perPage(),
                     'total' => $orders->total(),
                 ],
             ]);
