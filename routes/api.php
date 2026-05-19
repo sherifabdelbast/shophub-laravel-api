@@ -125,19 +125,19 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::patch('/{order}/cancel', [OrderController::class, 'cancel']);
     });
 
-    // Payments
+    // Payments — write endpoint rate-limited per user to deter replay/abuse
     Route::prefix('payments')->group(function () {
-        Route::post('/', [PaymentController::class, 'store']);
+        Route::post('/', [PaymentController::class, 'store'])->middleware('throttle:10,1');
         Route::get('/{payment}', [PaymentController::class, 'show']);
         Route::get('/order/{order}', [PaymentController::class, 'getOrderPayments']);
     });
 
-    // Reviews
+    // Reviews — write endpoints rate-limited to deter spam
     Route::prefix('reviews')->group(function () {
-        Route::post('/', [ReviewController::class, 'store']);
-        Route::put('/{review}', [ReviewController::class, 'update']);
-        Route::delete('/{review}', [ReviewController::class, 'destroy']);
-        Route::post('/{review}/helpful', [ReviewController::class, 'markHelpful']);
+        Route::post('/', [ReviewController::class, 'store'])->middleware('throttle:10,1');
+        Route::put('/{review}', [ReviewController::class, 'update'])->middleware('throttle:20,1');
+        Route::delete('/{review}', [ReviewController::class, 'destroy'])->middleware('throttle:20,1');
+        Route::post('/{review}/helpful', [ReviewController::class, 'markHelpful'])->middleware('throttle:60,1');
     });
 });
 
