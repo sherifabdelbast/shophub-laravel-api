@@ -36,10 +36,13 @@ return Application::configure(basePath: dirname(__DIR__))
             }
 
             if ($e instanceof \Illuminate\Validation\ValidationException) {
+                $errors = $e->errors();
+                $first = collect($errors)->flatten()->first();
+
                 return response()->json([
                     'success' => false,
-                    'message' => 'Validation error',
-                    'errors' => $e->errors(),
+                    'message' => $first ?: 'Validation error',
+                    'errors' => $errors,
                 ], 422);
             }
 

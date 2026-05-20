@@ -38,7 +38,7 @@ class StorePaymentRequest extends FormRequest
     {
         throw new HttpResponseException(response()->json([
             'success' => false,
-            'message' => 'Validation error',
+            'message' => $validator->errors()->first() ?: 'Validation error',
             'errors' => $validator->errors(),
         ], 422));
     }
