@@ -170,6 +170,11 @@ class AuthController extends Controller
             ]
         );
 
+        // Refuse to link Google to an existing local-only (email/password) account.
+        if (! $user->wasRecentlyCreated && $user->provider_id === null) {
+            return redirect()->away($callback.'?error=account_exists');
+        }
+
         // Refuse to re-link an account already bound to a different Google identity.
         if ($user->provider_id && $user->provider_id !== $googleUser->getId()) {
             return redirect()->away($callback.'?error=account_conflict');
