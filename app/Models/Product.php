@@ -39,6 +39,15 @@ class Product extends Model
         'meta_title',
         'meta_description',
         'status',
+        'series',
+        'material',
+        'alt',
+        'released_at',
+        'badge',
+        'atelier_note',
+        'specs',
+        'gallery',
+        'related_slugs',
     ];
 
     protected function casts(): array
@@ -51,6 +60,10 @@ class Product extends Model
             'weight' => 'decimal:2',
             'rating' => 'decimal:2',
             'is_featured' => 'boolean',
+            'released_at' => 'date',
+            'specs' => 'array',
+            'gallery' => 'array',
+            'related_slugs' => 'array',
         ];
     }
 

@@ -23,6 +23,8 @@ class Category extends Model
         'image_url',
         'icon',
         'status',
+        'display_index',
+        'meta',
     ];
 
     public function getRouteKeyName(): string

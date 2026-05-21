@@ -20,6 +20,8 @@ class Brand extends Model
         'website',
         'sort_order',
         'status',
+        'founded',
+        'discipline',
     ];
 
     public function getRouteKeyName(): string
