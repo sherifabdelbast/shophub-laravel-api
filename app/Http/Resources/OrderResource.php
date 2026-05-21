@@ -31,6 +31,7 @@ class OrderResource extends JsonResource
             'customerNotes' => $this->customer_notes,
             'shippedAt' => optional($this->shipped_at)->toIso8601String(),
             'deliveredAt' => optional($this->delivered_at)->toIso8601String(),
+            'itemsCount' => $this->when(isset($this->items_count), (int) $this->items_count),
             'items' => $this->whenLoaded('items', function () {
                 return $this->items->map(fn ($item) => [
                     'id' => $item->id,

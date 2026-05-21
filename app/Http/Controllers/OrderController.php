@@ -124,7 +124,8 @@ class OrderController extends Controller
     public function adminIndex(Request $request): JsonResponse
     {
         $orders = Order::query()
-            ->with(['items', 'shippingMethod', 'user:id,first_name,last_name,email'])
+            ->with(['shippingMethod', 'user:id,first_name,last_name,email'])
+            ->withCount('items')
             ->when($request->filled('status'), fn ($q) => $q->where('status', $request->status))
             ->when($request->filled('payment_status'), fn ($q) => $q->where('payment_status', $request->payment_status))
             ->when($request->filled('user_id'), fn ($q) => $q->where('user_id', $request->user_id))

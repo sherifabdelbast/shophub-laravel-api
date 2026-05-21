@@ -23,7 +23,7 @@ class ProductController extends Controller
      */
     public function index(ProductIndexRequest $request): JsonResponse
     {
-        $query = Product::with(['category', 'brand', 'images']);
+        $query = Product::with(['category', 'brand']);
 
         if ($request->filled('search')) {
             $search = $request->validated('search');
