@@ -48,10 +48,16 @@ Route::prefix('categories')->group(function () {
     Route::get('/{category}', [CategoryController::class, 'show']);
 });
 
+Route::get('/categories/{slug}/products', [ProductController::class, 'indexByCategory'])
+    ->where('slug', '[a-z0-9-]+');
+
 Route::prefix('brands')->group(function () {
     Route::get('/', [BrandController::class, 'index']);
     Route::get('/{brand}', [BrandController::class, 'show']);
 });
+
+Route::get('/brands/{slug}/products', [ProductController::class, 'indexByBrand'])
+    ->where('slug', '[a-z0-9-]+');
 
 // Shipping Methods (Public - for checkout)
 Route::prefix('shipping-methods')->group(function () {

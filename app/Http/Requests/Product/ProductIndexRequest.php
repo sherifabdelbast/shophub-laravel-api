@@ -25,10 +25,16 @@ class ProductIndexRequest extends FormRequest
     {
         return [
             'per_page' => ['sometimes', 'integer', 'min:1', 'max:100'],
+            'perPage' => ['sometimes', 'integer', 'min:1', 'max:100'],
             'page' => ['sometimes', 'integer', 'min:1'],
             'search' => ['sometimes', 'string', 'max:255'],
             'category_id' => ['sometimes', 'integer', 'exists:categories,id'],
             'brand_id' => ['sometimes', 'integer', 'exists:brands,id'],
+            'category' => ['sometimes', 'string', 'exists:categories,slug'],
+            'brand' => ['sometimes', 'string', 'exists:brands,slug'],
+            'material' => ['sometimes', 'string', 'max:64'],
+            'inStock' => ['sometimes', 'in:0,1,true,false'],
+            'sort' => ['sometimes', 'string', 'in:new,price-asc,price-desc'],
             'status' => ['sometimes', 'string', 'in:active,inactive,draft'],
             'min_price' => ['sometimes', 'numeric', 'min:0'],
             'max_price' => ['sometimes', 'numeric', 'min:0'],

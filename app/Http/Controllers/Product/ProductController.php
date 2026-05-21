@@ -57,14 +57,41 @@ class ProductController extends Controller
             $query->where('is_featured', filter_var($request->featured, FILTER_VALIDATE_BOOLEAN));
         }
 
-        // sort_by / sort_order are whitelisted by ProductIndexRequest validation.
-        $query->orderBy(
-            $request->validated('sort_by', 'created_at'),
-            $request->validated('sort_order', 'desc')
-        );
+        // New camelCase / slug-based filters from the storefront.
+        if ($request->filled('category')) {
+            $query->whereHas('category', fn ($q) => $q->where('slug', $request->input('category')));
+        }
 
-        // per_page is capped at 100 by ProductIndexRequest validation.
-        $products = $query->paginate($request->validated('per_page', 15));
+        if ($request->filled('brand')) {
+            $query->whereHas('brand', fn ($q) => $q->where('slug', $request->input('brand')));
+        }
+
+        if ($request->filled('material')) {
+            $query->where('material', $request->input('material'));
+        }
+
+        if ($request->filled('inStock') && $request->boolean('inStock')) {
+            $query->where('stock_status', 'in_stock');
+        }
+
+        $sort = $request->input('sort');
+
+        if ($sort !== null) {
+            match ($sort) {
+                'new' => $query->orderByDesc('released_at')->orderByDesc('created_at'),
+                'price-asc' => $query->orderBy('price', 'asc'),
+                'price-desc' => $query->orderBy('price', 'desc'),
+            };
+        } else {
+            // Legacy sort_by / sort_order (for admin and older clients).
+            $query->orderBy(
+                $request->validated('sort_by', 'created_at'),
+                $request->validated('sort_order', 'desc'),
+            );
+        }
+
+        $perPage = $request->input('perPage') ?? $request->validated('per_page', 15);
+        $products = $query->paginate($perPage);
 
         return response()->json([
             'success' => true,
@@ -111,6 +138,30 @@ class ProductController extends Controller
             'success' => true,
             'data' => ProductResource::collection($related),
         ]);
+    }
+
+    /**
+     * List products filtered by category slug.
+     *
+     * @group Products
+     */
+    public function indexByCategory(ProductIndexRequest $request, string $slug): JsonResponse
+    {
+        $request->merge(['category' => $slug]);
+
+        return $this->index($request);
+    }
+
+    /**
+     * List products filtered by brand slug.
+     *
+     * @group Products
+     */
+    public function indexByBrand(ProductIndexRequest $request, string $slug): JsonResponse
+    {
+        $request->merge(['brand' => $slug]);
+
+        return $this->index($request);
     }
 
     /**
