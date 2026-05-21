@@ -21,6 +21,15 @@ class PaymentController extends Controller
      */
     public function store(StorePaymentRequest $request): JsonResponse
     {
+        $idempotencyKey = $request->header('Idempotency-Key');
+
+        if ($idempotencyKey !== null && ! preg_match('/^[A-Za-z0-9_-]{1,128}$/', $idempotencyKey)) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Invalid Idempotency-Key header',
+            ], 400);
+        }
+
         $order = Order::findOrFail($request->order_id);
         $this->authorize('pay', $order);
 
@@ -28,7 +37,8 @@ class PaymentController extends Controller
             $payment = $this->paymentService->processPayment(
                 $order,
                 $request->payment_method,
-                $request->payment_data ?? []
+                $request->payment_data ?? [],
+                $idempotencyKey,
             );
         } catch (\DomainException $e) {
             return response()->json([

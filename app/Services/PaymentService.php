@@ -12,32 +12,52 @@ class PaymentService
     /**
      * Process payment for an order.
      */
-    public function processPayment(Order $order, string $paymentMethod, array $paymentData = []): Payment
+    public function processPayment(Order $order, string $paymentMethod, array $paymentData = [], ?string $idempotencyKey = null): Payment
     {
         if (! config('payment.fake_gateway')) {
             throw new \RuntimeException('Payment gateway not configured');
         }
 
-        return DB::transaction(function () use ($order, $paymentMethod, $paymentData) {
+        return DB::transaction(function () use ($order, $paymentMethod, $paymentData, $idempotencyKey) {
             // Lock the order row so concurrent payment attempts are serialized
             // and the already-paid check cannot be raced.
             $order = Order::whereKey($order->id)->lockForUpdate()->firstOrFail();
+
+            if ($idempotencyKey !== null) {
+                $existing = Payment::where('order_id', $order->id)
+                    ->where('idempotency_key', $idempotencyKey)
+                    ->first();
+
+                if ($existing) {
+                    return $existing;
+                }
+            }
 
             if ($order->payment_status === 'paid') {
                 throw new \DomainException('Order is already paid');
             }
 
             // Fake gateway: simulated success. Enabled only via config('payment.fake_gateway').
-            $payment = Payment::create([
-                'order_id' => $order->id,
-                'transaction_id' => 'TXN-'.strtoupper(Str::random(20)),
-                'payment_method' => $paymentMethod,
-                'amount' => $order->total,
-                'currency' => 'USD',
-                'status' => 'completed', // In real app, this would come from gateway
-                'gateway_response' => $paymentData,
-                'paid_at' => now(),
-            ]);
+            try {
+                $payment = Payment::create([
+                    'order_id' => $order->id,
+                    'transaction_id' => 'TXN-'.strtoupper(Str::random(20)),
+                    'idempotency_key' => $idempotencyKey,
+                    'payment_method' => $paymentMethod,
+                    'amount' => $order->total,
+                    'currency' => 'USD',
+                    'status' => 'completed', // In real app, this would come from gateway
+                    'gateway_response' => $paymentData,
+                    'paid_at' => now(),
+                ]);
+            } catch (\Illuminate\Database\UniqueConstraintViolationException $e) {
+                if ($idempotencyKey !== null) {
+                    return Payment::where('order_id', $order->id)
+                        ->where('idempotency_key', $idempotencyKey)
+                        ->firstOrFail();
+                }
+                throw $e;
+            }
 
             $order->update([
                 'payment_status' => 'paid',

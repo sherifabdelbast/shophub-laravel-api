@@ -14,6 +14,7 @@ class Payment extends Model
     protected $fillable = [
         'order_id',
         'transaction_id',
+        'idempotency_key',
         'payment_method',
         'amount',
         'refunded_amount',

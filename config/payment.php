@@ -17,4 +17,19 @@ return [
 
     'fake_gateway' => (bool) env('PAYMENT_FAKE_GATEWAY', false),
 
+    /*
+    |--------------------------------------------------------------------------
+    | Webhook Secrets
+    |--------------------------------------------------------------------------
+    |
+    | Per-provider HMAC secrets used to verify inbound webhook signatures.
+    | Configure via environment variable: PAYMENT_WEBHOOK_SECRET_{PROVIDER_UPPER}
+    |
+    */
+
+    'webhook_secrets' => [
+        'stripe' => env('PAYMENT_WEBHOOK_SECRET_STRIPE'),
+        'paymob' => env('PAYMENT_WEBHOOK_SECRET_PAYMOB'),
+    ],
+
 ];

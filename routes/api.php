@@ -63,6 +63,12 @@ Route::post('/coupons/validate', [CouponController::class, 'validateCoupon'])
     ->middleware(['auth:sanctum', 'throttle:20,1']);
 
 // ==========================================================================
+// PAYMENT WEBHOOKS (Gateway-callbacks; signature-verified, no Sanctum auth)
+// ==========================================================================
+Route::post('/webhooks/payments/{provider}', [\App\Http\Controllers\Webhooks\PaymentWebhookController::class, 'handle'])
+    ->where('provider', '[a-z_-]+');
+
+// ==========================================================================
 // AUTHENTICATION ROUTES (Guest only - with rate limiting)
 // ==========================================================================
 Route::prefix('auth')->middleware('throttle:10,1')->group(function () {
