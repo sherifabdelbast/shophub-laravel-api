@@ -16,6 +16,8 @@ class BrandResource extends JsonResource
             'description' => $this->description,
             'logoUrl' => $this->absoluteUrl($this->logo_url),
             'website' => $this->website,
+            'founded' => $this->founded,
+            'discipline' => $this->discipline,
             'sortOrder' => $this->sort_order,
             'status' => $this->status,
         ];

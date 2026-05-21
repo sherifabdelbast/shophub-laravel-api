@@ -65,4 +65,32 @@ class CategoryBrandApiTest extends TestCase
                 'data' => ['data', 'links', 'meta'],
             ]);
     }
+
+    public function test_category_resource_exposes_index_and_meta(): void
+    {
+        $category = Category::factory()->create([
+            'display_index' => '07',
+            'meta' => 'Test Subtitle',
+        ]);
+
+        $response = $this->getJson("/v1/categories/{$category->slug}");
+
+        $response->assertStatus(200)
+            ->assertJsonPath('data.index', '07')
+            ->assertJsonPath('data.meta', 'Test Subtitle');
+    }
+
+    public function test_brand_resource_exposes_founded_and_discipline(): void
+    {
+        $brand = Brand::factory()->create([
+            'founded' => 'Est. 1999',
+            'discipline' => 'Test Discipline',
+        ]);
+
+        $response = $this->getJson("/v1/brands/{$brand->slug}");
+
+        $response->assertStatus(200)
+            ->assertJsonPath('data.founded', 'Est. 1999')
+            ->assertJsonPath('data.discipline', 'Test Discipline');
+    }
 }

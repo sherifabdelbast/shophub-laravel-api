@@ -106,4 +106,75 @@ class ProductDetailTest extends TestCase
         $response->assertStatus(200);
         $this->assertCount(4, $response->json('data'));
     }
+
+    public function test_show_includes_editorial_fields(): void
+    {
+        $category = \App\Models\Category::factory()->create();
+        $brand = \App\Models\Brand::factory()->create();
+
+        $product = \App\Models\Product::factory()->create([
+            'category_id' => $category->id,
+            'brand_id' => $brand->id,
+            'slug' => 'editorial-product',
+            'series' => 'Series 99',
+            'material' => 'Test Material',
+            'alt' => 'Alt text',
+            'released_at' => '2026-05-01',
+            'badge' => 'Limited',
+            'atelier_note' => 'Note paragraph.',
+            'specs' => [['label' => 'Mass', 'value' => '1kg']],
+            'gallery' => [['src' => '/img/g1.png', 'alt' => 'gallery 1']],
+            'related_slugs' => ['other-a', 'other-b'],
+        ]);
+
+        $response = $this->getJson("/v1/products/{$product->slug}");
+
+        $response->assertStatus(200)
+            ->assertJsonPath('data.series', 'Series 99')
+            ->assertJsonPath('data.material', 'Test Material')
+            ->assertJsonPath('data.alt', 'Alt text')
+            ->assertJsonPath('data.releasedAt', '2026-05-01')
+            ->assertJsonPath('data.badge', 'Limited')
+            ->assertJsonPath('data.atelierNote', 'Note paragraph.')
+            ->assertJsonPath('data.image', $response->json('data.imageUrl'))
+            ->assertJsonPath('data.inStock', true)
+            ->assertJsonPath('data.specs.0.label', 'Mass')
+            ->assertJsonPath('data.gallery.0.alt', 'gallery 1')
+            ->assertJsonPath('data.relatedSlugs', ['other-a', 'other-b']);
+    }
+
+    public function test_related_slugs_falls_back_when_not_curated(): void
+    {
+        $category = \App\Models\Category::factory()->create();
+        $brand = \App\Models\Brand::factory()->create();
+
+        $main = \App\Models\Product::factory()->create([
+            'category_id' => $category->id,
+            'brand_id' => $brand->id,
+            'slug' => 'main',
+            'status' => 'active',
+            'stock_status' => 'in_stock',
+            'related_slugs' => null,
+        ]);
+
+        foreach (['rel-a', 'rel-b', 'rel-c', 'rel-d'] as $slug) {
+            \App\Models\Product::factory()->create([
+                'category_id' => $category->id,
+                'brand_id' => $brand->id,
+                'slug' => $slug,
+                'status' => 'active',
+                'stock_status' => 'in_stock',
+            ]);
+        }
+
+        $response = $this->getJson("/v1/products/{$main->slug}");
+
+        $response->assertStatus(200);
+        $slugs = $response->json('data.relatedSlugs');
+        $this->assertCount(3, $slugs);
+        $this->assertNotContains('main', $slugs);
+        foreach ($slugs as $slug) {
+            $this->assertContains($slug, ['rel-a', 'rel-b', 'rel-c', 'rel-d']);
+        }
+    }
 }
