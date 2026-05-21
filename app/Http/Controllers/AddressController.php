@@ -61,13 +61,7 @@ class AddressController extends Controller
      */
     public function show(Request $request, Address $address): JsonResponse
     {
-        // Ensure user owns this address
-        if ($address->user_id !== $request->user()->id) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Unauthorized',
-            ], 403);
-        }
+        $this->authorize('view', $address);
 
         return response()->json([
             'success' => true,
@@ -82,13 +76,7 @@ class AddressController extends Controller
      */
     public function update(UpdateAddressRequest $request, Address $address): JsonResponse
     {
-        // Ensure user owns this address
-        if ($address->user_id !== $request->user()->id) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Unauthorized',
-            ], 403);
-        }
+        $this->authorize('update', $address);
 
         $data = $request->validated();
 
@@ -115,13 +103,7 @@ class AddressController extends Controller
      */
     public function destroy(Request $request, Address $address): JsonResponse
     {
-        // Ensure user owns this address
-        if ($address->user_id !== $request->user()->id) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Unauthorized',
-            ], 403);
-        }
+        $this->authorize('delete', $address);
 
         $address->delete();
 
@@ -138,13 +120,7 @@ class AddressController extends Controller
      */
     public function setDefault(Request $request, Address $address): JsonResponse
     {
-        // Ensure user owns this address
-        if ($address->user_id !== $request->user()->id) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Unauthorized',
-            ], 403);
-        }
+        $this->authorize('setDefault', $address);
 
         // Unset all other defaults
         Address::where('user_id', $request->user()->id)

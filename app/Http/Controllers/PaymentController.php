@@ -20,41 +20,34 @@ class PaymentController extends Controller
      */
     public function store(StorePaymentRequest $request): JsonResponse
     {
+        $order = Order::findOrFail($request->order_id);
+        $this->authorize('pay', $order);
+
         try {
-            $order = Order::findOrFail($request->order_id);
-
-            // Ensure user owns this order
-            if ($order->user_id !== $request->user()->id) {
-                return response()->json([
-                    'success' => false,
-                    'message' => 'Unauthorized',
-                ], 403);
-            }
-
             $payment = $this->paymentService->processPayment(
                 $order,
                 $request->payment_method,
                 $request->payment_data ?? []
             );
-
-            return response()->json([
-                'success' => true,
-                'message' => 'Payment processed successfully',
-                'data' => [
-                    'id' => $payment->id,
-                    'transaction_id' => $payment->transaction_id,
-                    'status' => $payment->status,
-                    'amount' => $payment->amount,
-                    'currency' => $payment->currency,
-                    'paid_at' => $payment->paid_at,
-                ],
-            ], 201);
         } catch (\DomainException $e) {
             return response()->json([
                 'success' => false,
                 'message' => $e->getMessage(),
             ], 400);
         }
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Payment processed successfully',
+            'data' => [
+                'id' => $payment->id,
+                'transaction_id' => $payment->transaction_id,
+                'status' => $payment->status,
+                'amount' => $payment->amount,
+                'currency' => $payment->currency,
+                'paid_at' => $payment->paid_at,
+            ],
+        ], 201);
     }
 
     /**
@@ -64,13 +57,7 @@ class PaymentController extends Controller
      */
     public function show(Request $request, Payment $payment): JsonResponse
     {
-        // Ensure user owns the order
-        if ($payment->order->user_id !== $request->user()->id) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Unauthorized',
-            ], 403);
-        }
+        $this->authorize('view', $payment);
 
         return response()->json([
             'success' => true,
@@ -94,13 +81,7 @@ class PaymentController extends Controller
      */
     public function getOrderPayments(Request $request, Order $order): JsonResponse
     {
-        // Ensure user owns this order
-        if ($order->user_id !== $request->user()->id) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Unauthorized',
-            ], 403);
-        }
+        $this->authorize('viewPayments', $order);
 
         $payments = $order->payments()->get();
 

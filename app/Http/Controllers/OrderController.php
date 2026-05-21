@@ -73,13 +73,7 @@ class OrderController extends Controller
      */
     public function show(Request $request, Order $order): JsonResponse
     {
-        // Ensure user owns this order
-        if ($order->user_id !== $request->user()->id) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Unauthorized',
-            ], 403);
-        }
+        $this->authorize('view', $order);
 
         $order->load(['items.product', 'shippingMethod', 'coupon', 'payments']);
 
@@ -96,28 +90,30 @@ class OrderController extends Controller
      */
     public function cancel(Request $request, Order $order): JsonResponse
     {
-        try {
-            $request->validate([
-                'reason' => ['nullable', 'string', 'max:500'],
-            ]);
+        $this->authorize('cancel', $order);
 
+        $request->validate([
+            'reason' => ['nullable', 'string', 'max:500'],
+        ]);
+
+        try {
             $order = $this->orderService->cancelOrder(
                 $order,
                 $request->user(),
                 $request->reason
             );
-
-            return response()->json([
-                'success' => true,
-                'message' => 'Order cancelled successfully',
-                'data' => new OrderResource($order->load(['items', 'shippingMethod'])),
-            ]);
         } catch (\DomainException $e) {
             return response()->json([
                 'success' => false,
                 'message' => $e->getMessage(),
             ], 400);
         }
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Order cancelled successfully',
+            'data' => new OrderResource($order->load(['items', 'shippingMethod'])),
+        ]);
     }
 
     /**

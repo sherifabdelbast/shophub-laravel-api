@@ -64,12 +64,14 @@ class CartController extends Controller
      *
      * @group Cart
      */
-    public function update(UpdateCartRequest $request, int $cartItem): JsonResponse
+    public function update(UpdateCartRequest $request, \App\Models\CartItem $cartItem): JsonResponse
     {
+        $this->authorize('update', $cartItem);
+
         try {
             $cartItem = $this->cartService->updateQuantity(
                 $request->user(),
-                $cartItem,
+                $cartItem->id,
                 $request->quantity
             );
 
@@ -91,9 +93,11 @@ class CartController extends Controller
      *
      * @group Cart
      */
-    public function destroy(Request $request, int $cartItem): JsonResponse
+    public function destroy(Request $request, \App\Models\CartItem $cartItem): JsonResponse
     {
-        $this->cartService->removeItem($request->user(), $cartItem);
+        $this->authorize('delete', $cartItem);
+
+        $this->cartService->removeItem($request->user(), $cartItem->id);
 
         return response()->json([
             'success' => true,

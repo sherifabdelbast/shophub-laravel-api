@@ -77,12 +77,11 @@ class WishlistController extends Controller
      *
      * @group Wishlist
      */
-    public function destroy(Request $request, int $wishlist): JsonResponse
+    public function destroy(Request $request, \App\Models\Wishlist $wishlist): JsonResponse
     {
-        $wishlistItem = Wishlist::where('user_id', $request->user()->id)
-            ->findOrFail($wishlist);
+        $this->authorize('delete', $wishlist);
 
-        $wishlistItem->delete();
+        $wishlist->delete();
 
         return response()->json([
             'success' => true,

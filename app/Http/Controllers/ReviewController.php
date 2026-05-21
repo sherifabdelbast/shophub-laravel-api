@@ -92,13 +92,7 @@ class ReviewController extends Controller
      */
     public function update(UpdateReviewRequest $request, Review $review): JsonResponse
     {
-        // Ensure user owns this review
-        if ($review->user_id !== $request->user()->id) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Unauthorized',
-            ], 403);
-        }
+        $this->authorize('update', $review);
 
         $data = $request->validated();
 
@@ -139,13 +133,7 @@ class ReviewController extends Controller
      */
     public function destroy(Request $request, Review $review): JsonResponse
     {
-        // Ensure user owns this review
-        if ($review->user_id !== $request->user()->id) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Unauthorized',
-            ], 403);
-        }
+        $this->authorize('delete', $review);
 
         $productId = $review->product_id;
         $review->delete();
