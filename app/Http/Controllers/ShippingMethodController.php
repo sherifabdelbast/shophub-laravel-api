@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\ShippingMethod\StoreShippingMethodRequest;
 use App\Http\Requests\ShippingMethod\UpdateShippingMethodRequest;
+use App\Http\Resources\ShippingMethodResource;
 use App\Models\ShippingMethod;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -21,13 +22,7 @@ class ShippingMethodController extends Controller
 
         return response()->json([
             'success' => true,
-            'data' => $methods->map(fn ($method) => [
-                'id' => $method->id,
-                'name' => $method->name,
-                'description' => $method->description,
-                'cost' => $method->cost,
-                'estimated_delivery' => $method->estimated_delivery,
-            ]),
+            'data' => ShippingMethodResource::collection($methods),
         ]);
     }
 
@@ -48,7 +43,7 @@ class ShippingMethodController extends Controller
 
         return response()->json([
             'success' => true,
-            'data' => $methods->items(),
+            'data' => ShippingMethodResource::collection($methods->items()),
             'meta' => [
                 'currentPage' => $methods->currentPage(),
                 'lastPage' => $methods->lastPage(),
@@ -70,7 +65,7 @@ class ShippingMethodController extends Controller
         return response()->json([
             'success' => true,
             'message' => 'Shipping method created successfully',
-            'data' => $method,
+            'data' => new ShippingMethodResource($method),
         ], 201);
     }
 
@@ -83,7 +78,7 @@ class ShippingMethodController extends Controller
     {
         return response()->json([
             'success' => true,
-            'data' => $shippingMethod,
+            'data' => new ShippingMethodResource($shippingMethod),
         ]);
     }
 
@@ -99,7 +94,7 @@ class ShippingMethodController extends Controller
         return response()->json([
             'success' => true,
             'message' => 'Shipping method updated successfully',
-            'data' => $shippingMethod->fresh(),
+            'data' => new ShippingMethodResource($shippingMethod->fresh()),
         ]);
     }
 

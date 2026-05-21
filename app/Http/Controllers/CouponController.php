@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\Coupon\StoreCouponRequest;
 use App\Http\Requests\Coupon\UpdateCouponRequest;
 use App\Http\Requests\Coupon\ValidateCouponRequest;
+use App\Http\Resources\CouponResource;
 use App\Models\Coupon;
 use App\Services\CouponService;
 use Illuminate\Http\JsonResponse;
@@ -66,7 +67,7 @@ class CouponController extends Controller
 
         return response()->json([
             'success' => true,
-            'data' => $coupons->items(),
+            'data' => CouponResource::collection($coupons->items()),
             'meta' => [
                 'currentPage' => $coupons->currentPage(),
                 'lastPage' => $coupons->lastPage(),
@@ -88,7 +89,7 @@ class CouponController extends Controller
         return response()->json([
             'success' => true,
             'message' => 'Coupon created successfully',
-            'data' => $coupon,
+            'data' => new CouponResource($coupon),
         ], 201);
     }
 
@@ -101,7 +102,7 @@ class CouponController extends Controller
     {
         return response()->json([
             'success' => true,
-            'data' => $coupon->load('usage'),
+            'data' => new CouponResource($coupon),
         ]);
     }
 
@@ -117,7 +118,7 @@ class CouponController extends Controller
         return response()->json([
             'success' => true,
             'message' => 'Coupon updated successfully',
-            'data' => $coupon->fresh(),
+            'data' => new CouponResource($coupon->fresh()),
         ]);
     }
 

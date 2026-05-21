@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\Payment\StorePaymentRequest;
+use App\Http\Resources\PaymentResource;
 use App\Models\Order;
 use App\Models\Payment;
 use App\Services\PaymentService;
@@ -39,14 +40,7 @@ class PaymentController extends Controller
         return response()->json([
             'success' => true,
             'message' => 'Payment processed successfully',
-            'data' => [
-                'id' => $payment->id,
-                'transaction_id' => $payment->transaction_id,
-                'status' => $payment->status,
-                'amount' => $payment->amount,
-                'currency' => $payment->currency,
-                'paid_at' => $payment->paid_at,
-            ],
+            'data' => new PaymentResource($payment),
         ], 201);
     }
 
@@ -61,16 +55,7 @@ class PaymentController extends Controller
 
         return response()->json([
             'success' => true,
-            'data' => [
-                'id' => $payment->id,
-                'transaction_id' => $payment->transaction_id,
-                'payment_method' => $payment->payment_method,
-                'amount' => $payment->amount,
-                'currency' => $payment->currency,
-                'status' => $payment->status,
-                'paid_at' => $payment->paid_at,
-                // Hidden: gateway_response
-            ],
+            'data' => new PaymentResource($payment),
         ]);
     }
 
@@ -87,14 +72,7 @@ class PaymentController extends Controller
 
         return response()->json([
             'success' => true,
-            'data' => $payments->map(fn ($payment) => [
-                'id' => $payment->id,
-                'transaction_id' => $payment->transaction_id,
-                'payment_method' => $payment->payment_method,
-                'amount' => $payment->amount,
-                'status' => $payment->status,
-                'paid_at' => $payment->paid_at,
-            ]),
+            'data' => PaymentResource::collection($payments),
         ]);
     }
 
@@ -120,10 +98,7 @@ class PaymentController extends Controller
             return response()->json([
                 'success' => true,
                 'message' => 'Refund processed successfully',
-                'data' => [
-                    'id' => $refundedPayment->id,
-                    'status' => $refundedPayment->status,
-                ],
+                'data' => new PaymentResource($refundedPayment),
             ]);
         } catch (\DomainException $e) {
             return response()->json([

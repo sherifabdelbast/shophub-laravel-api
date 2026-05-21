@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\Review\StoreReviewRequest;
 use App\Http\Requests\Review\UpdateReviewRequest;
+use App\Http\Resources\ReviewResource;
 use App\Models\Product;
 use App\Models\Review;
 use App\Models\ReviewHelpfulVote;
@@ -30,7 +31,7 @@ class ReviewController extends Controller
 
         return response()->json([
             'success' => true,
-            'data' => $reviews->items(),
+            'data' => ReviewResource::collection($reviews->items()),
             'meta' => [
                 'currentPage' => $reviews->currentPage(),
                 'lastPage' => $reviews->lastPage(),
@@ -81,7 +82,7 @@ class ReviewController extends Controller
         return response()->json([
             'success' => true,
             'message' => 'Review submitted successfully. It will be published after approval.',
-            'data' => $review->load('user:id,first_name,last_name'),
+            'data' => new ReviewResource($review->load('user:id,first_name,last_name')),
         ], 201);
     }
 
@@ -122,7 +123,7 @@ class ReviewController extends Controller
         return response()->json([
             'success' => true,
             'message' => 'Review updated successfully',
-            'data' => $review->fresh()->load('user:id,first_name,last_name'),
+            'data' => new ReviewResource($review->fresh()->load('user:id,first_name,last_name')),
         ]);
     }
 
@@ -196,7 +197,7 @@ class ReviewController extends Controller
 
         return response()->json([
             'success' => true,
-            'data' => $reviews->items(),
+            'data' => ReviewResource::collection($reviews->items()),
             'meta' => [
                 'currentPage' => $reviews->currentPage(),
                 'lastPage' => $reviews->lastPage(),
@@ -219,7 +220,7 @@ class ReviewController extends Controller
         return response()->json([
             'success' => true,
             'message' => 'Review approved successfully',
-            'data' => $review->fresh(),
+            'data' => new ReviewResource($review->fresh()),
         ]);
     }
 
@@ -236,7 +237,7 @@ class ReviewController extends Controller
         return response()->json([
             'success' => true,
             'message' => 'Review rejected successfully',
-            'data' => $review->fresh(),
+            'data' => new ReviewResource($review->fresh()),
         ]);
     }
 

@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\Wishlist\StoreWishlistRequest;
-use App\Http\Resources\ProductResource;
+use App\Http\Resources\WishlistResource;
 use App\Models\Wishlist;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -24,11 +24,7 @@ class WishlistController extends Controller
 
         return response()->json([
             'success' => true,
-            'data' => $wishlist->map(fn ($item) => [
-                'id' => $item->id,
-                'product' => new ProductResource($item->product),
-                'added_at' => $item->created_at,
-            ]),
+            'data' => WishlistResource::collection($wishlist),
         ]);
     }
 
@@ -64,11 +60,7 @@ class WishlistController extends Controller
         return response()->json([
             'success' => true,
             'message' => 'Product added to wishlist successfully',
-            'data' => [
-                'id' => $wishlist->id,
-                'product' => new ProductResource($wishlist->product),
-                'added_at' => $wishlist->created_at,
-            ],
+            'data' => new WishlistResource($wishlist),
         ], 201);
     }
 
