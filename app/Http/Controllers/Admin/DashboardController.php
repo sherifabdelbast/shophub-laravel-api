@@ -64,7 +64,7 @@ class DashboardController extends Controller
                 'id' => $p->id,
                 'name' => $p->name,
                 'soldCount' => (int) $p->sold_count,
-                'revenue' => (float) $p->price * (int) $p->sold_count,
+                'revenue' => (float) bcmul((string) $p->price, (string) $p->sold_count, 2),
             ]);
 
         // Recent orders
