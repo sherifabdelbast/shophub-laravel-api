@@ -41,27 +41,19 @@ class UserController extends Controller
      */
     public function store(StoreUserRequest $request): JsonResponse
     {
-        try {
-            $data = $request->validated();
-            $data['password'] = Hash::make($data['password']);
-            $data['role'] = $data['role'] ?? 'customer';
+        $data = $request->validated();
+        $data['password'] = Hash::make($data['password']);
+        $data['role'] = $data['role'] ?? 'customer';
 
-            // forceCreate: admin endpoint may set the guarded role / is_active
-            // fields. Input is already whitelisted by StoreUserRequest.
-            $user = User::forceCreate($data);
+        // forceCreate: admin endpoint may set the guarded role / is_active
+        // fields. Input is already whitelisted by StoreUserRequest.
+        $user = User::forceCreate($data);
 
-            return response()->json([
-                'success' => true,
-                'message' => 'User created successfully',
-                'data' => new UserResource($user),
-            ], 201);
-
-        } catch (\Exception $e) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Failed to create user',
-            ], 500);
-        }
+        return response()->json([
+            'success' => true,
+            'message' => 'User created successfully',
+            'data' => new UserResource($user),
+        ], 201);
     }
 
     /**
@@ -84,22 +76,15 @@ class UserController extends Controller
      */
     public function update(UpdateUserRequest $request, User $user): JsonResponse
     {
-        try {
-            // forceFill: admin endpoint may set the guarded role / is_active
-            // fields. Input is already whitelisted by UpdateUserRequest.
-            $user->forceFill($request->validated())->save();
+        // forceFill: admin endpoint may set the guarded role / is_active
+        // fields. Input is already whitelisted by UpdateUserRequest.
+        $user->forceFill($request->validated())->save();
 
-            return response()->json([
-                'success' => true,
-                'message' => 'User updated successfully',
-                'data' => new UserResource($user->fresh()),
-            ]);
-        } catch (\Exception $e) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Failed to update user',
-            ], 500);
-        }
+        return response()->json([
+            'success' => true,
+            'message' => 'User updated successfully',
+            'data' => new UserResource($user->fresh()),
+        ]);
     }
 
     /**
@@ -109,17 +94,10 @@ class UserController extends Controller
      */
     public function destroy(User $user)
     {
-        try {
-            $user->delete();
+        $user->delete();
 
-            return response()->json([
-                'message' => 'User deleted successfully',
-            ]);
-
-        } catch (\Exception $e) {
-            return response()->json([
-                'message' => 'Failed to delete user',
-            ], 500);
-        }
+        return response()->json([
+            'message' => 'User deleted successfully',
+        ]);
     }
 }

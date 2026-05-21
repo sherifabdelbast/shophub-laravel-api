@@ -54,11 +54,6 @@ class PaymentController extends Controller
                 'success' => false,
                 'message' => $e->getMessage(),
             ], 400);
-        } catch (\Exception $e) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Failed to process payment',
-            ], 500);
         }
     }
 
@@ -69,34 +64,27 @@ class PaymentController extends Controller
      */
     public function show(Request $request, Payment $payment): JsonResponse
     {
-        try {
-            // Ensure user owns the order
-            if ($payment->order->user_id !== $request->user()->id) {
-                return response()->json([
-                    'success' => false,
-                    'message' => 'Unauthorized',
-                ], 403);
-            }
-
-            return response()->json([
-                'success' => true,
-                'data' => [
-                    'id' => $payment->id,
-                    'transaction_id' => $payment->transaction_id,
-                    'payment_method' => $payment->payment_method,
-                    'amount' => $payment->amount,
-                    'currency' => $payment->currency,
-                    'status' => $payment->status,
-                    'paid_at' => $payment->paid_at,
-                    // Hidden: gateway_response
-                ],
-            ]);
-        } catch (\Exception $e) {
+        // Ensure user owns the order
+        if ($payment->order->user_id !== $request->user()->id) {
             return response()->json([
                 'success' => false,
-                'message' => 'Failed to retrieve payment',
-            ], 500);
+                'message' => 'Unauthorized',
+            ], 403);
         }
+
+        return response()->json([
+            'success' => true,
+            'data' => [
+                'id' => $payment->id,
+                'transaction_id' => $payment->transaction_id,
+                'payment_method' => $payment->payment_method,
+                'amount' => $payment->amount,
+                'currency' => $payment->currency,
+                'status' => $payment->status,
+                'paid_at' => $payment->paid_at,
+                // Hidden: gateway_response
+            ],
+        ]);
     }
 
     /**
@@ -106,34 +94,27 @@ class PaymentController extends Controller
      */
     public function getOrderPayments(Request $request, Order $order): JsonResponse
     {
-        try {
-            // Ensure user owns this order
-            if ($order->user_id !== $request->user()->id) {
-                return response()->json([
-                    'success' => false,
-                    'message' => 'Unauthorized',
-                ], 403);
-            }
-
-            $payments = $order->payments()->get();
-
-            return response()->json([
-                'success' => true,
-                'data' => $payments->map(fn ($payment) => [
-                    'id' => $payment->id,
-                    'transaction_id' => $payment->transaction_id,
-                    'payment_method' => $payment->payment_method,
-                    'amount' => $payment->amount,
-                    'status' => $payment->status,
-                    'paid_at' => $payment->paid_at,
-                ]),
-            ]);
-        } catch (\Exception $e) {
+        // Ensure user owns this order
+        if ($order->user_id !== $request->user()->id) {
             return response()->json([
                 'success' => false,
-                'message' => 'Failed to retrieve payments',
-            ], 500);
+                'message' => 'Unauthorized',
+            ], 403);
         }
+
+        $payments = $order->payments()->get();
+
+        return response()->json([
+            'success' => true,
+            'data' => $payments->map(fn ($payment) => [
+                'id' => $payment->id,
+                'transaction_id' => $payment->transaction_id,
+                'payment_method' => $payment->payment_method,
+                'amount' => $payment->amount,
+                'status' => $payment->status,
+                'paid_at' => $payment->paid_at,
+            ]),
+        ]);
     }
 
     /**
@@ -163,22 +144,11 @@ class PaymentController extends Controller
                     'status' => $refundedPayment->status,
                 ],
             ]);
-        } catch (\Illuminate\Validation\ValidationException $e) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Validation failed',
-                'errors' => $e->errors(),
-            ], 422);
         } catch (\DomainException $e) {
             return response()->json([
                 'success' => false,
                 'message' => $e->getMessage(),
             ], 400);
-        } catch (\Exception $e) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Failed to process refund',
-            ], 500);
         }
     }
 }

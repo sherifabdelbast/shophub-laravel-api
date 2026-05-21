@@ -20,31 +20,24 @@ class ReviewController extends Controller
      */
     public function index(Request $request, Product $product): JsonResponse
     {
-        try {
-            $reviews = Review::where('product_id', $product->id)
-                ->where('status', 'approved')
-                ->with(['user' => function ($query) {
-                    $query->select('id', 'first_name', 'last_name');
-                }])
-                ->latest()
-                ->paginate(min((int) $request->get('per_page', 10), 100));
+        $reviews = Review::where('product_id', $product->id)
+            ->where('status', 'approved')
+            ->with(['user' => function ($query) {
+                $query->select('id', 'first_name', 'last_name');
+            }])
+            ->latest()
+            ->paginate(min((int) $request->get('per_page', 10), 100));
 
-            return response()->json([
-                'success' => true,
-                'data' => $reviews->items(),
-                'meta' => [
-                    'currentPage' => $reviews->currentPage(),
-                    'lastPage' => $reviews->lastPage(),
-                    'perPage' => $reviews->perPage(),
-                    'total' => $reviews->total(),
-                ],
-            ]);
-        } catch (\Exception $e) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Failed to retrieve reviews',
-            ], 500);
-        }
+        return response()->json([
+            'success' => true,
+            'data' => $reviews->items(),
+            'meta' => [
+                'currentPage' => $reviews->currentPage(),
+                'lastPage' => $reviews->lastPage(),
+                'perPage' => $reviews->perPage(),
+                'total' => $reviews->total(),
+            ],
+        ]);
     }
 
     /**
@@ -54,49 +47,42 @@ class ReviewController extends Controller
      */
     public function store(StoreReviewRequest $request): JsonResponse
     {
-        try {
-            $data = $request->validated();
-            $data['user_id'] = $request->user()->id;
-            $data['status'] = 'pending'; // Requires approval
+        $data = $request->validated();
+        $data['user_id'] = $request->user()->id;
+        $data['status'] = 'pending'; // Requires approval
 
-            // Check if user has purchased this product (for verified purchase)
-            if ($request->order_id) {
-                $order = \App\Models\Order::where('id', $request->order_id)
-                    ->where('user_id', $request->user()->id)
-                    ->where('payment_status', 'paid')
-                    ->first();
+        // Check if user has purchased this product (for verified purchase)
+        if ($request->order_id) {
+            $order = \App\Models\Order::where('id', $request->order_id)
+                ->where('user_id', $request->user()->id)
+                ->where('payment_status', 'paid')
+                ->first();
 
-                if ($order && $order->items()->where('product_id', $request->product_id)->exists()) {
-                    $data['verified_purchase'] = true;
-                }
+            if ($order && $order->items()->where('product_id', $request->product_id)->exists()) {
+                $data['verified_purchase'] = true;
             }
-
-            // Handle image uploads
-            if ($request->hasFile('images')) {
-                $imagePaths = [];
-                foreach ($request->file('images') as $image) {
-                    $path = $image->store('reviews', 'public');
-                    $imagePaths[] = Storage::url($path);
-                }
-                $data['images'] = $imagePaths;
-            }
-
-            $review = Review::create($data);
-
-            // Update product rating (average)
-            $this->updateProductRating($request->product_id);
-
-            return response()->json([
-                'success' => true,
-                'message' => 'Review submitted successfully. It will be published after approval.',
-                'data' => $review->load('user:id,first_name,last_name'),
-            ], 201);
-        } catch (\Exception $e) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Failed to create review',
-            ], 500);
         }
+
+        // Handle image uploads
+        if ($request->hasFile('images')) {
+            $imagePaths = [];
+            foreach ($request->file('images') as $image) {
+                $path = $image->store('reviews', 'public');
+                $imagePaths[] = Storage::url($path);
+            }
+            $data['images'] = $imagePaths;
+        }
+
+        $review = Review::create($data);
+
+        // Update product rating (average)
+        $this->updateProductRating($request->product_id);
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Review submitted successfully. It will be published after approval.',
+            'data' => $review->load('user:id,first_name,last_name'),
+        ], 201);
     }
 
     /**
@@ -106,51 +92,44 @@ class ReviewController extends Controller
      */
     public function update(UpdateReviewRequest $request, Review $review): JsonResponse
     {
-        try {
-            // Ensure user owns this review
-            if ($review->user_id !== $request->user()->id) {
-                return response()->json([
-                    'success' => false,
-                    'message' => 'Unauthorized',
-                ], 403);
-            }
-
-            $data = $request->validated();
-
-            // Handle image uploads
-            if ($request->hasFile('images')) {
-                // Delete old images
-                if ($review->images) {
-                    foreach ($review->images as $imagePath) {
-                        $path = str_replace('/storage/', '', $imagePath);
-                        Storage::disk('public')->delete($path);
-                    }
-                }
-
-                $imagePaths = [];
-                foreach ($request->file('images') as $image) {
-                    $path = $image->store('reviews', 'public');
-                    $imagePaths[] = Storage::url($path);
-                }
-                $data['images'] = $imagePaths;
-            }
-
-            $review->update($data);
-
-            // Update product rating
-            $this->updateProductRating($review->product_id);
-
-            return response()->json([
-                'success' => true,
-                'message' => 'Review updated successfully',
-                'data' => $review->fresh()->load('user:id,first_name,last_name'),
-            ]);
-        } catch (\Exception $e) {
+        // Ensure user owns this review
+        if ($review->user_id !== $request->user()->id) {
             return response()->json([
                 'success' => false,
-                'message' => 'Failed to update review',
-            ], 500);
+                'message' => 'Unauthorized',
+            ], 403);
         }
+
+        $data = $request->validated();
+
+        // Handle image uploads
+        if ($request->hasFile('images')) {
+            // Delete old images
+            if ($review->images) {
+                foreach ($review->images as $imagePath) {
+                    $path = str_replace('/storage/', '', $imagePath);
+                    Storage::disk('public')->delete($path);
+                }
+            }
+
+            $imagePaths = [];
+            foreach ($request->file('images') as $image) {
+                $path = $image->store('reviews', 'public');
+                $imagePaths[] = Storage::url($path);
+            }
+            $data['images'] = $imagePaths;
+        }
+
+        $review->update($data);
+
+        // Update product rating
+        $this->updateProductRating($review->product_id);
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Review updated successfully',
+            'data' => $review->fresh()->load('user:id,first_name,last_name'),
+        ]);
     }
 
     /**
@@ -160,31 +139,24 @@ class ReviewController extends Controller
      */
     public function destroy(Request $request, Review $review): JsonResponse
     {
-        try {
-            // Ensure user owns this review
-            if ($review->user_id !== $request->user()->id) {
-                return response()->json([
-                    'success' => false,
-                    'message' => 'Unauthorized',
-                ], 403);
-            }
-
-            $productId = $review->product_id;
-            $review->delete();
-
-            // Update product rating
-            $this->updateProductRating($productId);
-
-            return response()->json([
-                'success' => true,
-                'message' => 'Review deleted successfully',
-            ]);
-        } catch (\Exception $e) {
+        // Ensure user owns this review
+        if ($review->user_id !== $request->user()->id) {
             return response()->json([
                 'success' => false,
-                'message' => 'Failed to delete review',
-            ], 500);
+                'message' => 'Unauthorized',
+            ], 403);
         }
+
+        $productId = $review->product_id;
+        $review->delete();
+
+        // Update product rating
+        $this->updateProductRating($productId);
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Review deleted successfully',
+        ]);
     }
 
     /**
@@ -194,33 +166,26 @@ class ReviewController extends Controller
      */
     public function markHelpful(Request $request, Review $review): JsonResponse
     {
-        try {
-            // createOrFirst is atomic against the (review_id, user_id) unique
-            // constraint — a user can only ever count once per review.
-            $vote = ReviewHelpfulVote::createOrFirst([
-                'review_id' => $review->id,
-                'user_id' => $request->user()->id,
-            ]);
+        // createOrFirst is atomic against the (review_id, user_id) unique
+        // constraint — a user can only ever count once per review.
+        $vote = ReviewHelpfulVote::createOrFirst([
+            'review_id' => $review->id,
+            'user_id' => $request->user()->id,
+        ]);
 
-            if ($vote->wasRecentlyCreated) {
-                $review->increment('helpful_count');
-            }
-
-            return response()->json([
-                'success' => true,
-                'message' => $vote->wasRecentlyCreated
-                    ? 'Review marked as helpful'
-                    : 'You have already marked this review as helpful',
-                'data' => [
-                    'helpful_count' => $review->helpful_count,
-                ],
-            ]);
-        } catch (\Exception $e) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Failed to mark review as helpful',
-            ], 500);
+        if ($vote->wasRecentlyCreated) {
+            $review->increment('helpful_count');
         }
+
+        return response()->json([
+            'success' => true,
+            'message' => $vote->wasRecentlyCreated
+                ? 'Review marked as helpful'
+                : 'You have already marked this review as helpful',
+            'data' => [
+                'helpful_count' => $review->helpful_count,
+            ],
+        ]);
     }
 
     /**
@@ -230,34 +195,27 @@ class ReviewController extends Controller
      */
     public function adminIndex(Request $request): JsonResponse
     {
-        try {
-            $reviews = Review::query()
-                ->with(['user:id,first_name,last_name', 'product:id,name'])
-                ->when($request->filled('status'), function ($query) use ($request) {
-                    $query->where('status', $request->status);
-                })
-                ->when($request->filled('product_id'), function ($query) use ($request) {
-                    $query->where('product_id', $request->product_id);
-                })
-                ->latest()
-                ->paginate(min((int) $request->get('per_page', 15), 100));
+        $reviews = Review::query()
+            ->with(['user:id,first_name,last_name', 'product:id,name'])
+            ->when($request->filled('status'), function ($query) use ($request) {
+                $query->where('status', $request->status);
+            })
+            ->when($request->filled('product_id'), function ($query) use ($request) {
+                $query->where('product_id', $request->product_id);
+            })
+            ->latest()
+            ->paginate(min((int) $request->get('per_page', 15), 100));
 
-            return response()->json([
-                'success' => true,
-                'data' => $reviews->items(),
-                'meta' => [
-                    'currentPage' => $reviews->currentPage(),
-                    'lastPage' => $reviews->lastPage(),
-                    'perPage' => $reviews->perPage(),
-                    'total' => $reviews->total(),
-                ],
-            ]);
-        } catch (\Exception $e) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Failed to retrieve reviews',
-            ], 500);
-        }
+        return response()->json([
+            'success' => true,
+            'data' => $reviews->items(),
+            'meta' => [
+                'currentPage' => $reviews->currentPage(),
+                'lastPage' => $reviews->lastPage(),
+                'perPage' => $reviews->perPage(),
+                'total' => $reviews->total(),
+            ],
+        ]);
     }
 
     /**
@@ -267,21 +225,14 @@ class ReviewController extends Controller
      */
     public function approve(Request $request, Review $review): JsonResponse
     {
-        try {
-            $review->update(['status' => 'approved']);
-            $this->updateProductRating($review->product_id);
+        $review->update(['status' => 'approved']);
+        $this->updateProductRating($review->product_id);
 
-            return response()->json([
-                'success' => true,
-                'message' => 'Review approved successfully',
-                'data' => $review->fresh(),
-            ]);
-        } catch (\Exception $e) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Failed to approve review',
-            ], 500);
-        }
+        return response()->json([
+            'success' => true,
+            'message' => 'Review approved successfully',
+            'data' => $review->fresh(),
+        ]);
     }
 
     /**
@@ -291,21 +242,14 @@ class ReviewController extends Controller
      */
     public function reject(Request $request, Review $review): JsonResponse
     {
-        try {
-            $review->update(['status' => 'rejected']);
-            $this->updateProductRating($review->product_id);
+        $review->update(['status' => 'rejected']);
+        $this->updateProductRating($review->product_id);
 
-            return response()->json([
-                'success' => true,
-                'message' => 'Review rejected successfully',
-                'data' => $review->fresh(),
-            ]);
-        } catch (\Exception $e) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Failed to reject review',
-            ], 500);
-        }
+        return response()->json([
+            'success' => true,
+            'message' => 'Review rejected successfully',
+            'data' => $review->fresh(),
+        ]);
     }
 
     /**

@@ -16,19 +16,12 @@ class ProfileController extends Controller
      */
     public function show(Request $request): JsonResponse
     {
-        try {
-            $user = $request->user()->load(['addresses']);
+        $user = $request->user()->load(['addresses']);
 
-            return response()->json([
-                'success' => true,
-                'data' => new UserResource($user),
-            ]);
-        } catch (\Exception $e) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Failed to get profile',
-            ], 500);
-        }
+        return response()->json([
+            'success' => true,
+            'data' => new UserResource($user),
+        ]);
     }
 
     /**
@@ -38,20 +31,13 @@ class ProfileController extends Controller
      */
     public function update(UpdateProfileRequest $request): JsonResponse
     {
-        try {
-            $user = $request->user();
-            $user->update($request->validated());
+        $user = $request->user();
+        $user->update($request->validated());
 
-            return response()->json([
-                'success' => true,
-                'message' => 'Profile updated successfully',
-                'data' => new UserResource($user->fresh()),
-            ]);
-        } catch (\Exception $e) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Failed to update profile',
-            ], 500);
-        }
+        return response()->json([
+            'success' => true,
+            'message' => 'Profile updated successfully',
+            'data' => new UserResource($user->fresh()),
+        ]);
     }
 }

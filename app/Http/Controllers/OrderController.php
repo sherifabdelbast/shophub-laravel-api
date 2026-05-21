@@ -20,28 +20,21 @@ class OrderController extends Controller
      */
     public function index(Request $request): JsonResponse
     {
-        try {
-            $orders = Order::where('user_id', $request->user()->id)
-                ->with(['items', 'shippingMethod'])
-                ->latest()
-                ->paginate(min((int) $request->get('per_page', 15), 100));
+        $orders = Order::where('user_id', $request->user()->id)
+            ->with(['items', 'shippingMethod'])
+            ->latest()
+            ->paginate(min((int) $request->get('per_page', 15), 100));
 
-            return response()->json([
-                'success' => true,
-                'data' => OrderResource::collection($orders->items()),
-                'meta' => [
-                    'currentPage' => $orders->currentPage(),
-                    'lastPage' => $orders->lastPage(),
-                    'perPage' => $orders->perPage(),
-                    'total' => $orders->total(),
-                ],
-            ]);
-        } catch (\Exception $e) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Failed to retrieve orders',
-            ], 500);
-        }
+        return response()->json([
+            'success' => true,
+            'data' => OrderResource::collection($orders->items()),
+            'meta' => [
+                'currentPage' => $orders->currentPage(),
+                'lastPage' => $orders->lastPage(),
+                'perPage' => $orders->perPage(),
+                'total' => $orders->total(),
+            ],
+        ]);
     }
 
     /**
@@ -70,11 +63,6 @@ class OrderController extends Controller
                 'success' => false,
                 'message' => $e->getMessage(),
             ], 400);
-        } catch (\Exception $e) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Failed to create order',
-            ], 500);
         }
     }
 
@@ -85,27 +73,20 @@ class OrderController extends Controller
      */
     public function show(Request $request, Order $order): JsonResponse
     {
-        try {
-            // Ensure user owns this order
-            if ($order->user_id !== $request->user()->id) {
-                return response()->json([
-                    'success' => false,
-                    'message' => 'Unauthorized',
-                ], 403);
-            }
-
-            $order->load(['items.product', 'shippingMethod', 'coupon', 'payments']);
-
-            return response()->json([
-                'success' => true,
-                'data' => new OrderResource($order),
-            ]);
-        } catch (\Exception $e) {
+        // Ensure user owns this order
+        if ($order->user_id !== $request->user()->id) {
             return response()->json([
                 'success' => false,
-                'message' => 'Failed to retrieve order',
-            ], 500);
+                'message' => 'Unauthorized',
+            ], 403);
         }
+
+        $order->load(['items.product', 'shippingMethod', 'coupon', 'payments']);
+
+        return response()->json([
+            'success' => true,
+            'data' => new OrderResource($order),
+        ]);
     }
 
     /**
@@ -131,22 +112,11 @@ class OrderController extends Controller
                 'message' => 'Order cancelled successfully',
                 'data' => new OrderResource($order->load(['items', 'shippingMethod'])),
             ]);
-        } catch (\Illuminate\Validation\ValidationException $e) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Validation failed',
-                'errors' => $e->errors(),
-            ], 422);
         } catch (\DomainException $e) {
             return response()->json([
                 'success' => false,
                 'message' => $e->getMessage(),
             ], 400);
-        } catch (\Exception $e) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Failed to cancel order',
-            ], 500);
         }
     }
 

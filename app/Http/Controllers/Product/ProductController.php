@@ -120,32 +120,24 @@ class ProductController extends Controller
      */
     public function store(StoreProductRequest $request): JsonResponse
     {
-        try {
-            $data = $request->validated();
+        $data = $request->validated();
 
-            // Auto-generate slug from name
-            $slug = Str::slug($data['name']);
-            $originalSlug = $slug;
-            $count = 1;
-            while (Product::where('slug', $slug)->exists()) {
-                $slug = $originalSlug.'-'.$count++;
-            }
-            $data['slug'] = $slug;
-
-            $product = Product::create($data);
-
-            return response()->json([
-                'success' => true,
-                'message' => 'Product created successfully',
-                'data' => $product->load(['category', 'brand']),
-            ], 201);
-
-        } catch (\Exception $e) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Failed to create product',
-            ], 500);
+        // Auto-generate slug from name
+        $slug = Str::slug($data['name']);
+        $originalSlug = $slug;
+        $count = 1;
+        while (Product::where('slug', $slug)->exists()) {
+            $slug = $originalSlug.'-'.$count++;
         }
+        $data['slug'] = $slug;
+
+        $product = Product::create($data);
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Product created successfully',
+            'data' => $product->load(['category', 'brand']),
+        ], 201);
     }
 
     /**
@@ -175,22 +167,14 @@ class ProductController extends Controller
      */
     public function updateStatus(Product $product): JsonResponse
     {
-        try {
-            $newStatus = $product->status === 'active' ? 'inactive' : 'active';
-            $product->update(['status' => $newStatus]);
+        $newStatus = $product->status === 'active' ? 'inactive' : 'active';
+        $product->update(['status' => $newStatus]);
 
-            return response()->json([
-                'success' => true,
-                'message' => 'Product status updated successfully',
-                'data' => $product->load(['category', 'brand']),
-            ]);
-
-        } catch (\Exception $e) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Failed to update product status',
-            ], 500);
-        }
+        return response()->json([
+            'success' => true,
+            'message' => 'Product status updated successfully',
+            'data' => $product->load(['category', 'brand']),
+        ]);
     }
 
     /**
@@ -200,47 +184,39 @@ class ProductController extends Controller
      */
     public function update(UpdateProductRequest $request, Product $product): JsonResponse
     {
-        try {
-            $data = $request->validated();
+        $data = $request->validated();
 
-            // Handle image upload if provided
-            if ($request->hasFile('image')) {
-                // Delete old image if exists
-                if ($product->image_url) {
-                    $oldImagePath = str_replace('/storage', 'public', $product->image_url);
-                    Storage::delete($oldImagePath);
-                }
-
-                // Store new image
-                $imagePath = $request->file('image')->store('products', 'public');
-                $data['image_url'] = Storage::url($imagePath);
+        // Handle image upload if provided
+        if ($request->hasFile('image')) {
+            // Delete old image if exists
+            if ($product->image_url) {
+                $oldImagePath = str_replace('/storage', 'public', $product->image_url);
+                Storage::delete($oldImagePath);
             }
 
-            // Handle gallery images if provided
-            if ($request->hasFile('gallery')) {
-                $galleryPaths = [];
-                foreach ($request->file('gallery') as $image) {
-                    $path = $image->store('products/gallery', 'public');
-                    $galleryPaths[] = Storage::url($path);
-                }
-                $data['gallery'] = array_merge($product->gallery ?? [], $galleryPaths);
-            }
-
-            $product->update($data);
-            $product->load(['category', 'brand']);
-
-            return response()->json([
-                'success' => true,
-                'message' => 'Product updated successfully',
-                'data' => $product,
-            ]);
-
-        } catch (\Exception $e) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Failed to update product',
-            ], 500);
+            // Store new image
+            $imagePath = $request->file('image')->store('products', 'public');
+            $data['image_url'] = Storage::url($imagePath);
         }
+
+        // Handle gallery images if provided
+        if ($request->hasFile('gallery')) {
+            $galleryPaths = [];
+            foreach ($request->file('gallery') as $image) {
+                $path = $image->store('products/gallery', 'public');
+                $galleryPaths[] = Storage::url($path);
+            }
+            $data['gallery'] = array_merge($product->gallery ?? [], $galleryPaths);
+        }
+
+        $product->update($data);
+        $product->load(['category', 'brand']);
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Product updated successfully',
+            'data' => $product,
+        ]);
     }
 
     /**
@@ -250,19 +226,11 @@ class ProductController extends Controller
      */
     public function destroy(Product $product): JsonResponse
     {
-        try {
-            $product->delete();
+        $product->delete();
 
-            return response()->json([
-                'success' => true,
-                'message' => 'Product deleted successfully',
-            ]);
-
-        } catch (\Exception $e) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Failed to delete product',
-            ], 500);
-        }
+        return response()->json([
+            'success' => true,
+            'message' => 'Product deleted successfully',
+        ]);
     }
 }

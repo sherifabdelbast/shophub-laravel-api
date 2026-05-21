@@ -21,36 +21,29 @@ class CouponController extends Controller
      */
     public function validateCoupon(ValidateCouponRequest $request): JsonResponse
     {
-        try {
-            $result = $this->couponService->validateCoupon(
-                $request->code,
-                $request->user()->id,
-                number_format((float) $request->subtotal, 2, '.', '')
-            );
+        $result = $this->couponService->validateCoupon(
+            $request->code,
+            $request->user()->id,
+            number_format((float) $request->subtotal, 2, '.', '')
+        );
 
-            if (! $result['valid']) {
-                return response()->json([
-                    'success' => false,
-                    'message' => $result['message'],
-                ], 400);
-            }
-
-            return response()->json([
-                'success' => true,
-                'message' => $result['message'],
-                'data' => [
-                    'code' => $result['coupon']->code,
-                    'discount' => $result['discount'],
-                    'type' => $result['coupon']->type,
-                    'value' => $result['coupon']->value,
-                ],
-            ]);
-        } catch (\Exception $e) {
+        if (! $result['valid']) {
             return response()->json([
                 'success' => false,
-                'message' => 'Failed to validate coupon',
-            ], 500);
+                'message' => $result['message'],
+            ], 400);
         }
+
+        return response()->json([
+            'success' => true,
+            'message' => $result['message'],
+            'data' => [
+                'code' => $result['coupon']->code,
+                'discount' => $result['discount'],
+                'type' => $result['coupon']->type,
+                'value' => $result['coupon']->value,
+            ],
+        ]);
     }
 
     /**
@@ -60,34 +53,27 @@ class CouponController extends Controller
      */
     public function index(Request $request): JsonResponse
     {
-        try {
-            $coupons = Coupon::query()
-                ->when($request->filled('search'), function ($query) use ($request) {
-                    $query->where('code', 'like', "%{$request->search}%")
-                        ->orWhere('description', 'like', "%{$request->search}%");
-                })
-                ->when($request->filled('is_active'), function ($query) use ($request) {
-                    $query->where('is_active', $request->boolean('is_active'));
-                })
-                ->latest()
-                ->paginate(min((int) $request->get('per_page', 15), 100));
+        $coupons = Coupon::query()
+            ->when($request->filled('search'), function ($query) use ($request) {
+                $query->where('code', 'like', "%{$request->search}%")
+                    ->orWhere('description', 'like', "%{$request->search}%");
+            })
+            ->when($request->filled('is_active'), function ($query) use ($request) {
+                $query->where('is_active', $request->boolean('is_active'));
+            })
+            ->latest()
+            ->paginate(min((int) $request->get('per_page', 15), 100));
 
-            return response()->json([
-                'success' => true,
-                'data' => $coupons->items(),
-                'meta' => [
-                    'currentPage' => $coupons->currentPage(),
-                    'lastPage' => $coupons->lastPage(),
-                    'perPage' => $coupons->perPage(),
-                    'total' => $coupons->total(),
-                ],
-            ]);
-        } catch (\Exception $e) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Failed to retrieve coupons',
-            ], 500);
-        }
+        return response()->json([
+            'success' => true,
+            'data' => $coupons->items(),
+            'meta' => [
+                'currentPage' => $coupons->currentPage(),
+                'lastPage' => $coupons->lastPage(),
+                'perPage' => $coupons->perPage(),
+                'total' => $coupons->total(),
+            ],
+        ]);
     }
 
     /**
@@ -97,20 +83,13 @@ class CouponController extends Controller
      */
     public function store(StoreCouponRequest $request): JsonResponse
     {
-        try {
-            $coupon = Coupon::create($request->validated());
+        $coupon = Coupon::create($request->validated());
 
-            return response()->json([
-                'success' => true,
-                'message' => 'Coupon created successfully',
-                'data' => $coupon,
-            ], 201);
-        } catch (\Exception $e) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Failed to create coupon',
-            ], 500);
-        }
+        return response()->json([
+            'success' => true,
+            'message' => 'Coupon created successfully',
+            'data' => $coupon,
+        ], 201);
     }
 
     /**
@@ -133,20 +112,13 @@ class CouponController extends Controller
      */
     public function update(UpdateCouponRequest $request, Coupon $coupon): JsonResponse
     {
-        try {
-            $coupon->update($request->validated());
+        $coupon->update($request->validated());
 
-            return response()->json([
-                'success' => true,
-                'message' => 'Coupon updated successfully',
-                'data' => $coupon->fresh(),
-            ]);
-        } catch (\Exception $e) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Failed to update coupon',
-            ], 500);
-        }
+        return response()->json([
+            'success' => true,
+            'message' => 'Coupon updated successfully',
+            'data' => $coupon->fresh(),
+        ]);
     }
 
     /**
@@ -156,18 +128,11 @@ class CouponController extends Controller
      */
     public function destroy(Coupon $coupon): JsonResponse
     {
-        try {
-            $coupon->delete();
+        $coupon->delete();
 
-            return response()->json([
-                'success' => true,
-                'message' => 'Coupon deleted successfully',
-            ]);
-        } catch (\Exception $e) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Failed to delete coupon',
-            ], 500);
-        }
+        return response()->json([
+            'success' => true,
+            'message' => 'Coupon deleted successfully',
+        ]);
     }
 }
