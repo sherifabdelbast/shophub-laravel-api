@@ -30,7 +30,7 @@ class RegisterRequest extends FormRequest
             'gender' => ['required', 'string', 'in:male,female'],
             'birthday' => ['required', 'date', 'before:today'],
             'phone' => ['required', 'string', 'min:8', 'max:20', 'unique:users,phone'],
-            'password' => ['required', 'string', 'min:6'],
+            'password' => ['required', \Illuminate\Validation\Rules\Password::defaults()],
         ];
     }
 
@@ -55,7 +55,6 @@ class RegisterRequest extends FormRequest
             'phone.required' => 'Phone number is required.',
             'phone.min' => 'Phone number must be at least 8 characters.',
             'password.required' => 'Password is required.',
-            'password.min' => 'Password must be at least 6 characters.',
         ];
     }
 
