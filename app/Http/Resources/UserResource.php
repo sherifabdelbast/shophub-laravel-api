@@ -16,16 +16,15 @@ class UserResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'first_name' => $this->first_name,
-            'last_name' => $this->last_name,
+            'firstName' => $this->first_name,
+            'lastName' => $this->last_name,
             'name' => $this->full_name,
             'email' => $this->email,
             'phone' => $this->phone,
-            'avatar_url' => $this->avatar_url,
+            'avatarUrl' => $this->avatar_url,
             'gender' => $this->gender,
             'birthday' => $this->birthday,
-            'email_verified_at' => $this->email_verified_at,
-            // Hidden: password, provider, provider_id, is_active, role, last_login_at, remember_token
+            'emailVerifiedAt' => optional($this->email_verified_at)->toIso8601String(),
         ];
     }
 }

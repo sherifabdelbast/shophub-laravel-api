@@ -2,8 +2,8 @@
 
 namespace App\Http\Requests\Product;
 
-use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Contracts\Validation\Validator;
+use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Validation\Rule;
 
@@ -38,7 +38,6 @@ class UpdateProductRequest extends FormRequest
             'image_url' => ['sometimes', 'url'],
             'gallery' => ['sometimes', 'array'],
             'gallery.*' => ['url'],
-            'rating' => ['sometimes', 'numeric', 'between:0,5'],
             'status' => ['sometimes', 'in:active,inactive,draft'],
         ];
     }
@@ -75,8 +74,8 @@ class UpdateProductRequest extends FormRequest
     {
         throw new HttpResponseException(response()->json([
             'success' => false,
-            'message' => 'Validation error',
-            'errors' => $validator->errors()
+            'message' => $validator->errors()->first() ?: 'Validation error',
+            'errors' => $validator->errors(),
         ], 422));
     }
 
@@ -100,4 +99,3 @@ class UpdateProductRequest extends FormRequest
         return null;
     }
 }
-

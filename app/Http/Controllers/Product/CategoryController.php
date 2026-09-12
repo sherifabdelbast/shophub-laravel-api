@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Product;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\CategoryResource;
 use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -36,11 +37,11 @@ class CategoryController extends Controller
             $query->where('parent_id', $request->parent_id);
         }
 
-        $categories = $query->latest()->paginate($request->get('per_page', 15));
+        $categories = $query->latest()->paginate(min((int) $request->get('per_page', 15), 100));
 
         return response()->json([
             'success' => true,
-            'data' => $categories,
+            'data' => CategoryResource::collection($categories)->response()->getData(true),
         ]);
     }
 
@@ -59,31 +60,22 @@ class CategoryController extends Controller
             'status' => 'required|in:active,inactive',
         ]);
 
-        try {
-            // Generate slug
-            $validated['slug'] = Str::slug($validated['name']);
+        // Generate slug
+        $validated['slug'] = Str::slug($validated['name']);
 
-            // Handle image upload
-            if ($request->hasFile('image')) {
-                $imagePath = $request->file('image')->store('categories', 'public');
-                $validated['image_url'] = Storage::url($imagePath);
-            }
-
-            $category = Category::create($validated);
-
-            return response()->json([
-                'success' => true,
-                'message' => 'Category created successfully',
-                'data' => $category->load(['parent', 'children']),
-            ], 201);
-
-        } catch (\Exception $e) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Failed to create category',
-                'error' => $e->getMessage(),
-            ], 500);
+        // Handle image upload
+        if ($request->hasFile('image')) {
+            $imagePath = $request->file('image')->store('categories', 'public');
+            $validated['image_url'] = Storage::url($imagePath);
         }
+
+        $category = Category::create($validated);
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Category created successfully',
+            'data' => new CategoryResource($category->load(['parent', 'children'])),
+        ], 201);
     }
 
     /**
@@ -97,7 +89,7 @@ class CategoryController extends Controller
 
         return response()->json([
             'success' => true,
-            'data' => $category,
+            'data' => new CategoryResource($category),
         ]);
     }
 
@@ -116,44 +108,35 @@ class CategoryController extends Controller
             'status' => 'required|in:active,inactive',
         ]);
 
-        try {
-            // Generate slug if name changed
-            if ($validated['name'] !== $category->name) {
-                $validated['slug'] = Str::slug($validated['name']);
-            }
-
-            // Handle parent_id - convert empty string to null
-            if (isset($validated['parent_id']) && $validated['parent_id'] === '') {
-                $validated['parent_id'] = null;
-            }
-
-            // Handle image upload
-            if ($request->hasFile('image')) {
-                // Delete old image if exists
-                if ($category->image_url) {
-                    $oldImage = str_replace('/storage/', '', $category->image_url);
-                    Storage::disk('public')->delete($oldImage);
-                }
-
-                $imagePath = $request->file('image')->store('categories', 'public');
-                $validated['image_url'] = Storage::url($imagePath);
-            }
-
-            $category->update($validated);
-
-            return response()->json([
-                'success' => true,
-                'message' => 'Category updated successfully',
-                'data' => $category->load(['parent', 'children']),
-            ]);
-
-        } catch (\Exception $e) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Failed to update category',
-                'error' => $e->getMessage(),
-            ], 500);
+        // Generate slug if name changed
+        if ($validated['name'] !== $category->name) {
+            $validated['slug'] = Str::slug($validated['name']);
         }
+
+        // Handle parent_id - convert empty string to null
+        if (isset($validated['parent_id']) && $validated['parent_id'] === '') {
+            $validated['parent_id'] = null;
+        }
+
+        // Handle image upload
+        if ($request->hasFile('image')) {
+            // Delete old image if exists
+            if ($category->image_url) {
+                $oldImage = str_replace('/storage/', '', $category->image_url);
+                Storage::disk('public')->delete($oldImage);
+            }
+
+            $imagePath = $request->file('image')->store('categories', 'public');
+            $validated['image_url'] = Storage::url($imagePath);
+        }
+
+        $category->update($validated);
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Category updated successfully',
+            'data' => new CategoryResource($category->load(['parent', 'children'])),
+        ]);
     }
 
     /**
@@ -171,27 +154,18 @@ class CategoryController extends Controller
             ], 422);
         }
 
-        try {
-            // Delete image if exists
-            if ($category->image_url) {
-                $oldImage = str_replace('/storage/', '', $category->image_url);
-                Storage::disk('public')->delete($oldImage);
-            }
-
-            $category->delete();
-
-            return response()->json([
-                'success' => true,
-                'message' => 'Category deleted successfully',
-            ]);
-
-        } catch (\Exception $e) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Failed to delete category',
-                'error' => $e->getMessage(),
-            ], 500);
+        // Delete image if exists
+        if ($category->image_url) {
+            $oldImage = str_replace('/storage/', '', $category->image_url);
+            Storage::disk('public')->delete($oldImage);
         }
+
+        $category->delete();
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Category deleted successfully',
+        ]);
     }
 
     /**
@@ -227,7 +201,7 @@ class CategoryController extends Controller
         return response()->json([
             'success' => true,
             'message' => 'Category status updated successfully',
-            'data' => $category,
+            'data' => new CategoryResource($category),
         ]);
     }
 }

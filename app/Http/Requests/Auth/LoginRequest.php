@@ -3,13 +3,12 @@
 namespace App\Http\Requests\Auth;
 
 use Illuminate\Auth\Events\Lockout;
+use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\Str;
-use Illuminate\Validation\ValidationException;
-use Illuminate\Contracts\Validation\Validator;
-use Illuminate\Http\Exceptions\HttpResponseException;
 
 class LoginRequest extends FormRequest
 {
@@ -57,8 +56,8 @@ class LoginRequest extends FormRequest
     {
         throw new HttpResponseException(response()->json([
             'success' => false,
-            'message' => 'Validation error',
-            'errors' => $validator->errors()
+            'message' => $validator->errors()->first() ?: 'Validation error',
+            'errors' => $validator->errors(),
         ], 422));
     }
 
@@ -76,7 +75,7 @@ class LoginRequest extends FormRequest
 
             throw new HttpResponseException(response()->json([
                 'success' => false,
-                'message' => 'Invalid email or password'
+                'message' => 'Invalid email or password',
             ], 401));
         }
 
@@ -100,7 +99,7 @@ class LoginRequest extends FormRequest
 
         throw new HttpResponseException(response()->json([
             'success' => false,
-            'message' => 'Too many login attempts. Please try again in ' . ceil($seconds / 60) . ' minutes.'
+            'message' => 'Too many login attempts. Please try again in '.ceil($seconds / 60).' minutes.',
         ], 429));
     }
 

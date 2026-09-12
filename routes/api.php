@@ -38,6 +38,7 @@ Route::prefix('products')->group(function () {
     Route::get('/', [ProductController::class, 'index']);
     Route::get('/form/data', [ProductController::class, 'getFormData']);
     Route::get('/{product}', [ProductController::class, 'show']);
+    Route::get('/{product}/related', [ProductController::class, 'related']);
     Route::get('/{product}/reviews', [ReviewController::class, 'index']);
 });
 
@@ -47,18 +48,31 @@ Route::prefix('categories')->group(function () {
     Route::get('/{category}', [CategoryController::class, 'show']);
 });
 
+Route::get('/categories/{slug}/products', [ProductController::class, 'indexByCategory'])
+    ->where('slug', '[a-z0-9-]+');
+
 Route::prefix('brands')->group(function () {
     Route::get('/', [BrandController::class, 'index']);
     Route::get('/{brand}', [BrandController::class, 'show']);
 });
+
+Route::get('/brands/{slug}/products', [ProductController::class, 'indexByBrand'])
+    ->where('slug', '[a-z0-9-]+');
 
 // Shipping Methods (Public - for checkout)
 Route::prefix('shipping-methods')->group(function () {
     Route::get('/', [ShippingMethodController::class, 'index']);
 });
 
-// Coupon Validation (Public)
-Route::post('/coupons/validate', [CouponController::class, 'validateCoupon']);
+// Coupon Validation (Authenticated — per-user limits require a verified user)
+Route::post('/coupons/validate', [CouponController::class, 'validateCoupon'])
+    ->middleware(['auth:sanctum', 'throttle:20,1']);
+
+// ==========================================================================
+// PAYMENT WEBHOOKS (Gateway-callbacks; signature-verified, no Sanctum auth)
+// ==========================================================================
+Route::post('/webhooks/payments/{provider}', [\App\Http\Controllers\Webhooks\PaymentWebhookController::class, 'handle'])
+    ->where('provider', '[a-z_-]+');
 
 // ==========================================================================
 // AUTHENTICATION ROUTES (Guest only - with rate limiting)
@@ -82,6 +96,7 @@ Route::middleware('auth:sanctum')->group(function () {
 
     // User Profile Routes
     Route::prefix('auth')->group(function () {
+        Route::get('/me', [AuthController::class, 'me']);
         Route::post('/logout', [AuthController::class, 'logout']);
     });
 
@@ -123,19 +138,19 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::patch('/{order}/cancel', [OrderController::class, 'cancel']);
     });
 
-    // Payments
+    // Payments — write endpoint rate-limited per user to deter replay/abuse
     Route::prefix('payments')->group(function () {
-        Route::post('/', [PaymentController::class, 'store']);
+        Route::post('/', [PaymentController::class, 'store'])->middleware('throttle:10,1');
         Route::get('/{payment}', [PaymentController::class, 'show']);
         Route::get('/order/{order}', [PaymentController::class, 'getOrderPayments']);
     });
 
-    // Reviews
+    // Reviews — write endpoints rate-limited to deter spam
     Route::prefix('reviews')->group(function () {
-        Route::post('/', [ReviewController::class, 'store']);
-        Route::put('/{review}', [ReviewController::class, 'update']);
-        Route::delete('/{review}', [ReviewController::class, 'destroy']);
-        Route::post('/{review}/helpful', [ReviewController::class, 'markHelpful']);
+        Route::post('/', [ReviewController::class, 'store'])->middleware('throttle:10,1');
+        Route::put('/{review}', [ReviewController::class, 'update'])->middleware('throttle:20,1');
+        Route::delete('/{review}', [ReviewController::class, 'destroy'])->middleware('throttle:20,1');
+        Route::post('/{review}/helpful', [ReviewController::class, 'markHelpful'])->middleware('throttle:60,1');
     });
 });
 
@@ -146,8 +161,14 @@ Route::prefix('admin')
     ->middleware(['auth:sanctum', 'admin'])
     ->group(function () {
 
-        // Dashboard stats (optional)
-        // Route::get('/dashboard', [AdminController::class, 'dashboard']);
+        // Dashboard stats
+        Route::get('/dashboard', [\App\Http\Controllers\Admin\DashboardController::class, 'index']);
+
+        // Orders Management
+        Route::prefix('orders')->group(function () {
+            Route::get('/', [OrderController::class, 'adminIndex']);
+            Route::get('/{order}', [OrderController::class, 'adminShow']);
+        });
 
         // Products Management
         Route::prefix('products')->group(function () {

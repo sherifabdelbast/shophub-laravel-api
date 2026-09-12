@@ -9,7 +9,7 @@ class CouponService
     /**
      * Validate if coupon can be used by user.
      */
-    public function isValidForUser(Coupon $coupon, int $userId, float $subtotal): bool
+    public function isValidForUser(Coupon $coupon, int $userId, string $subtotal): bool
     {
         if (! $coupon->isValid()) {
             return false;
@@ -19,7 +19,7 @@ class CouponService
             return false;
         }
 
-        if ($coupon->min_purchase && $subtotal < $coupon->min_purchase) {
+        if ($coupon->min_purchase && bccomp($subtotal, (string) $coupon->min_purchase, 2) < 0) {
             return false;
         }
 
@@ -29,7 +29,7 @@ class CouponService
     /**
      * Validate coupon code.
      */
-    public function validateCoupon(string $code, int $userId, float $subtotal): array
+    public function validateCoupon(string $code, int $userId, string $subtotal): array
     {
         $coupon = Coupon::where('code', $code)->first();
 

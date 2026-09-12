@@ -2,16 +2,24 @@
 
 namespace App\Models;
 
+use App\Notifications\ResetPasswordCustomNotification;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
-use App\Notifications\ResetPasswordCustomNotification;
 
 class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
 
+    /**
+     * Mass-assignable attributes. `role` and `is_active` are deliberately
+     * excluded — they are privilege-sensitive and must be set explicitly
+     * (forceFill) only in admin-controlled code paths.
+     *
+     * @var list<string>
+     */
     protected $fillable = [
         'first_name',
         'last_name',
@@ -20,11 +28,9 @@ class User extends Authenticatable
         'avatar_url',
         'gender',
         'birthday',
-        'role',
         'provider',
         'provider_id',
         'password',
-        'is_active',
         'last_login_at',
     ];
 
@@ -45,27 +51,27 @@ class User extends Authenticatable
     }
 
     // Relationships
-    public function addresses()
+    public function addresses(): HasMany
     {
         return $this->hasMany(Address::class);
     }
 
-    public function cartItems()
+    public function cartItems(): HasMany
     {
         return $this->hasMany(CartItem::class);
     }
 
-    public function wishlists()
+    public function wishlists(): HasMany
     {
         return $this->hasMany(Wishlist::class);
     }
 
-    public function reviews()
+    public function reviews(): HasMany
     {
         return $this->hasMany(Review::class);
     }
 
-    public function orders()
+    public function orders(): HasMany
     {
         return $this->hasMany(Order::class);
     }

@@ -18,7 +18,9 @@ class StorePaymentRequest extends FormRequest
         return [
             'order_id' => ['required', 'integer', 'exists:orders,id'],
             'payment_method' => ['required', 'string', 'in:credit_card,debit_card,paypal,stripe,cash_on_delivery'],
-            'payment_data' => ['nullable', 'array'], // For gateway-specific data
+            // Flat scalar map only — bounds key count and value size, no nested arrays.
+            'payment_data' => ['nullable', 'array', 'max:20'],
+            'payment_data.*' => ['nullable', 'string', 'max:500'],
         ];
     }
 
@@ -36,7 +38,7 @@ class StorePaymentRequest extends FormRequest
     {
         throw new HttpResponseException(response()->json([
             'success' => false,
-            'message' => 'Validation error',
+            'message' => $validator->errors()->first() ?: 'Validation error',
             'errors' => $validator->errors(),
         ], 422));
     }

@@ -1,61 +1,124 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# ShopHub — E-commerce REST API
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+A production-minded e-commerce backend built with **Laravel 12** and **PHP 8.4**. Powers a storefront frontend with products, cart, checkout, orders, payments, reviews, coupons, and authentication (including Google OAuth).
 
-## About Laravel
+This project is a portfolio piece focused on **correctness and security**, not just feature count — money math, race conditions, authorization, and data leakage were each audited and tested.
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+---
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## Tech Stack
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+| Layer      | Choice                                                                               |
+| ---------- | ------------------------------------------------------------------------------------ |
+| Framework  | Laravel 12 (streamlined structure — no `Http/Kernel`, config in `bootstrap/app.php`) |
+| Language   | PHP 8.4                                                                              |
+| Auth       | Laravel Sanctum (token), Laravel Socialite (Google OAuth)                            |
+| Database   | PostgreSQL                                                                           |
+| Testing    | PHPUnit 11 — 58 feature/unit tests                                                   |
+| Formatting | Laravel Pint                                                                         |
+| API docs   | Scribe (HTML docs + Postman collection)                                              |
 
-## Learning Laravel
+---
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+## Features
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+- **Catalog** — products, categories, brands, product images; search, filtering, sorting, pagination.
+- **Cart & checkout** — cart items, shipping methods, coupon validation, order placement.
+- **Orders & payments** — order lifecycle, simulated payment gateway, refunds.
+- **Reviews** — per-product reviews with one-review-per-user constraint and idempotent "helpful" voting.
+- **Accounts** — registration, login, Google OAuth, addresses, wishlist, profile.
+- **Admin** — product/category/brand management behind an admin role gate.
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+---
 
-## Laravel Sponsors
+## API Design
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+- Versioned under `/v1/*`.
+- Consistent JSON envelope: `{ "success": true, "data": ..., "meta": ... }`.
+- List endpoints paginated, `per_page` capped to prevent DoS.
+- Eloquent API Resources hide internal fields (`cost_price`, `stock`, timestamps) from public responses.
+- Public product pages resolve by **slug**, not numeric id (SEO-friendly URLs).
+- Validation isolated in Form Request classes.
+- Errors always rendered as JSON for `/v1/*`; exception messages are not leaked to clients.
 
-### Premium Partners
+### Example endpoints
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+```
+GET  /v1/products                    # paginated, filterable list
+GET  /v1/products/{slug}             # product detail + images
+GET  /v1/products/{slug}/related     # up to 4 same-category products
+POST /v1/auth/login                  # rate-limited (5 attempts / IP)
+POST /v1/coupons/validate            # authenticated
+```
 
-## Contributing
+Full reference: import `postman-collection.json` into Postman, or run `php artisan scribe:generate` for HTML docs.
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+---
 
-## Code of Conduct
+## Engineering Highlights
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+- **Money math** — all monetary values handled with `bcmath` at scale 2; no float arithmetic on prices, discounts, or refunds.
+- **Concurrency** — order stock decrement and payment processing wrapped in DB transactions; `random_bytes`-based identifiers instead of collision-prone `uniqid()`.
+- **Authorization** — admin routes gated; mass-assignment hardened (`role` / `is_active` removed from `$fillable`).
+- **Data integrity** — unique constraints on OAuth `provider_id` and on `reviews(user_id, product_id)`.
+- **Service layer** — business logic (`OrderService`, `PaymentService`, `CartService`, `CouponService`) kept out of controllers.
+- **Security audit** — exception-message leakage, unbounded pagination, OAuth account-linking, and sort-field injection were each found and fixed (see git history).
 
-## Security Vulnerabilities
+---
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+## Getting Started
+
+### Requirements
+
+- PHP 8.4, Composer
+- PostgreSQL
+- Node.js (for asset build, optional for API-only use)
+
+### Setup
+
+composer install
+cp .env.example .env
+php artisan key:generate
+
+# configure DB credentials in .env, then:
+
+php artisan migrate --seed
+
+php artisan serve # http://localhost:8000
+
+````
+
+### Google OAuth (optional)
+Set `GOOGLE_CLIENT_ID`, `GOOGLE_CLIENT_SECRET`, `GOOGLE_REDIRECT_URI` in `.env`.
+
+---
+
+## Testing
+
+```bash
+php artisan test                                  # full suite (58 tests)
+php artisan test --filter=ProductDetailTest       # single class
+````
+
+Tests cover happy paths, failure paths, and edge cases — pagination caps, field-leak prevention, refund accounting, review uniqueness, and authorization.
+
+---
+
+## Project Structure
+
+```
+app/Http/Controllers   # thin controllers, grouped (Product/, Auth/)
+app/Http/Requests      # Form Request validation
+app/Http/Resources     # API Resources (response shaping)
+app/Services           # OrderService, PaymentService, CartService, CouponService
+app/Models             # 16 Eloquent models
+database/migrations    # 25 migrations
+tests/Feature          # feature tests
+routes/api.php         # versioned API routes + middleware groups
+```
+
+---
 
 ## License
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+MIT.

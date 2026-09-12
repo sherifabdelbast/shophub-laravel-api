@@ -5,6 +5,7 @@ namespace App\Http\Requests\Review;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
+use Illuminate\Validation\Rule;
 
 class StoreReviewRequest extends FormRequest
 {
@@ -16,7 +17,14 @@ class StoreReviewRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'product_id' => ['required', 'integer', 'exists:products,id'],
+            'product_id' => [
+                'required',
+                'integer',
+                'exists:products,id',
+                Rule::unique('reviews', 'product_id')->where(
+                    fn ($query) => $query->where('user_id', $this->user()?->id)
+                ),
+            ],
             'order_id' => ['nullable', 'integer', 'exists:orders,id'],
             'rating' => ['required', 'integer', 'min:1', 'max:5'],
             'title' => ['nullable', 'string', 'max:255'],
@@ -31,6 +39,7 @@ class StoreReviewRequest extends FormRequest
         return [
             'product_id.required' => 'Product ID is required.',
             'product_id.exists' => 'The selected product does not exist.',
+            'product_id.unique' => 'You have already reviewed this product.',
             'rating.required' => 'Rating is required.',
             'rating.min' => 'Rating must be at least 1.',
             'rating.max' => 'Rating cannot exceed 5.',
@@ -42,7 +51,7 @@ class StoreReviewRequest extends FormRequest
     {
         throw new HttpResponseException(response()->json([
             'success' => false,
-            'message' => 'Validation error',
+            'message' => $validator->errors()->first() ?: 'Validation error',
             'errors' => $validator->errors(),
         ], 422));
     }

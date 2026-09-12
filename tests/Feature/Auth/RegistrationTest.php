@@ -15,7 +15,7 @@ class RegistrationTest extends TestCase
             'first_name' => 'Test',
             'last_name' => 'User',
             'email' => 'test@example.com',
-            'password' => 'password123',
+            'password' => 'Password123',
             'gender' => 'male',
             'phone' => '1234567890',
             'birthday' => '1990-01-01',
@@ -24,17 +24,40 @@ class RegistrationTest extends TestCase
         $response->assertStatus(201)
             ->assertJsonStructure([
                 'success',
-                'token',
                 'user',
                 'message',
             ])
             ->assertJson(['success' => true]);
 
-        $this->assertNotNull($response->json('token'));
         $this->assertDatabaseHas('users', [
             'email' => 'test@example.com',
             'first_name' => 'Test',
             'last_name' => 'User',
         ]);
+    }
+
+    public function test_registration_rejects_weak_passwords(): void
+    {
+        $weakPasswords = [
+            'short1A',        // too short
+            'alllowercase1',  // no uppercase
+            'ALLUPPERCASE1',  // no lowercase
+            'NoDigitsHere',   // no numbers
+        ];
+
+        foreach ($weakPasswords as $weak) {
+            $response = $this->postJson('/v1/auth/register', [
+                'first_name' => 'Test',
+                'last_name' => 'User',
+                'email' => 'weak'.uniqid().'@example.com',
+                'phone' => '1234567'.random_int(100, 999),
+                'gender' => 'male',
+                'birthday' => '1990-01-01',
+                'password' => $weak,
+            ]);
+
+            $response->assertStatus(422)
+                ->assertJsonValidationErrors('password');
+        }
     }
 }

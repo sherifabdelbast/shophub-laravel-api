@@ -2,8 +2,11 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Product extends Model
@@ -36,6 +39,15 @@ class Product extends Model
         'meta_title',
         'meta_description',
         'status',
+        'series',
+        'material',
+        'alt',
+        'released_at',
+        'badge',
+        'atelier_note',
+        'specs',
+        'gallery',
+        'related_slugs',
     ];
 
     protected function casts(): array
@@ -48,62 +60,74 @@ class Product extends Model
             'weight' => 'decimal:2',
             'rating' => 'decimal:2',
             'is_featured' => 'boolean',
+            'released_at' => 'date',
+            'specs' => 'array',
+            'gallery' => 'array',
+            'related_slugs' => 'array',
         ];
     }
 
+    /**
+     * Resolve route model bindings by slug instead of id.
+     */
+    public function getRouteKeyName(): string
+    {
+        return 'slug';
+    }
+
     // Relationships
-    public function category()
+    public function category(): BelongsTo
     {
         return $this->belongsTo(Category::class);
     }
 
-    public function brand()
+    public function brand(): BelongsTo
     {
         return $this->belongsTo(Brand::class);
     }
 
-    public function images()
+    public function images(): HasMany
     {
         return $this->hasMany(ProductImage::class)->orderBy('sort_order');
     }
 
-    public function reviews()
+    public function reviews(): HasMany
     {
         return $this->hasMany(Review::class);
     }
 
-    public function cartItems()
+    public function cartItems(): HasMany
     {
         return $this->hasMany(CartItem::class);
     }
 
-    public function orderItems()
+    public function orderItems(): HasMany
     {
         return $this->hasMany(OrderItem::class);
     }
 
-    public function wishlists()
+    public function wishlists(): HasMany
     {
         return $this->hasMany(Wishlist::class);
     }
 
     // Scopes
-    public function scopeActive($query)
+    public function scopeActive(Builder $query): Builder
     {
         return $query->where('status', 'active');
     }
 
-    public function scopeFeatured($query)
+    public function scopeFeatured(Builder $query): Builder
     {
         return $query->where('is_featured', true);
     }
 
-    public function scopeInStock($query)
+    public function scopeInStock(Builder $query): Builder
     {
         return $query->where('stock_status', 'in_stock');
     }
 
-    public function scopeSearch($query, $term)
+    public function scopeSearch(Builder $query, string $term): Builder
     {
         return $query->whereFullText(['name', 'description'], $term);
     }
@@ -119,20 +143,26 @@ class Product extends Model
         return $this->stock <= $this->low_stock_threshold && $this->stock > 0;
     }
 
-    public function hasDiscount()
+    public function hasDiscount(): bool
     {
-        return $this->discount_price !== null && $this->discount_price < $this->price;
+        return $this->discount_price !== null
+            && bccomp((string) $this->discount_price, (string) $this->price, 2) < 0;
     }
 
-    public function finalPrice()
+    public function finalPrice(): string
     {
-        return $this->hasDiscount() ? $this->discount_price : $this->price;
+        $price = $this->hasDiscount() ? $this->discount_price : $this->price;
+
+        // Normalize to a 2-decimal string regardless of source (DB cast or in-memory).
+        return bcadd((string) $price, '0', 2);
     }
 
-    public function profitMargin()
+    public function profitMargin(): ?string
     {
-        if (!$this->cost_price) return null;
-        return $this->finalPrice() - $this->cost_price;
+        if ($this->cost_price === null) {
+            return null;
+        }
+
+        return bcsub($this->finalPrice(), (string) $this->cost_price, 2);
     }
 }
-

@@ -29,8 +29,8 @@ class RegisterRequest extends FormRequest
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'gender' => ['required', 'string', 'in:male,female'],
             'birthday' => ['required', 'date', 'before:today'],
-            'phone' => ['required', 'string', 'min:8', 'max:20'],
-            'password' => ['required', 'string', 'min:6'],
+            'phone' => ['required', 'string', 'min:8', 'max:20', 'unique:users,phone'],
+            'password' => ['required', \Illuminate\Validation\Rules\Password::defaults()],
         ];
     }
 
@@ -46,7 +46,8 @@ class RegisterRequest extends FormRequest
             'last_name.required' => 'Last name is required.',
             'email.required' => 'Email is required.',
             'email.email' => 'Please provide a valid email address.',
-            'email.unique' => 'This email is already registered.',
+            'email.unique' => 'This email already exists. Please use another email.',
+            'phone.unique' => 'This phone already exists. Please use another phone.',
             'gender.required' => 'Gender is required.',
             'gender.in' => 'Gender must be either male or female.',
             'birthday.required' => 'Birthday is required.',
@@ -54,7 +55,6 @@ class RegisterRequest extends FormRequest
             'phone.required' => 'Phone number is required.',
             'phone.min' => 'Phone number must be at least 8 characters.',
             'password.required' => 'Password is required.',
-            'password.min' => 'Password must be at least 6 characters.',
         ];
     }
 
@@ -67,7 +67,7 @@ class RegisterRequest extends FormRequest
     {
         throw new HttpResponseException(response()->json([
             'success' => false,
-            'message' => 'Validation error',
+            'message' => $validator->errors()->first() ?: 'Validation error',
             'errors' => $validator->errors(),
         ], 422));
     }

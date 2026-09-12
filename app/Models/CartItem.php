@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class CartItem extends Model
 {
@@ -25,20 +26,23 @@ class CartItem extends Model
     }
 
     // Relationships
-    public function user()
+    public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
     }
 
-    public function product()
+    public function product(): BelongsTo
     {
         return $this->belongsTo(Product::class);
     }
 
     // Helper methods
-    public function subtotal()
+
+    /**
+     * Line subtotal as a 2-decimal string (bcmath — no float drift).
+     */
+    public function subtotal(): string
     {
-        return $this->quantity * $this->price;
+        return bcmul((string) $this->price, (string) $this->quantity, 2);
     }
 }
-

@@ -24,13 +24,12 @@ class AuthenticationTest extends TestCase
         $response->assertStatus(200)
             ->assertJsonStructure([
                 'success',
-                'token',
                 'user',
                 'message',
             ])
             ->assertJson(['success' => true]);
 
-        $this->assertNotNull($response->json('token'));
+        $this->assertAuthenticatedAs($user);
     }
 
     public function test_users_can_not_authenticate_with_invalid_password(): void
@@ -54,10 +53,8 @@ class AuthenticationTest extends TestCase
     public function test_users_can_logout(): void
     {
         $user = User::factory()->create();
-        $token = $user->createToken('test-token')->plainTextToken;
 
-        $response = $this->withHeader('Authorization', "Bearer {$token}")
-            ->postJson('/v1/auth/logout');
+        $response = $this->actingAs($user)->postJson('/v1/auth/logout');
 
         $response->assertStatus(200)
             ->assertJson([

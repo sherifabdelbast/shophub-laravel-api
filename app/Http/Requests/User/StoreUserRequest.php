@@ -2,8 +2,8 @@
 
 namespace App\Http\Requests\User;
 
-use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Contracts\Validation\Validator;
+use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
 
 class StoreUserRequest extends FormRequest
@@ -27,7 +27,7 @@ class StoreUserRequest extends FormRequest
             'first_name' => ['required', 'string', 'max:255'],
             'last_name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users,email'],
-            'password' => ['required', 'string', 'min:6'],
+            'password' => ['required', \Illuminate\Validation\Rules\Password::defaults()],
             'gender' => ['required', 'string', 'in:male,female'],
             'phone' => ['required', 'string', 'min:8', 'max:20'],
             'birthday' => ['required', 'date', 'before:today'],
@@ -51,7 +51,6 @@ class StoreUserRequest extends FormRequest
             'email.email' => 'Please provide a valid email address.',
             'email.unique' => 'This email is already registered.',
             'password.required' => 'Password is required.',
-            'password.min' => 'Password must be at least 6 characters.',
             'gender.required' => 'Gender is required.',
             'gender.in' => 'Gender must be either male or female.',
             'phone.required' => 'Phone number is required.',
@@ -71,9 +70,8 @@ class StoreUserRequest extends FormRequest
     {
         throw new HttpResponseException(response()->json([
             'success' => false,
-            'message' => 'Validation error',
-            'errors' => $validator->errors()
+            'message' => $validator->errors()->first() ?: 'Validation error',
+            'errors' => $validator->errors(),
         ], 422));
     }
 }
-

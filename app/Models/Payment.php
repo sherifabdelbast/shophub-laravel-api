@@ -2,8 +2,10 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Payment extends Model
 {
@@ -12,8 +14,10 @@ class Payment extends Model
     protected $fillable = [
         'order_id',
         'transaction_id',
+        'idempotency_key',
         'payment_method',
         'amount',
+        'refunded_amount',
         'currency',
         'status',
         'gateway_response',
@@ -24,24 +28,25 @@ class Payment extends Model
     {
         return [
             'amount' => 'decimal:2',
+            'refunded_amount' => 'decimal:2',
             'gateway_response' => 'array',
             'paid_at' => 'datetime',
         ];
     }
 
     // Relationships
-    public function order()
+    public function order(): BelongsTo
     {
         return $this->belongsTo(Order::class);
     }
 
     // Scopes
-    public function scopeCompleted($query)
+    public function scopeCompleted(Builder $query): Builder
     {
         return $query->where('status', 'completed');
     }
 
-    public function scopeFailed($query)
+    public function scopeFailed(Builder $query): Builder
     {
         return $query->where('status', 'failed');
     }
@@ -57,4 +62,3 @@ class Payment extends Model
         return $this->status === 'failed';
     }
 }
-

@@ -2,8 +2,10 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class ShippingMethod extends Model
 {
@@ -28,13 +30,13 @@ class ShippingMethod extends Model
     }
 
     // Relationships
-    public function orders()
+    public function orders(): HasMany
     {
         return $this->hasMany(Order::class);
     }
 
     // Scopes
-    public function scopeActive($query)
+    public function scopeActive(Builder $query): Builder
     {
         return $query->where('is_active', true)->orderBy('sort_order');
     }
@@ -45,7 +47,7 @@ class ShippingMethod extends Model
         if ($this->estimated_days_min && $this->estimated_days_max) {
             return "{$this->estimated_days_min}-{$this->estimated_days_max} days";
         }
+
         return null;
     }
 }
-
