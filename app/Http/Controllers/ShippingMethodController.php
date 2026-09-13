@@ -13,9 +13,9 @@ class ShippingMethodController extends Controller
 {
     public function index(Request $request): JsonResponse
     {
-        try {
-            $methods = ShippingMethod::active()->get();
+        $methods = ShippingMethod::active()->get();
 
+<<<<<<< HEAD
             return response()->json([
                 'success' => true,
                 'data' => ShippingMethodResource::collection($methods)->resolve(),
@@ -27,19 +27,25 @@ class ShippingMethodController extends Controller
                 'error' => $e->getMessage(),
             ], 500);
         }
+=======
+        return response()->json([
+            'success' => true,
+            'data' => ShippingMethodResource::collection($methods),
+        ]);
+>>>>>>> 7c08fc79fdf0567617cc049853bcea94f3aa35fe
     }
 
     public function adminIndex(Request $request): JsonResponse
     {
-        try {
-            $methods = ShippingMethod::query()
-                ->when($request->filled('is_active'), function ($query) use ($request) {
-                    $query->where('is_active', $request->boolean('is_active'));
-                })
-                ->orderBy('sort_order')
-                ->orderBy('name')
-                ->paginate($request->get('per_page', 15));
+        $methods = ShippingMethod::query()
+            ->when($request->filled('is_active'), function ($query) use ($request) {
+                $query->where('is_active', $request->boolean('is_active'));
+            })
+            ->orderBy('sort_order')
+            ->orderBy('name')
+            ->paginate(min((int) $request->get('per_page', 15), 100));
 
+<<<<<<< HEAD
             return response()->json([
                 'success' => true,
                 'data' => ShippingMethodResource::collection($methods)->resolve(),
@@ -57,13 +63,25 @@ class ShippingMethodController extends Controller
                 'error' => $e->getMessage(),
             ], 500);
         }
+=======
+        return response()->json([
+            'success' => true,
+            'data' => ShippingMethodResource::collection($methods->items()),
+            'meta' => [
+                'currentPage' => $methods->currentPage(),
+                'lastPage' => $methods->lastPage(),
+                'perPage' => $methods->perPage(),
+                'total' => $methods->total(),
+            ],
+        ]);
+>>>>>>> 7c08fc79fdf0567617cc049853bcea94f3aa35fe
     }
 
     public function store(StoreShippingMethodRequest $request): JsonResponse
     {
-        try {
-            $method = ShippingMethod::create($request->validated());
+        $method = ShippingMethod::create($request->validated());
 
+<<<<<<< HEAD
             return response()->json([
                 'success' => true,
                 'message' => 'Shipping method created successfully',
@@ -76,6 +94,13 @@ class ShippingMethodController extends Controller
                 'error' => $e->getMessage(),
             ], 500);
         }
+=======
+        return response()->json([
+            'success' => true,
+            'message' => 'Shipping method created successfully',
+            'data' => new ShippingMethodResource($method),
+        ], 201);
+>>>>>>> 7c08fc79fdf0567617cc049853bcea94f3aa35fe
     }
 
     public function show(ShippingMethod $shippingMethod): JsonResponse
@@ -88,9 +113,9 @@ class ShippingMethodController extends Controller
 
     public function update(UpdateShippingMethodRequest $request, ShippingMethod $shippingMethod): JsonResponse
     {
-        try {
-            $shippingMethod->update($request->validated());
+        $shippingMethod->update($request->validated());
 
+<<<<<<< HEAD
             return response()->json([
                 'success' => true,
                 'message' => 'Shipping method updated successfully',
@@ -103,10 +128,18 @@ class ShippingMethodController extends Controller
                 'error' => $e->getMessage(),
             ], 500);
         }
+=======
+        return response()->json([
+            'success' => true,
+            'message' => 'Shipping method updated successfully',
+            'data' => new ShippingMethodResource($shippingMethod->fresh()),
+        ]);
+>>>>>>> 7c08fc79fdf0567617cc049853bcea94f3aa35fe
     }
 
     public function destroy(ShippingMethod $shippingMethod): JsonResponse
     {
+<<<<<<< HEAD
         try {
             if ($shippingMethod->orders()->count() > 0) {
                 return response()->json([
@@ -122,11 +155,21 @@ class ShippingMethodController extends Controller
                 'message' => 'Shipping method deleted successfully',
             ]);
         } catch (\Exception $e) {
+=======
+        // Check if method is used in orders
+        if ($shippingMethod->orders()->count() > 0) {
+>>>>>>> 7c08fc79fdf0567617cc049853bcea94f3aa35fe
             return response()->json([
                 'success' => false,
-                'message' => 'Failed to delete shipping method',
-                'error' => $e->getMessage(),
-            ], 500);
+                'message' => 'Cannot delete shipping method. It has associated orders.',
+            ], 422);
         }
+
+        $shippingMethod->delete();
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Shipping method deleted successfully',
+        ]);
     }
 }

@@ -19,9 +19,13 @@ class UserResource extends JsonResource
             'avatarUrl' => $this->avatar_url,
             'gender' => $this->gender,
             'birthday' => $this->birthday,
+<<<<<<< HEAD
             'role' => $this->role,
             'emailVerifiedAt' => $this->email_verified_at,
             'createdAt' => $this->created_at,
+=======
+            'emailVerifiedAt' => optional($this->email_verified_at)->toIso8601String(),
+>>>>>>> 7c08fc79fdf0567617cc049853bcea94f3aa35fe
         ];
     }
 }

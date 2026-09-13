@@ -20,29 +20,21 @@ class OrderController extends Controller
      */
     public function index(Request $request): JsonResponse
     {
-        try {
-            $orders = Order::where('user_id', $request->user()->id)
-                ->with(['items', 'shippingMethod'])
-                ->latest()
-                ->paginate($request->get('per_page', 15));
+        $orders = Order::where('user_id', $request->user()->id)
+            ->with(['items', 'shippingMethod'])
+            ->latest()
+            ->paginate(min((int) $request->get('per_page', 15), 100));
 
-            return response()->json([
-                'success' => true,
-                'data' => OrderResource::collection($orders->items()),
-                'meta' => [
-                    'current_page' => $orders->currentPage(),
-                    'last_page' => $orders->lastPage(),
-                    'per_page' => $orders->perPage(),
-                    'total' => $orders->total(),
-                ],
-            ]);
-        } catch (\Exception $e) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Failed to retrieve orders',
-                'error' => $e->getMessage(),
-            ], 500);
-        }
+        return response()->json([
+            'success' => true,
+            'data' => OrderResource::collection($orders->items()),
+            'meta' => [
+                'currentPage' => $orders->currentPage(),
+                'lastPage' => $orders->lastPage(),
+                'perPage' => $orders->perPage(),
+                'total' => $orders->total(),
+            ],
+        ]);
     }
 
     /**
@@ -66,7 +58,7 @@ class OrderController extends Controller
                 'message' => 'Order created successfully',
                 'data' => new OrderResource($order),
             ], 201);
-        } catch (\Exception $e) {
+        } catch (\DomainException $e) {
             return response()->json([
                 'success' => false,
                 'message' => $e->getMessage(),
@@ -81,28 +73,14 @@ class OrderController extends Controller
      */
     public function show(Request $request, Order $order): JsonResponse
     {
-        try {
-            // Ensure user owns this order
-            if ($order->user_id !== $request->user()->id) {
-                return response()->json([
-                    'success' => false,
-                    'message' => 'Unauthorized',
-                ], 403);
-            }
+        $this->authorize('view', $order);
 
-            $order->load(['items.product', 'shippingMethod', 'coupon', 'payments']);
+        $order->load(['items.product', 'shippingMethod', 'coupon', 'payments']);
 
-            return response()->json([
-                'success' => true,
-                'data' => new OrderResource($order),
-            ]);
-        } catch (\Exception $e) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Failed to retrieve order',
-                'error' => $e->getMessage(),
-            ], 500);
-        }
+        return response()->json([
+            'success' => true,
+            'data' => new OrderResource($order),
+        ]);
     }
 
     /**
@@ -112,27 +90,72 @@ class OrderController extends Controller
      */
     public function cancel(Request $request, Order $order): JsonResponse
     {
-        try {
-            $request->validate([
-                'reason' => ['nullable', 'string', 'max:500'],
-            ]);
+        $this->authorize('cancel', $order);
 
+        $request->validate([
+            'reason' => ['nullable', 'string', 'max:500'],
+        ]);
+
+        try {
             $order = $this->orderService->cancelOrder(
                 $order,
                 $request->user(),
                 $request->reason
             );
-
-            return response()->json([
-                'success' => true,
-                'message' => 'Order cancelled successfully',
-                'data' => new OrderResource($order->load(['items', 'shippingMethod'])),
-            ]);
-        } catch (\Exception $e) {
+        } catch (\DomainException $e) {
             return response()->json([
                 'success' => false,
                 'message' => $e->getMessage(),
             ], 400);
         }
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Order cancelled successfully',
+            'data' => new OrderResource($order->load(['items', 'shippingMethod'])),
+        ]);
+    }
+
+    /**
+     * List all orders (Admin only).
+     *
+     * @group Admin - Orders
+     */
+    public function adminIndex(Request $request): JsonResponse
+    {
+        $orders = Order::query()
+            ->with(['shippingMethod', 'user:id,first_name,last_name,email'])
+            ->withCount('items')
+            ->when($request->filled('status'), fn ($q) => $q->where('status', $request->status))
+            ->when($request->filled('payment_status'), fn ($q) => $q->where('payment_status', $request->payment_status))
+            ->when($request->filled('user_id'), fn ($q) => $q->where('user_id', $request->user_id))
+            ->latest()
+            ->paginate(min((int) $request->get('per_page', 15), 100));
+
+        return response()->json([
+            'success' => true,
+            'data' => OrderResource::collection($orders->items()),
+            'meta' => [
+                'currentPage' => $orders->currentPage(),
+                'lastPage' => $orders->lastPage(),
+                'perPage' => $orders->perPage(),
+                'total' => $orders->total(),
+            ],
+        ]);
+    }
+
+    /**
+     * Show order detail (Admin only).
+     *
+     * @group Admin - Orders
+     */
+    public function adminShow(Order $order): JsonResponse
+    {
+        $order->load(['items.product', 'shippingMethod', 'coupon', 'payments', 'user:id,first_name,last_name,email']);
+
+        return response()->json([
+            'success' => true,
+            'data' => new OrderResource($order),
+        ]);
     }
 }

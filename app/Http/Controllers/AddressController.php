@@ -18,23 +18,15 @@ class AddressController extends Controller
      */
     public function index(Request $request): JsonResponse
     {
-        try {
-            $addresses = Address::where('user_id', $request->user()->id)
-                ->orderBy('is_default', 'desc')
-                ->orderBy('created_at', 'desc')
-                ->get();
+        $addresses = Address::where('user_id', $request->user()->id)
+            ->orderBy('is_default', 'desc')
+            ->orderBy('created_at', 'desc')
+            ->get();
 
-            return response()->json([
-                'success' => true,
-                'data' => AddressResource::collection($addresses),
-            ]);
-        } catch (\Exception $e) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Failed to retrieve addresses',
-                'error' => $e->getMessage(),
-            ], 500);
-        }
+        return response()->json([
+            'success' => true,
+            'data' => AddressResource::collection($addresses),
+        ]);
     }
 
     /**
@@ -44,30 +36,22 @@ class AddressController extends Controller
      */
     public function store(StoreAddressRequest $request): JsonResponse
     {
-        try {
-            $data = $request->validated();
-            $data['user_id'] = $request->user()->id;
+        $data = $request->validated();
+        $data['user_id'] = $request->user()->id;
 
-            // If this is set as default, unset other defaults
-            if ($request->boolean('is_default')) {
-                Address::where('user_id', $request->user()->id)
-                    ->update(['is_default' => false]);
-            }
-
-            $address = Address::create($data);
-
-            return response()->json([
-                'success' => true,
-                'message' => 'Address created successfully',
-                'data' => new AddressResource($address),
-            ], 201);
-        } catch (\Exception $e) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Failed to create address',
-                'error' => $e->getMessage(),
-            ], 500);
+        // If this is set as default, unset other defaults
+        if ($request->boolean('is_default')) {
+            Address::where('user_id', $request->user()->id)
+                ->update(['is_default' => false]);
         }
+
+        $address = Address::create($data);
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Address created successfully',
+            'data' => new AddressResource($address),
+        ], 201);
     }
 
     /**
@@ -77,13 +61,7 @@ class AddressController extends Controller
      */
     public function show(Request $request, Address $address): JsonResponse
     {
-        // Ensure user owns this address
-        if ($address->user_id !== $request->user()->id) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Unauthorized',
-            ], 403);
-        }
+        $this->authorize('view', $address);
 
         return response()->json([
             'success' => true,
@@ -98,38 +76,24 @@ class AddressController extends Controller
      */
     public function update(UpdateAddressRequest $request, Address $address): JsonResponse
     {
-        try {
-            // Ensure user owns this address
-            if ($address->user_id !== $request->user()->id) {
-                return response()->json([
-                    'success' => false,
-                    'message' => 'Unauthorized',
-                ], 403);
-            }
+        $this->authorize('update', $address);
 
-            $data = $request->validated();
+        $data = $request->validated();
 
-            // If setting as default, unset other defaults
-            if (isset($data['is_default']) && $data['is_default']) {
-                Address::where('user_id', $request->user()->id)
-                    ->where('id', '!=', $address->id)
-                    ->update(['is_default' => false]);
-            }
-
-            $address->update($data);
-
-            return response()->json([
-                'success' => true,
-                'message' => 'Address updated successfully',
-                'data' => new AddressResource($address->fresh()),
-            ]);
-        } catch (\Exception $e) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Failed to update address',
-                'error' => $e->getMessage(),
-            ], 500);
+        // If setting as default, unset other defaults
+        if (isset($data['is_default']) && $data['is_default']) {
+            Address::where('user_id', $request->user()->id)
+                ->where('id', '!=', $address->id)
+                ->update(['is_default' => false]);
         }
+
+        $address->update($data);
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Address updated successfully',
+            'data' => new AddressResource($address->fresh()),
+        ]);
     }
 
     /**
@@ -139,28 +103,14 @@ class AddressController extends Controller
      */
     public function destroy(Request $request, Address $address): JsonResponse
     {
-        try {
-            // Ensure user owns this address
-            if ($address->user_id !== $request->user()->id) {
-                return response()->json([
-                    'success' => false,
-                    'message' => 'Unauthorized',
-                ], 403);
-            }
+        $this->authorize('delete', $address);
 
-            $address->delete();
+        $address->delete();
 
-            return response()->json([
-                'success' => true,
-                'message' => 'Address deleted successfully',
-            ]);
-        } catch (\Exception $e) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Failed to delete address',
-                'error' => $e->getMessage(),
-            ], 500);
-        }
+        return response()->json([
+            'success' => true,
+            'message' => 'Address deleted successfully',
+        ]);
     }
 
     /**
@@ -170,34 +120,20 @@ class AddressController extends Controller
      */
     public function setDefault(Request $request, Address $address): JsonResponse
     {
-        try {
-            // Ensure user owns this address
-            if ($address->user_id !== $request->user()->id) {
-                return response()->json([
-                    'success' => false,
-                    'message' => 'Unauthorized',
-                ], 403);
-            }
+        $this->authorize('setDefault', $address);
 
-            // Unset all other defaults
-            Address::where('user_id', $request->user()->id)
-                ->where('id', '!=', $address->id)
-                ->update(['is_default' => false]);
+        // Unset all other defaults
+        Address::where('user_id', $request->user()->id)
+            ->where('id', '!=', $address->id)
+            ->update(['is_default' => false]);
 
-            // Set this as default
-            $address->update(['is_default' => true]);
+        // Set this as default
+        $address->update(['is_default' => true]);
 
-            return response()->json([
-                'success' => true,
-                'message' => 'Default address updated successfully',
-                'data' => new AddressResource($address->fresh()),
-            ]);
-        } catch (\Exception $e) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Failed to set default address',
-                'error' => $e->getMessage(),
-            ], 500);
-        }
+        return response()->json([
+            'success' => true,
+            'message' => 'Default address updated successfully',
+            'data' => new AddressResource($address->fresh()),
+        ]);
     }
 }

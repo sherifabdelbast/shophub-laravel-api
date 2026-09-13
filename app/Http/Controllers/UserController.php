@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\User\StoreUserRequest;
 use App\Http\Requests\User\UpdateUserRequest;
+use App\Http\Resources\UserResource;
 use App\Models\User;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
@@ -15,13 +17,20 @@ class UserController extends Controller
      *
      * @group Admin - Users
      */
-    public function index(): JsonResponse
+    public function index(Request $request): JsonResponse
     {
-        $users = User::all();
+        $perPage = min((int) $request->get('per_page', 15), 100);
+        $users = User::query()->latest()->paginate($perPage);
 
         return response()->json([
             'success' => true,
-            'data' => $users,
+            'data' => UserResource::collection($users->items()),
+            'meta' => [
+                'currentPage' => $users->currentPage(),
+                'lastPage' => $users->lastPage(),
+                'perPage' => $users->perPage(),
+                'total' => $users->total(),
+            ],
         ]);
     }
 
@@ -32,30 +41,19 @@ class UserController extends Controller
      */
     public function store(StoreUserRequest $request): JsonResponse
     {
-        try {
-            $data = $request->validated();
-            $data['password'] = Hash::make($data['password']);
+        $data = $request->validated();
+        $data['password'] = Hash::make($data['password']);
+        $data['role'] = $data['role'] ?? 'customer';
 
-            // Set default role if not provided
-            if (! isset($data['role'])) {
-                $data['role'] = 'customer';
-            }
+        // forceCreate: admin endpoint may set the guarded role / is_active
+        // fields. Input is already whitelisted by StoreUserRequest.
+        $user = User::forceCreate($data);
 
-            $user = User::create($data);
-
-            return response()->json([
-                'success' => true,
-                'message' => 'User created successfully',
-                'data' => $user,
-            ], 201);
-
-        } catch (\Exception $e) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Failed to create user',
-                'error' => $e->getMessage(),
-            ], 500);
-        }
+        return response()->json([
+            'success' => true,
+            'message' => 'User created successfully',
+            'data' => new UserResource($user),
+        ], 201);
     }
 
     /**
@@ -67,7 +65,7 @@ class UserController extends Controller
     {
         return response()->json([
             'success' => true,
-            'data' => $user,
+            'data' => new UserResource($user),
         ]);
     }
 
@@ -78,21 +76,15 @@ class UserController extends Controller
      */
     public function update(UpdateUserRequest $request, User $user): JsonResponse
     {
-        try {
-            $user->update($request->validated());
+        // forceFill: admin endpoint may set the guarded role / is_active
+        // fields. Input is already whitelisted by UpdateUserRequest.
+        $user->forceFill($request->validated())->save();
 
-            return response()->json([
-                'success' => true,
-                'message' => 'User updated successfully',
-                'data' => $user->fresh(),
-            ]);
-        } catch (\Exception $e) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Failed to update user',
-                'error' => $e->getMessage(),
-            ], 500);
-        }
+        return response()->json([
+            'success' => true,
+            'message' => 'User updated successfully',
+            'data' => new UserResource($user->fresh()),
+        ]);
     }
 
     /**
@@ -102,18 +94,10 @@ class UserController extends Controller
      */
     public function destroy(User $user)
     {
-        try {
-            $user->delete();
+        $user->delete();
 
-            return response()->json([
-                'message' => 'User deleted successfully',
-            ]);
-
-        } catch (\Exception $e) {
-            return response()->json([
-                'message' => 'Failed to delete user',
-                'error' => $e->getMessage(),
-            ], 500);
-        }
+        return response()->json([
+            'message' => 'User deleted successfully',
+        ]);
     }
 }

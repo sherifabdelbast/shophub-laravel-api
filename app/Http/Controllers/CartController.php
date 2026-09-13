@@ -20,24 +20,16 @@ class CartController extends Controller
      */
     public function index(Request $request): JsonResponse
     {
-        try {
-            $cart = $this->cartService->getCart($request->user());
+        $cart = $this->cartService->getCart($request->user());
 
-            return response()->json([
-                'success' => true,
-                'data' => [
-                    'items' => CartItemResource::collection($cart['items']),
-                    'subtotal' => $cart['subtotal'],
-                    'item_count' => $cart['item_count'],
-                ],
-            ]);
-        } catch (\Exception $e) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Failed to retrieve cart',
-                'error' => $e->getMessage(),
-            ], 500);
-        }
+        return response()->json([
+            'success' => true,
+            'data' => [
+                'items' => CartItemResource::collection($cart['items']),
+                'subtotal' => $cart['subtotal'],
+                'item_count' => $cart['item_count'],
+            ],
+        ]);
     }
 
     /**
@@ -59,7 +51,7 @@ class CartController extends Controller
                 'message' => 'Item added to cart successfully',
                 'data' => new CartItemResource($cartItem),
             ], 201);
-        } catch (\Exception $e) {
+        } catch (\DomainException $e) {
             return response()->json([
                 'success' => false,
                 'message' => $e->getMessage(),
@@ -72,12 +64,14 @@ class CartController extends Controller
      *
      * @group Cart
      */
-    public function update(UpdateCartRequest $request, int $cartItem): JsonResponse
+    public function update(UpdateCartRequest $request, \App\Models\CartItem $cartItem): JsonResponse
     {
+        $this->authorize('update', $cartItem);
+
         try {
             $cartItem = $this->cartService->updateQuantity(
                 $request->user(),
-                $cartItem,
+                $cartItem->id,
                 $request->quantity
             );
 
@@ -86,7 +80,7 @@ class CartController extends Controller
                 'message' => 'Cart item updated successfully',
                 'data' => new CartItemResource($cartItem),
             ]);
-        } catch (\Exception $e) {
+        } catch (\DomainException $e) {
             return response()->json([
                 'success' => false,
                 'message' => $e->getMessage(),
@@ -99,22 +93,16 @@ class CartController extends Controller
      *
      * @group Cart
      */
-    public function destroy(Request $request, int $cartItem): JsonResponse
+    public function destroy(Request $request, \App\Models\CartItem $cartItem): JsonResponse
     {
-        try {
-            $this->cartService->removeItem($request->user(), $cartItem);
+        $this->authorize('delete', $cartItem);
 
-            return response()->json([
-                'success' => true,
-                'message' => 'Item removed from cart successfully',
-            ]);
-        } catch (\Exception $e) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Failed to remove item from cart',
-                'error' => $e->getMessage(),
-            ], 400);
-        }
+        $this->cartService->removeItem($request->user(), $cartItem->id);
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Item removed from cart successfully',
+        ]);
     }
 
     /**
@@ -124,19 +112,11 @@ class CartController extends Controller
      */
     public function clear(Request $request): JsonResponse
     {
-        try {
-            $this->cartService->clearCart($request->user());
+        $this->cartService->clearCart($request->user());
 
-            return response()->json([
-                'success' => true,
-                'message' => 'Cart cleared successfully',
-            ]);
-        } catch (\Exception $e) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Failed to clear cart',
-                'error' => $e->getMessage(),
-            ], 500);
-        }
+        return response()->json([
+            'success' => true,
+            'message' => 'Cart cleared successfully',
+        ]);
     }
 }

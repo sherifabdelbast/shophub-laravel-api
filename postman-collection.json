@@ -5,14 +5,14 @@
             "key": "baseUrl",
             "type": "string",
             "name": "string",
-            "value": "http:\/\/localhost:8000"
+            "value": "http://localhost:8000"
         }
     ],
     "info": {
         "name": "Laravel API Documentation",
         "_postman_id": "b069a810-c012-430d-af5c-add5c5e60580",
         "description": "ShopHub API - E-commerce backend API for Angular frontend",
-        "schema": "https:\/\/schema.getpostman.com\/json\/collection\/v2.1.0\/collection.json"
+        "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
     },
     "item": [
         {
@@ -24,19 +24,19 @@
                     "request": {
                         "url": {
                             "host": "{{baseUrl}}",
-                            "path": "v1\/addresses",
+                            "path": "v1/addresses",
                             "query": [],
-                            "raw": "{{baseUrl}}\/v1\/addresses"
+                            "raw": "{{baseUrl}}/v1/addresses"
                         },
                         "method": "GET",
                         "header": [
                             {
                                 "key": "Content-Type",
-                                "value": "application\/json"
+                                "value": "application/json"
                             },
                             {
                                 "key": "Accept",
-                                "value": "application\/json"
+                                "value": "application/json"
                             }
                         ],
                         "body": null,
@@ -54,7 +54,7 @@
                                 },
                                 {
                                     "key": "content-type",
-                                    "value": "application\/json"
+                                    "value": "application/json"
                                 }
                             ],
                             "code": 401,
@@ -68,19 +68,19 @@
                     "request": {
                         "url": {
                             "host": "{{baseUrl}}",
-                            "path": "v1\/addresses",
+                            "path": "v1/addresses",
                             "query": [],
-                            "raw": "{{baseUrl}}\/v1\/addresses"
+                            "raw": "{{baseUrl}}/v1/addresses"
                         },
                         "method": "POST",
                         "header": [
                             {
                                 "key": "Content-Type",
-                                "value": "application\/json"
+                                "value": "application/json"
                             },
                             {
                                 "key": "Accept",
-                                "value": "application\/json"
+                                "value": "application/json"
                             }
                         ],
                         "body": {
@@ -99,9 +99,9 @@
                     "request": {
                         "url": {
                             "host": "{{baseUrl}}",
-                            "path": "v1\/addresses\/:address_id",
+                            "path": "v1/addresses/:address_id",
                             "query": [],
-                            "raw": "{{baseUrl}}\/v1\/addresses\/:address_id",
+                            "raw": "{{baseUrl}}/v1/addresses/:address_id",
                             "variable": [
                                 {
                                     "id": "address_id",
@@ -115,11 +115,11 @@
                         "header": [
                             {
                                 "key": "Content-Type",
-                                "value": "application\/json"
+                                "value": "application/json"
                             },
                             {
                                 "key": "Accept",
-                                "value": "application\/json"
+                                "value": "application/json"
                             }
                         ],
                         "body": null,
@@ -137,7 +137,7 @@
                                 },
                                 {
                                     "key": "content-type",
-                                    "value": "application\/json"
+                                    "value": "application/json"
                                 }
                             ],
                             "code": 401,
@@ -151,9 +151,9 @@
                     "request": {
                         "url": {
                             "host": "{{baseUrl}}",
-                            "path": "v1\/addresses\/:address_id",
+                            "path": "v1/addresses/:address_id",
                             "query": [],
-                            "raw": "{{baseUrl}}\/v1\/addresses\/:address_id",
+                            "raw": "{{baseUrl}}/v1/addresses/:address_id",
                             "variable": [
                                 {
                                     "id": "address_id",
@@ -167,11 +167,11 @@
                         "header": [
                             {
                                 "key": "Content-Type",
-                                "value": "application\/json"
+                                "value": "application/json"
                             },
                             {
                                 "key": "Accept",
-                                "value": "application\/json"
+                                "value": "application/json"
                             }
                         ],
                         "body": {
@@ -190,9 +190,9 @@
                     "request": {
                         "url": {
                             "host": "{{baseUrl}}",
-                            "path": "v1\/addresses\/:address_id",
+                            "path": "v1/addresses/:address_id",
                             "query": [],
-                            "raw": "{{baseUrl}}\/v1\/addresses\/:address_id",
+                            "raw": "{{baseUrl}}/v1/addresses/:address_id",
                             "variable": [
                                 {
                                     "id": "address_id",
@@ -206,11 +206,11 @@
                         "header": [
                             {
                                 "key": "Content-Type",
-                                "value": "application\/json"
+                                "value": "application/json"
                             },
                             {
                                 "key": "Accept",
-                                "value": "application\/json"
+                                "value": "application/json"
                             }
                         ],
                         "body": null,
@@ -226,9 +226,9 @@
                     "request": {
                         "url": {
                             "host": "{{baseUrl}}",
-                            "path": "v1\/addresses\/:address_id\/set-default",
+                            "path": "v1/addresses/:address_id/set-default",
                             "query": [],
-                            "raw": "{{baseUrl}}\/v1\/addresses\/:address_id\/set-default",
+                            "raw": "{{baseUrl}}/v1/addresses/:address_id/set-default",
                             "variable": [
                                 {
                                     "id": "address_id",
@@ -242,11 +242,11 @@
                         "header": [
                             {
                                 "key": "Content-Type",
-                                "value": "application\/json"
+                                "value": "application/json"
                             },
                             {
                                 "key": "Accept",
-                                "value": "application\/json"
+                                "value": "application/json"
                             }
                         ],
                         "body": null,
@@ -268,19 +268,19 @@
                     "request": {
                         "url": {
                             "host": "{{baseUrl}}",
-                            "path": "v1\/admin\/brands",
+                            "path": "v1/admin/brands",
                             "query": [],
-                            "raw": "{{baseUrl}}\/v1\/admin\/brands"
+                            "raw": "{{baseUrl}}/v1/admin/brands"
                         },
                         "method": "POST",
                         "header": [
                             {
                                 "key": "Content-Type",
-                                "value": "application\/json"
+                                "value": "application/json"
                             },
                             {
                                 "key": "Accept",
-                                "value": "application\/json"
+                                "value": "application/json"
                             }
                         ],
                         "body": null,
@@ -296,9 +296,9 @@
                     "request": {
                         "url": {
                             "host": "{{baseUrl}}",
-                            "path": "v1\/admin\/brands\/:brand_id",
+                            "path": "v1/admin/brands/:brand_id",
                             "query": [],
-                            "raw": "{{baseUrl}}\/v1\/admin\/brands\/:brand_id",
+                            "raw": "{{baseUrl}}/v1/admin/brands/:brand_id",
                             "variable": [
                                 {
                                     "id": "brand_id",
@@ -312,11 +312,11 @@
                         "header": [
                             {
                                 "key": "Content-Type",
-                                "value": "application\/json"
+                                "value": "application/json"
                             },
                             {
                                 "key": "Accept",
-                                "value": "application\/json"
+                                "value": "application/json"
                             }
                         ],
                         "body": null,
@@ -332,9 +332,9 @@
                     "request": {
                         "url": {
                             "host": "{{baseUrl}}",
-                            "path": "v1\/admin\/brands\/:brand_id\/status",
+                            "path": "v1/admin/brands/:brand_id/status",
                             "query": [],
-                            "raw": "{{baseUrl}}\/v1\/admin\/brands\/:brand_id\/status",
+                            "raw": "{{baseUrl}}/v1/admin/brands/:brand_id/status",
                             "variable": [
                                 {
                                     "id": "brand_id",
@@ -348,11 +348,11 @@
                         "header": [
                             {
                                 "key": "Content-Type",
-                                "value": "application\/json"
+                                "value": "application/json"
                             },
                             {
                                 "key": "Accept",
-                                "value": "application\/json"
+                                "value": "application/json"
                             }
                         ],
                         "body": null,
@@ -368,9 +368,9 @@
                     "request": {
                         "url": {
                             "host": "{{baseUrl}}",
-                            "path": "v1\/admin\/brands\/:brand_id",
+                            "path": "v1/admin/brands/:brand_id",
                             "query": [],
-                            "raw": "{{baseUrl}}\/v1\/admin\/brands\/:brand_id",
+                            "raw": "{{baseUrl}}/v1/admin/brands/:brand_id",
                             "variable": [
                                 {
                                     "id": "brand_id",
@@ -384,11 +384,11 @@
                         "header": [
                             {
                                 "key": "Content-Type",
-                                "value": "application\/json"
+                                "value": "application/json"
                             },
                             {
                                 "key": "Accept",
-                                "value": "application\/json"
+                                "value": "application/json"
                             }
                         ],
                         "body": null,
@@ -410,19 +410,19 @@
                     "request": {
                         "url": {
                             "host": "{{baseUrl}}",
-                            "path": "v1\/admin\/categories",
+                            "path": "v1/admin/categories",
                             "query": [],
-                            "raw": "{{baseUrl}}\/v1\/admin\/categories"
+                            "raw": "{{baseUrl}}/v1/admin/categories"
                         },
                         "method": "POST",
                         "header": [
                             {
                                 "key": "Content-Type",
-                                "value": "multipart\/form-data"
+                                "value": "multipart/form-data"
                             },
                             {
                                 "key": "Accept",
-                                "value": "application\/json"
+                                "value": "application/json"
                             }
                         ],
                         "body": {
@@ -465,9 +465,9 @@
                     "request": {
                         "url": {
                             "host": "{{baseUrl}}",
-                            "path": "v1\/admin\/categories\/edit\/:category_id",
+                            "path": "v1/admin/categories/edit/:category_id",
                             "query": [],
-                            "raw": "{{baseUrl}}\/v1\/admin\/categories\/edit\/:category_id",
+                            "raw": "{{baseUrl}}/v1/admin/categories/edit/:category_id",
                             "variable": [
                                 {
                                     "id": "category_id",
@@ -481,11 +481,11 @@
                         "header": [
                             {
                                 "key": "Content-Type",
-                                "value": "multipart\/form-data"
+                                "value": "multipart/form-data"
                             },
                             {
                                 "key": "Accept",
-                                "value": "application\/json"
+                                "value": "application/json"
                             }
                         ],
                         "body": {
@@ -527,9 +527,9 @@
                     "request": {
                         "url": {
                             "host": "{{baseUrl}}",
-                            "path": "v1\/admin\/categories\/:category_id\/status",
+                            "path": "v1/admin/categories/:category_id/status",
                             "query": [],
-                            "raw": "{{baseUrl}}\/v1\/admin\/categories\/:category_id\/status",
+                            "raw": "{{baseUrl}}/v1/admin/categories/:category_id/status",
                             "variable": [
                                 {
                                     "id": "category_id",
@@ -543,11 +543,11 @@
                         "header": [
                             {
                                 "key": "Content-Type",
-                                "value": "application\/json"
+                                "value": "application/json"
                             },
                             {
                                 "key": "Accept",
-                                "value": "application\/json"
+                                "value": "application/json"
                             }
                         ],
                         "body": {
@@ -566,9 +566,9 @@
                     "request": {
                         "url": {
                             "host": "{{baseUrl}}",
-                            "path": "v1\/admin\/categories\/:category_id",
+                            "path": "v1/admin/categories/:category_id",
                             "query": [],
-                            "raw": "{{baseUrl}}\/v1\/admin\/categories\/:category_id",
+                            "raw": "{{baseUrl}}/v1/admin/categories/:category_id",
                             "variable": [
                                 {
                                     "id": "category_id",
@@ -582,11 +582,11 @@
                         "header": [
                             {
                                 "key": "Content-Type",
-                                "value": "application\/json"
+                                "value": "application/json"
                             },
                             {
                                 "key": "Accept",
-                                "value": "application\/json"
+                                "value": "application/json"
                             }
                         ],
                         "body": null,
@@ -608,19 +608,19 @@
                     "request": {
                         "url": {
                             "host": "{{baseUrl}}",
-                            "path": "v1\/admin\/coupons",
+                            "path": "v1/admin/coupons",
                             "query": [],
-                            "raw": "{{baseUrl}}\/v1\/admin\/coupons"
+                            "raw": "{{baseUrl}}/v1/admin/coupons"
                         },
                         "method": "GET",
                         "header": [
                             {
                                 "key": "Content-Type",
-                                "value": "application\/json"
+                                "value": "application/json"
                             },
                             {
                                 "key": "Accept",
-                                "value": "application\/json"
+                                "value": "application/json"
                             }
                         ],
                         "body": null,
@@ -638,7 +638,7 @@
                                 },
                                 {
                                     "key": "content-type",
-                                    "value": "application\/json"
+                                    "value": "application/json"
                                 }
                             ],
                             "code": 401,
@@ -652,19 +652,19 @@
                     "request": {
                         "url": {
                             "host": "{{baseUrl}}",
-                            "path": "v1\/admin\/coupons",
+                            "path": "v1/admin/coupons",
                             "query": [],
-                            "raw": "{{baseUrl}}\/v1\/admin\/coupons"
+                            "raw": "{{baseUrl}}/v1/admin/coupons"
                         },
                         "method": "POST",
                         "header": [
                             {
                                 "key": "Content-Type",
-                                "value": "application\/json"
+                                "value": "application/json"
                             },
                             {
                                 "key": "Accept",
-                                "value": "application\/json"
+                                "value": "application/json"
                             }
                         ],
                         "body": {
@@ -683,9 +683,9 @@
                     "request": {
                         "url": {
                             "host": "{{baseUrl}}",
-                            "path": "v1\/admin\/coupons\/:coupon_id",
+                            "path": "v1/admin/coupons/:coupon_id",
                             "query": [],
-                            "raw": "{{baseUrl}}\/v1\/admin\/coupons\/:coupon_id",
+                            "raw": "{{baseUrl}}/v1/admin/coupons/:coupon_id",
                             "variable": [
                                 {
                                     "id": "coupon_id",
@@ -699,11 +699,11 @@
                         "header": [
                             {
                                 "key": "Content-Type",
-                                "value": "application\/json"
+                                "value": "application/json"
                             },
                             {
                                 "key": "Accept",
-                                "value": "application\/json"
+                                "value": "application/json"
                             }
                         ],
                         "body": null,
@@ -721,7 +721,7 @@
                                 },
                                 {
                                     "key": "content-type",
-                                    "value": "application\/json"
+                                    "value": "application/json"
                                 }
                             ],
                             "code": 401,
@@ -735,9 +735,9 @@
                     "request": {
                         "url": {
                             "host": "{{baseUrl}}",
-                            "path": "v1\/admin\/coupons\/:coupon_id",
+                            "path": "v1/admin/coupons/:coupon_id",
                             "query": [],
-                            "raw": "{{baseUrl}}\/v1\/admin\/coupons\/:coupon_id",
+                            "raw": "{{baseUrl}}/v1/admin/coupons/:coupon_id",
                             "variable": [
                                 {
                                     "id": "coupon_id",
@@ -751,11 +751,11 @@
                         "header": [
                             {
                                 "key": "Content-Type",
-                                "value": "application\/json"
+                                "value": "application/json"
                             },
                             {
                                 "key": "Accept",
-                                "value": "application\/json"
+                                "value": "application/json"
                             }
                         ],
                         "body": {
@@ -774,9 +774,9 @@
                     "request": {
                         "url": {
                             "host": "{{baseUrl}}",
-                            "path": "v1\/admin\/coupons\/:coupon_id",
+                            "path": "v1/admin/coupons/:coupon_id",
                             "query": [],
-                            "raw": "{{baseUrl}}\/v1\/admin\/coupons\/:coupon_id",
+                            "raw": "{{baseUrl}}/v1/admin/coupons/:coupon_id",
                             "variable": [
                                 {
                                     "id": "coupon_id",
@@ -790,11 +790,11 @@
                         "header": [
                             {
                                 "key": "Content-Type",
-                                "value": "application\/json"
+                                "value": "application/json"
                             },
                             {
                                 "key": "Accept",
-                                "value": "application\/json"
+                                "value": "application/json"
                             }
                         ],
                         "body": null,
@@ -816,9 +816,9 @@
                     "request": {
                         "url": {
                             "host": "{{baseUrl}}",
-                            "path": "v1\/admin\/payments\/:payment_id\/refund",
+                            "path": "v1/admin/payments/:payment_id/refund",
                             "query": [],
-                            "raw": "{{baseUrl}}\/v1\/admin\/payments\/:payment_id\/refund",
+                            "raw": "{{baseUrl}}/v1/admin/payments/:payment_id/refund",
                             "variable": [
                                 {
                                     "id": "payment_id",
@@ -832,11 +832,11 @@
                         "header": [
                             {
                                 "key": "Content-Type",
-                                "value": "application\/json"
+                                "value": "application/json"
                             },
                             {
                                 "key": "Accept",
-                                "value": "application\/json"
+                                "value": "application/json"
                             }
                         ],
                         "body": null,
@@ -858,19 +858,19 @@
                     "request": {
                         "url": {
                             "host": "{{baseUrl}}",
-                            "path": "v1\/admin\/products",
+                            "path": "v1/admin/products",
                             "query": [],
-                            "raw": "{{baseUrl}}\/v1\/admin\/products"
+                            "raw": "{{baseUrl}}/v1/admin/products"
                         },
                         "method": "POST",
                         "header": [
                             {
                                 "key": "Content-Type",
-                                "value": "multipart\/form-data"
+                                "value": "multipart/form-data"
                             },
                             {
                                 "key": "Accept",
-                                "value": "application\/json"
+                                "value": "application/json"
                             }
                         ],
                         "body": {
@@ -892,13 +892,13 @@
                                     "key": "category_id",
                                     "value": "architecto",
                                     "type": "text",
-                                    "description": "The <code>id<\/code> of an existing record in the categories table."
+                                    "description": "The <code>id</code> of an existing record in the categories table."
                                 },
                                 {
                                     "key": "brand_id",
                                     "value": "architecto",
                                     "type": "text",
-                                    "description": "The <code>id<\/code> of an existing record in the brands table."
+                                    "description": "The <code>id</code> of an existing record in the brands table."
                                 },
                                 {
                                     "key": "price",
@@ -954,9 +954,9 @@
                     "request": {
                         "url": {
                             "host": "{{baseUrl}}",
-                            "path": "v1\/admin\/products\/:product_id",
+                            "path": "v1/admin/products/:product_id",
                             "query": [],
-                            "raw": "{{baseUrl}}\/v1\/admin\/products\/:product_id",
+                            "raw": "{{baseUrl}}/v1/admin/products/:product_id",
                             "variable": [
                                 {
                                     "id": "product_id",
@@ -970,16 +970,16 @@
                         "header": [
                             {
                                 "key": "Content-Type",
-                                "value": "application\/json"
+                                "value": "application/json"
                             },
                             {
                                 "key": "Accept",
-                                "value": "application\/json"
+                                "value": "application/json"
                             }
                         ],
                         "body": {
                             "mode": "raw",
-                            "raw": "{\"name\":\"b\",\"description\":\"Eius et animi quos velit et.\",\"price\":60,\"discount_price\":42,\"stock\":37,\"sku\":\"architecto\",\"image_url\":\"http:\\\/\\\/bailey.com\\\/\",\"gallery\":[\"http:\\\/\\\/rempel.com\\\/sunt-nihil-accusantium-harum-mollitia\"],\"rating\":0,\"status\":\"active\"}"
+                            "raw": "{\"name\":\"b\",\"description\":\"Eius et animi quos velit et.\",\"price\":60,\"discount_price\":42,\"stock\":37,\"sku\":\"architecto\",\"image_url\":\"http:\\/\\/bailey.com\\/\",\"gallery\":[\"http:\\/\\/rempel.com\\/sunt-nihil-accusantium-harum-mollitia\"],\"rating\":0,\"status\":\"active\"}"
                         },
                         "description": "",
                         "auth": {
@@ -993,9 +993,9 @@
                     "request": {
                         "url": {
                             "host": "{{baseUrl}}",
-                            "path": "v1\/admin\/products\/:product_id\/status",
+                            "path": "v1/admin/products/:product_id/status",
                             "query": [],
-                            "raw": "{{baseUrl}}\/v1\/admin\/products\/:product_id\/status",
+                            "raw": "{{baseUrl}}/v1/admin/products/:product_id/status",
                             "variable": [
                                 {
                                     "id": "product_id",
@@ -1009,11 +1009,11 @@
                         "header": [
                             {
                                 "key": "Content-Type",
-                                "value": "application\/json"
+                                "value": "application/json"
                             },
                             {
                                 "key": "Accept",
-                                "value": "application\/json"
+                                "value": "application/json"
                             }
                         ],
                         "body": null,
@@ -1029,9 +1029,9 @@
                     "request": {
                         "url": {
                             "host": "{{baseUrl}}",
-                            "path": "v1\/admin\/products\/:product_id",
+                            "path": "v1/admin/products/:product_id",
                             "query": [],
-                            "raw": "{{baseUrl}}\/v1\/admin\/products\/:product_id",
+                            "raw": "{{baseUrl}}/v1/admin/products/:product_id",
                             "variable": [
                                 {
                                     "id": "product_id",
@@ -1045,11 +1045,11 @@
                         "header": [
                             {
                                 "key": "Content-Type",
-                                "value": "application\/json"
+                                "value": "application/json"
                             },
                             {
                                 "key": "Accept",
-                                "value": "application\/json"
+                                "value": "application/json"
                             }
                         ],
                         "body": null,
@@ -1071,19 +1071,19 @@
                     "request": {
                         "url": {
                             "host": "{{baseUrl}}",
-                            "path": "v1\/admin\/reviews",
+                            "path": "v1/admin/reviews",
                             "query": [],
-                            "raw": "{{baseUrl}}\/v1\/admin\/reviews"
+                            "raw": "{{baseUrl}}/v1/admin/reviews"
                         },
                         "method": "GET",
                         "header": [
                             {
                                 "key": "Content-Type",
-                                "value": "application\/json"
+                                "value": "application/json"
                             },
                             {
                                 "key": "Accept",
-                                "value": "application\/json"
+                                "value": "application/json"
                             }
                         ],
                         "body": null,
@@ -1101,7 +1101,7 @@
                                 },
                                 {
                                     "key": "content-type",
-                                    "value": "application\/json"
+                                    "value": "application/json"
                                 }
                             ],
                             "code": 401,
@@ -1115,9 +1115,9 @@
                     "request": {
                         "url": {
                             "host": "{{baseUrl}}",
-                            "path": "v1\/admin\/reviews\/:review_id\/approve",
+                            "path": "v1/admin/reviews/:review_id/approve",
                             "query": [],
-                            "raw": "{{baseUrl}}\/v1\/admin\/reviews\/:review_id\/approve",
+                            "raw": "{{baseUrl}}/v1/admin/reviews/:review_id/approve",
                             "variable": [
                                 {
                                     "id": "review_id",
@@ -1131,11 +1131,11 @@
                         "header": [
                             {
                                 "key": "Content-Type",
-                                "value": "application\/json"
+                                "value": "application/json"
                             },
                             {
                                 "key": "Accept",
-                                "value": "application\/json"
+                                "value": "application/json"
                             }
                         ],
                         "body": null,
@@ -1151,9 +1151,9 @@
                     "request": {
                         "url": {
                             "host": "{{baseUrl}}",
-                            "path": "v1\/admin\/reviews\/:review_id\/reject",
+                            "path": "v1/admin/reviews/:review_id/reject",
                             "query": [],
-                            "raw": "{{baseUrl}}\/v1\/admin\/reviews\/:review_id\/reject",
+                            "raw": "{{baseUrl}}/v1/admin/reviews/:review_id/reject",
                             "variable": [
                                 {
                                     "id": "review_id",
@@ -1167,11 +1167,11 @@
                         "header": [
                             {
                                 "key": "Content-Type",
-                                "value": "application\/json"
+                                "value": "application/json"
                             },
                             {
                                 "key": "Accept",
-                                "value": "application\/json"
+                                "value": "application/json"
                             }
                         ],
                         "body": null,
@@ -1193,19 +1193,19 @@
                     "request": {
                         "url": {
                             "host": "{{baseUrl}}",
-                            "path": "v1\/admin\/shipping-methods",
+                            "path": "v1/admin/shipping-methods",
                             "query": [],
-                            "raw": "{{baseUrl}}\/v1\/admin\/shipping-methods"
+                            "raw": "{{baseUrl}}/v1/admin/shipping-methods"
                         },
                         "method": "GET",
                         "header": [
                             {
                                 "key": "Content-Type",
-                                "value": "application\/json"
+                                "value": "application/json"
                             },
                             {
                                 "key": "Accept",
-                                "value": "application\/json"
+                                "value": "application/json"
                             }
                         ],
                         "body": null,
@@ -1223,7 +1223,7 @@
                                 },
                                 {
                                     "key": "content-type",
-                                    "value": "application\/json"
+                                    "value": "application/json"
                                 }
                             ],
                             "code": 401,
@@ -1237,19 +1237,19 @@
                     "request": {
                         "url": {
                             "host": "{{baseUrl}}",
-                            "path": "v1\/admin\/shipping-methods",
+                            "path": "v1/admin/shipping-methods",
                             "query": [],
-                            "raw": "{{baseUrl}}\/v1\/admin\/shipping-methods"
+                            "raw": "{{baseUrl}}/v1/admin/shipping-methods"
                         },
                         "method": "POST",
                         "header": [
                             {
                                 "key": "Content-Type",
-                                "value": "application\/json"
+                                "value": "application/json"
                             },
                             {
                                 "key": "Accept",
-                                "value": "application\/json"
+                                "value": "application/json"
                             }
                         ],
                         "body": {
@@ -1268,9 +1268,9 @@
                     "request": {
                         "url": {
                             "host": "{{baseUrl}}",
-                            "path": "v1\/admin\/shipping-methods\/:shippingMethod_id",
+                            "path": "v1/admin/shipping-methods/:shippingMethod_id",
                             "query": [],
-                            "raw": "{{baseUrl}}\/v1\/admin\/shipping-methods\/:shippingMethod_id",
+                            "raw": "{{baseUrl}}/v1/admin/shipping-methods/:shippingMethod_id",
                             "variable": [
                                 {
                                     "id": "shippingMethod_id",
@@ -1284,11 +1284,11 @@
                         "header": [
                             {
                                 "key": "Content-Type",
-                                "value": "application\/json"
+                                "value": "application/json"
                             },
                             {
                                 "key": "Accept",
-                                "value": "application\/json"
+                                "value": "application/json"
                             }
                         ],
                         "body": null,
@@ -1306,7 +1306,7 @@
                                 },
                                 {
                                     "key": "content-type",
-                                    "value": "application\/json"
+                                    "value": "application/json"
                                 }
                             ],
                             "code": 401,
@@ -1320,9 +1320,9 @@
                     "request": {
                         "url": {
                             "host": "{{baseUrl}}",
-                            "path": "v1\/admin\/shipping-methods\/:shippingMethod_id",
+                            "path": "v1/admin/shipping-methods/:shippingMethod_id",
                             "query": [],
-                            "raw": "{{baseUrl}}\/v1\/admin\/shipping-methods\/:shippingMethod_id",
+                            "raw": "{{baseUrl}}/v1/admin/shipping-methods/:shippingMethod_id",
                             "variable": [
                                 {
                                     "id": "shippingMethod_id",
@@ -1336,11 +1336,11 @@
                         "header": [
                             {
                                 "key": "Content-Type",
-                                "value": "application\/json"
+                                "value": "application/json"
                             },
                             {
                                 "key": "Accept",
-                                "value": "application\/json"
+                                "value": "application/json"
                             }
                         ],
                         "body": {
@@ -1359,9 +1359,9 @@
                     "request": {
                         "url": {
                             "host": "{{baseUrl}}",
-                            "path": "v1\/admin\/shipping-methods\/:shippingMethod_id",
+                            "path": "v1/admin/shipping-methods/:shippingMethod_id",
                             "query": [],
-                            "raw": "{{baseUrl}}\/v1\/admin\/shipping-methods\/:shippingMethod_id",
+                            "raw": "{{baseUrl}}/v1/admin/shipping-methods/:shippingMethod_id",
                             "variable": [
                                 {
                                     "id": "shippingMethod_id",
@@ -1375,11 +1375,11 @@
                         "header": [
                             {
                                 "key": "Content-Type",
-                                "value": "application\/json"
+                                "value": "application/json"
                             },
                             {
                                 "key": "Accept",
-                                "value": "application\/json"
+                                "value": "application/json"
                             }
                         ],
                         "body": null,
@@ -1401,19 +1401,19 @@
                     "request": {
                         "url": {
                             "host": "{{baseUrl}}",
-                            "path": "v1\/admin\/users",
+                            "path": "v1/admin/users",
                             "query": [],
-                            "raw": "{{baseUrl}}\/v1\/admin\/users"
+                            "raw": "{{baseUrl}}/v1/admin/users"
                         },
                         "method": "GET",
                         "header": [
                             {
                                 "key": "Content-Type",
-                                "value": "application\/json"
+                                "value": "application/json"
                             },
                             {
                                 "key": "Accept",
-                                "value": "application\/json"
+                                "value": "application/json"
                             }
                         ],
                         "body": null,
@@ -1431,7 +1431,7 @@
                                 },
                                 {
                                     "key": "content-type",
-                                    "value": "application\/json"
+                                    "value": "application/json"
                                 }
                             ],
                             "code": 401,
@@ -1445,19 +1445,19 @@
                     "request": {
                         "url": {
                             "host": "{{baseUrl}}",
-                            "path": "v1\/admin\/users",
+                            "path": "v1/admin/users",
                             "query": [],
-                            "raw": "{{baseUrl}}\/v1\/admin\/users"
+                            "raw": "{{baseUrl}}/v1/admin/users"
                         },
                         "method": "POST",
                         "header": [
                             {
                                 "key": "Content-Type",
-                                "value": "application\/json"
+                                "value": "application/json"
                             },
                             {
                                 "key": "Accept",
-                                "value": "application\/json"
+                                "value": "application/json"
                             }
                         ],
                         "body": {
@@ -1476,9 +1476,9 @@
                     "request": {
                         "url": {
                             "host": "{{baseUrl}}",
-                            "path": "v1\/admin\/users\/:user_id",
+                            "path": "v1/admin/users/:user_id",
                             "query": [],
-                            "raw": "{{baseUrl}}\/v1\/admin\/users\/:user_id",
+                            "raw": "{{baseUrl}}/v1/admin/users/:user_id",
                             "variable": [
                                 {
                                     "id": "user_id",
@@ -1492,11 +1492,11 @@
                         "header": [
                             {
                                 "key": "Content-Type",
-                                "value": "application\/json"
+                                "value": "application/json"
                             },
                             {
                                 "key": "Accept",
-                                "value": "application\/json"
+                                "value": "application/json"
                             }
                         ],
                         "body": null,
@@ -1514,7 +1514,7 @@
                                 },
                                 {
                                     "key": "content-type",
-                                    "value": "application\/json"
+                                    "value": "application/json"
                                 }
                             ],
                             "code": 401,
@@ -1528,9 +1528,9 @@
                     "request": {
                         "url": {
                             "host": "{{baseUrl}}",
-                            "path": "v1\/admin\/users\/:user_id",
+                            "path": "v1/admin/users/:user_id",
                             "query": [],
-                            "raw": "{{baseUrl}}\/v1\/admin\/users\/:user_id",
+                            "raw": "{{baseUrl}}/v1/admin/users/:user_id",
                             "variable": [
                                 {
                                     "id": "user_id",
@@ -1544,11 +1544,11 @@
                         "header": [
                             {
                                 "key": "Content-Type",
-                                "value": "application\/json"
+                                "value": "application/json"
                             },
                             {
                                 "key": "Accept",
-                                "value": "application\/json"
+                                "value": "application/json"
                             }
                         ],
                         "body": {
@@ -1567,9 +1567,9 @@
                     "request": {
                         "url": {
                             "host": "{{baseUrl}}",
-                            "path": "v1\/admin\/users\/:user_id",
+                            "path": "v1/admin/users/:user_id",
                             "query": [],
-                            "raw": "{{baseUrl}}\/v1\/admin\/users\/:user_id",
+                            "raw": "{{baseUrl}}/v1/admin/users/:user_id",
                             "variable": [
                                 {
                                     "id": "user_id",
@@ -1583,11 +1583,11 @@
                         "header": [
                             {
                                 "key": "Content-Type",
-                                "value": "application\/json"
+                                "value": "application/json"
                             },
                             {
                                 "key": "Accept",
-                                "value": "application\/json"
+                                "value": "application/json"
                             }
                         ],
                         "body": null,
@@ -1609,24 +1609,24 @@
                     "request": {
                         "url": {
                             "host": "{{baseUrl}}",
-                            "path": "v1\/auth\/register",
+                            "path": "v1/auth/register",
                             "query": [],
-                            "raw": "{{baseUrl}}\/v1\/auth\/register"
+                            "raw": "{{baseUrl}}/v1/auth/register"
                         },
                         "method": "POST",
                         "header": [
                             {
                                 "key": "Content-Type",
-                                "value": "application\/json"
+                                "value": "application/json"
                             },
                             {
                                 "key": "Accept",
-                                "value": "application\/json"
+                                "value": "application/json"
                             }
                         ],
                         "body": {
                             "mode": "raw",
-                            "raw": "{\"first_name\":\"b\",\"last_name\":\"n\",\"email\":\"ashly64@example.com\",\"gender\":\"male\",\"birthday\":\"2022-01-23\",\"phone\":\"ngzmiyvdljnikhwa\",\"password\":\"\\\/#iw\\\/kXaz\"}"
+                            "raw": "{\"first_name\":\"b\",\"last_name\":\"n\",\"email\":\"ashly64@example.com\",\"gender\":\"male\",\"birthday\":\"2022-01-23\",\"phone\":\"ngzmiyvdljnikhwa\",\"password\":\"\\/#iw\\/kXaz\"}"
                         },
                         "description": "",
                         "auth": {
@@ -1640,19 +1640,19 @@
                     "request": {
                         "url": {
                             "host": "{{baseUrl}}",
-                            "path": "v1\/auth\/login",
+                            "path": "v1/auth/login",
                             "query": [],
-                            "raw": "{{baseUrl}}\/v1\/auth\/login"
+                            "raw": "{{baseUrl}}/v1/auth/login"
                         },
                         "method": "POST",
                         "header": [
                             {
                                 "key": "Content-Type",
-                                "value": "application\/json"
+                                "value": "application/json"
                             },
                             {
                                 "key": "Accept",
-                                "value": "application\/json"
+                                "value": "application/json"
                             }
                         ],
                         "body": {
@@ -1671,19 +1671,19 @@
                     "request": {
                         "url": {
                             "host": "{{baseUrl}}",
-                            "path": "v1\/auth\/forgot-password",
+                            "path": "v1/auth/forgot-password",
                             "query": [],
-                            "raw": "{{baseUrl}}\/v1\/auth\/forgot-password"
+                            "raw": "{{baseUrl}}/v1/auth/forgot-password"
                         },
                         "method": "POST",
                         "header": [
                             {
                                 "key": "Content-Type",
-                                "value": "application\/json"
+                                "value": "application/json"
                             },
                             {
                                 "key": "Accept",
-                                "value": "application\/json"
+                                "value": "application/json"
                             }
                         ],
                         "body": {
@@ -1702,19 +1702,19 @@
                     "request": {
                         "url": {
                             "host": "{{baseUrl}}",
-                            "path": "v1\/auth\/reset-password",
+                            "path": "v1/auth/reset-password",
                             "query": [],
-                            "raw": "{{baseUrl}}\/v1\/auth\/reset-password"
+                            "raw": "{{baseUrl}}/v1/auth/reset-password"
                         },
                         "method": "POST",
                         "header": [
                             {
                                 "key": "Content-Type",
-                                "value": "application\/json"
+                                "value": "application/json"
                             },
                             {
                                 "key": "Accept",
-                                "value": "application\/json"
+                                "value": "application/json"
                             }
                         ],
                         "body": {
@@ -1733,19 +1733,19 @@
                     "request": {
                         "url": {
                             "host": "{{baseUrl}}",
-                            "path": "v1\/auth\/google",
+                            "path": "v1/auth/google",
                             "query": [],
-                            "raw": "{{baseUrl}}\/v1\/auth\/google"
+                            "raw": "{{baseUrl}}/v1/auth/google"
                         },
                         "method": "GET",
                         "header": [
                             {
                                 "key": "Content-Type",
-                                "value": "application\/json"
+                                "value": "application/json"
                             },
                             {
                                 "key": "Accept",
-                                "value": "application\/json"
+                                "value": "application/json"
                             }
                         ],
                         "body": null,
@@ -1763,7 +1763,7 @@
                                 },
                                 {
                                     "key": "content-type",
-                                    "value": "application\/json"
+                                    "value": "application/json"
                                 },
                                 {
                                     "key": "x-ratelimit-limit",
@@ -1775,7 +1775,7 @@
                                 }
                             ],
                             "code": 200,
-                            "body": "{\"success\":true,\"url\":\"https:\\\/\\\/accounts.google.com\\\/o\\\/oauth2\\\/v2\\\/auth?client_id=270319989827-h5aa09un0albvl6ogpgfks60p8d7kks5.apps.googleusercontent.com&redirect_uri=http%3A%2F%2Flocalhost%3A4200%2Fauth%2Fgoogle%2Fcallback&response_type=code&scope=openid+email+profile&access_type=online&prompt=select_account\"}",
+                            "body": "{\"success\":true,\"url\":\"https:\\/\\/accounts.google.com\\/o\\/oauth2\\/v2\\/auth?client_id=270319989827-h5aa09un0albvl6ogpgfks60p8d7kks5.apps.googleusercontent.com&redirect_uri=http%3A%2F%2Flocalhost%3A4200%2Fauth%2Fgoogle%2Fcallback&response_type=code&scope=openid+email+profile&access_type=online&prompt=select_account\"}",
                             "name": ""
                         }
                     ]
@@ -1785,19 +1785,19 @@
                     "request": {
                         "url": {
                             "host": "{{baseUrl}}",
-                            "path": "v1\/auth\/google\/callback",
+                            "path": "v1/auth/google/callback",
                             "query": [],
-                            "raw": "{{baseUrl}}\/v1\/auth\/google\/callback"
+                            "raw": "{{baseUrl}}/v1/auth/google/callback"
                         },
                         "method": "GET",
                         "header": [
                             {
                                 "key": "Content-Type",
-                                "value": "application\/json"
+                                "value": "application/json"
                             },
                             {
                                 "key": "Accept",
-                                "value": "application\/json"
+                                "value": "application/json"
                             }
                         ],
                         "body": null,
@@ -1815,7 +1815,7 @@
                                 },
                                 {
                                     "key": "content-type",
-                                    "value": "application\/json"
+                                    "value": "application/json"
                                 },
                                 {
                                     "key": "x-ratelimit-limit",
@@ -1837,19 +1837,19 @@
                     "request": {
                         "url": {
                             "host": "{{baseUrl}}",
-                            "path": "v1\/auth\/logout",
+                            "path": "v1/auth/logout",
                             "query": [],
-                            "raw": "{{baseUrl}}\/v1\/auth\/logout"
+                            "raw": "{{baseUrl}}/v1/auth/logout"
                         },
                         "method": "POST",
                         "header": [
                             {
                                 "key": "Content-Type",
-                                "value": "application\/json"
+                                "value": "application/json"
                             },
                             {
                                 "key": "Accept",
-                                "value": "application\/json"
+                                "value": "application/json"
                             }
                         ],
                         "body": null,
@@ -1871,19 +1871,19 @@
                     "request": {
                         "url": {
                             "host": "{{baseUrl}}",
-                            "path": "v1\/brands",
+                            "path": "v1/brands",
                             "query": [],
-                            "raw": "{{baseUrl}}\/v1\/brands"
+                            "raw": "{{baseUrl}}/v1/brands"
                         },
                         "method": "GET",
                         "header": [
                             {
                                 "key": "Content-Type",
-                                "value": "application\/json"
+                                "value": "application/json"
                             },
                             {
                                 "key": "Accept",
-                                "value": "application\/json"
+                                "value": "application/json"
                             }
                         ],
                         "body": null,
@@ -1901,11 +1901,11 @@
                                 },
                                 {
                                     "key": "content-type",
-                                    "value": "application\/json"
+                                    "value": "application/json"
                                 }
                             ],
                             "code": 200,
-                            "body": "{\"success\":true,\"data\":{\"current_page\":1,\"data\":[{\"id\":1,\"name\":\"Lehner-Lehner\",\"slug\":\"lehner-lehner\",\"description\":\"Velit id pariatur voluptas commodi voluptatibus aut.\",\"logo_url\":\"https:\\\/\\\/via.placeholder.com\\\/200x200.png\\\/008833?text=brands+incidunt\",\"website\":\"http:\\\/\\\/steuber.com\\\/\",\"status\":\"active\",\"created_at\":\"2025-12-25T13:00:10.000000Z\",\"updated_at\":\"2025-12-25T13:00:10.000000Z\",\"sort_order\":0,\"deleted_at\":null},{\"id\":2,\"name\":\"Blanda Inc\",\"slug\":\"blanda-inc\",\"description\":\"Totam inventore esse ipsum repellat et sapiente quod maiores.\",\"logo_url\":\"https:\\\/\\\/via.placeholder.com\\\/200x200.png\\\/001155?text=brands+voluptatem\",\"website\":\"http:\\\/\\\/corkery.com\\\/et-tenetur-omnis-iste-optio.html\",\"status\":\"active\",\"created_at\":\"2025-12-25T13:00:10.000000Z\",\"updated_at\":\"2025-12-25T13:00:10.000000Z\",\"sort_order\":0,\"deleted_at\":null},{\"id\":3,\"name\":\"Halvorson-Effertz\",\"slug\":\"halvorson-effertz\",\"description\":\"Quis doloribus deleniti maxime quia modi dolorum earum sapiente.\",\"logo_url\":\"https:\\\/\\\/via.placeholder.com\\\/200x200.png\\\/005588?text=brands+magnam\",\"website\":\"https:\\\/\\\/becker.org\\\/recusandae-provident-sit-numquam-ut-similique-sunt-unde.html\",\"status\":\"active\",\"created_at\":\"2025-12-25T13:00:10.000000Z\",\"updated_at\":\"2025-12-25T13:00:10.000000Z\",\"sort_order\":0,\"deleted_at\":null},{\"id\":4,\"name\":\"Cruickshank, Von and Schaden\",\"slug\":\"cruickshank-von-and-schaden\",\"description\":\"Esse repudiandae repudiandae eum laudantium molestias ullam consequatur a perferendis in.\",\"logo_url\":\"https:\\\/\\\/via.placeholder.com\\\/200x200.png\\\/006677?text=brands+officiis\",\"website\":\"http:\\\/\\\/franecki.biz\\\/\",\"status\":\"active\",\"created_at\":\"2025-12-25T13:00:10.000000Z\",\"updated_at\":\"2025-12-25T13:00:10.000000Z\",\"sort_order\":0,\"deleted_at\":null},{\"id\":5,\"name\":\"Feeney-Langosh\",\"slug\":\"feeney-langosh\",\"description\":\"Repellendus aut et quo vel ut hic praesentium quos eveniet.\",\"logo_url\":\"https:\\\/\\\/via.placeholder.com\\\/200x200.png\\\/007700?text=brands+omnis\",\"website\":\"http:\\\/\\\/www.lockman.org\\\/voluptatum-aliquid-hic-et-quasi-eaque-voluptate.html\",\"status\":\"active\",\"created_at\":\"2025-12-25T13:00:10.000000Z\",\"updated_at\":\"2025-12-25T13:00:10.000000Z\",\"sort_order\":0,\"deleted_at\":null}],\"first_page_url\":\"http:\\\/\\\/localhost:8000\\\/v1\\\/brands?page=1\",\"from\":1,\"last_page\":1,\"last_page_url\":\"http:\\\/\\\/localhost:8000\\\/v1\\\/brands?page=1\",\"links\":[{\"url\":null,\"label\":\"&laquo; Previous\",\"page\":null,\"active\":false},{\"url\":\"http:\\\/\\\/localhost:8000\\\/v1\\\/brands?page=1\",\"label\":\"1\",\"page\":1,\"active\":true},{\"url\":null,\"label\":\"Next &raquo;\",\"page\":null,\"active\":false}],\"next_page_url\":null,\"path\":\"http:\\\/\\\/localhost:8000\\\/v1\\\/brands\",\"per_page\":10,\"prev_page_url\":null,\"to\":5,\"total\":5},\"message\":\"Brands retrieved successfully\"}",
+                            "body": "{\"success\":true,\"data\":{\"current_page\":1,\"data\":[{\"id\":1,\"name\":\"Lehner-Lehner\",\"slug\":\"lehner-lehner\",\"description\":\"Velit id pariatur voluptas commodi voluptatibus aut.\",\"logo_url\":\"https:\\/\\/via.placeholder.com\\/200x200.png\\/008833?text=brands+incidunt\",\"website\":\"http:\\/\\/steuber.com\\/\",\"status\":\"active\",\"created_at\":\"2025-12-25T13:00:10.000000Z\",\"updated_at\":\"2025-12-25T13:00:10.000000Z\",\"sort_order\":0,\"deleted_at\":null},{\"id\":2,\"name\":\"Blanda Inc\",\"slug\":\"blanda-inc\",\"description\":\"Totam inventore esse ipsum repellat et sapiente quod maiores.\",\"logo_url\":\"https:\\/\\/via.placeholder.com\\/200x200.png\\/001155?text=brands+voluptatem\",\"website\":\"http:\\/\\/corkery.com\\/et-tenetur-omnis-iste-optio.html\",\"status\":\"active\",\"created_at\":\"2025-12-25T13:00:10.000000Z\",\"updated_at\":\"2025-12-25T13:00:10.000000Z\",\"sort_order\":0,\"deleted_at\":null},{\"id\":3,\"name\":\"Halvorson-Effertz\",\"slug\":\"halvorson-effertz\",\"description\":\"Quis doloribus deleniti maxime quia modi dolorum earum sapiente.\",\"logo_url\":\"https:\\/\\/via.placeholder.com\\/200x200.png\\/005588?text=brands+magnam\",\"website\":\"https:\\/\\/becker.org\\/recusandae-provident-sit-numquam-ut-similique-sunt-unde.html\",\"status\":\"active\",\"created_at\":\"2025-12-25T13:00:10.000000Z\",\"updated_at\":\"2025-12-25T13:00:10.000000Z\",\"sort_order\":0,\"deleted_at\":null},{\"id\":4,\"name\":\"Cruickshank, Von and Schaden\",\"slug\":\"cruickshank-von-and-schaden\",\"description\":\"Esse repudiandae repudiandae eum laudantium molestias ullam consequatur a perferendis in.\",\"logo_url\":\"https:\\/\\/via.placeholder.com\\/200x200.png\\/006677?text=brands+officiis\",\"website\":\"http:\\/\\/franecki.biz\\/\",\"status\":\"active\",\"created_at\":\"2025-12-25T13:00:10.000000Z\",\"updated_at\":\"2025-12-25T13:00:10.000000Z\",\"sort_order\":0,\"deleted_at\":null},{\"id\":5,\"name\":\"Feeney-Langosh\",\"slug\":\"feeney-langosh\",\"description\":\"Repellendus aut et quo vel ut hic praesentium quos eveniet.\",\"logo_url\":\"https:\\/\\/via.placeholder.com\\/200x200.png\\/007700?text=brands+omnis\",\"website\":\"http:\\/\\/www.lockman.org\\/voluptatum-aliquid-hic-et-quasi-eaque-voluptate.html\",\"status\":\"active\",\"created_at\":\"2025-12-25T13:00:10.000000Z\",\"updated_at\":\"2025-12-25T13:00:10.000000Z\",\"sort_order\":0,\"deleted_at\":null}],\"first_page_url\":\"http:\\/\\/localhost:8000\\/v1\\/brands?page=1\",\"from\":1,\"last_page\":1,\"last_page_url\":\"http:\\/\\/localhost:8000\\/v1\\/brands?page=1\",\"links\":[{\"url\":null,\"label\":\"&laquo; Previous\",\"page\":null,\"active\":false},{\"url\":\"http:\\/\\/localhost:8000\\/v1\\/brands?page=1\",\"label\":\"1\",\"page\":1,\"active\":true},{\"url\":null,\"label\":\"Next &raquo;\",\"page\":null,\"active\":false}],\"next_page_url\":null,\"path\":\"http:\\/\\/localhost:8000\\/v1\\/brands\",\"per_page\":10,\"prev_page_url\":null,\"to\":5,\"total\":5},\"message\":\"Brands retrieved successfully\"}",
                             "name": ""
                         }
                     ]
@@ -1915,9 +1915,9 @@
                     "request": {
                         "url": {
                             "host": "{{baseUrl}}",
-                            "path": "v1\/brands\/:brand_id",
+                            "path": "v1/brands/:brand_id",
                             "query": [],
-                            "raw": "{{baseUrl}}\/v1\/brands\/:brand_id",
+                            "raw": "{{baseUrl}}/v1/brands/:brand_id",
                             "variable": [
                                 {
                                     "id": "brand_id",
@@ -1931,11 +1931,11 @@
                         "header": [
                             {
                                 "key": "Content-Type",
-                                "value": "application\/json"
+                                "value": "application/json"
                             },
                             {
                                 "key": "Accept",
-                                "value": "application\/json"
+                                "value": "application/json"
                             }
                         ],
                         "body": null,
@@ -1953,11 +1953,11 @@
                                 },
                                 {
                                     "key": "content-type",
-                                    "value": "application\/json"
+                                    "value": "application/json"
                                 }
                             ],
                             "code": 200,
-                            "body": "{\"success\":true,\"data\":{\"id\":1,\"name\":\"Lehner-Lehner\",\"slug\":\"lehner-lehner\",\"description\":\"Velit id pariatur voluptas commodi voluptatibus aut.\",\"logo_url\":\"https:\\\/\\\/via.placeholder.com\\\/200x200.png\\\/008833?text=brands+incidunt\",\"website\":\"http:\\\/\\\/steuber.com\\\/\",\"status\":\"active\",\"created_at\":\"2025-12-25T13:00:10.000000Z\",\"updated_at\":\"2025-12-25T13:00:10.000000Z\",\"sort_order\":0,\"deleted_at\":null},\"message\":\"Brand retrieved successfully\"}",
+                            "body": "{\"success\":true,\"data\":{\"id\":1,\"name\":\"Lehner-Lehner\",\"slug\":\"lehner-lehner\",\"description\":\"Velit id pariatur voluptas commodi voluptatibus aut.\",\"logo_url\":\"https:\\/\\/via.placeholder.com\\/200x200.png\\/008833?text=brands+incidunt\",\"website\":\"http:\\/\\/steuber.com\\/\",\"status\":\"active\",\"created_at\":\"2025-12-25T13:00:10.000000Z\",\"updated_at\":\"2025-12-25T13:00:10.000000Z\",\"sort_order\":0,\"deleted_at\":null},\"message\":\"Brand retrieved successfully\"}",
                             "name": ""
                         }
                     ]
@@ -1967,19 +1967,19 @@
                     "request": {
                         "url": {
                             "host": "{{baseUrl}}",
-                            "path": "v1\/admin\/brands",
+                            "path": "v1/admin/brands",
                             "query": [],
-                            "raw": "{{baseUrl}}\/v1\/admin\/brands"
+                            "raw": "{{baseUrl}}/v1/admin/brands"
                         },
                         "method": "GET",
                         "header": [
                             {
                                 "key": "Content-Type",
-                                "value": "application\/json"
+                                "value": "application/json"
                             },
                             {
                                 "key": "Accept",
-                                "value": "application\/json"
+                                "value": "application/json"
                             }
                         ],
                         "body": null,
@@ -1997,7 +1997,7 @@
                                 },
                                 {
                                     "key": "content-type",
-                                    "value": "application\/json"
+                                    "value": "application/json"
                                 }
                             ],
                             "code": 401,
@@ -2011,9 +2011,9 @@
                     "request": {
                         "url": {
                             "host": "{{baseUrl}}",
-                            "path": "v1\/admin\/brands\/:brand_id",
+                            "path": "v1/admin/brands/:brand_id",
                             "query": [],
-                            "raw": "{{baseUrl}}\/v1\/admin\/brands\/:brand_id",
+                            "raw": "{{baseUrl}}/v1/admin/brands/:brand_id",
                             "variable": [
                                 {
                                     "id": "brand_id",
@@ -2027,11 +2027,11 @@
                         "header": [
                             {
                                 "key": "Content-Type",
-                                "value": "application\/json"
+                                "value": "application/json"
                             },
                             {
                                 "key": "Accept",
-                                "value": "application\/json"
+                                "value": "application/json"
                             }
                         ],
                         "body": null,
@@ -2049,7 +2049,7 @@
                                 },
                                 {
                                     "key": "content-type",
-                                    "value": "application\/json"
+                                    "value": "application/json"
                                 }
                             ],
                             "code": 401,
@@ -2069,19 +2069,19 @@
                     "request": {
                         "url": {
                             "host": "{{baseUrl}}",
-                            "path": "v1\/cart",
+                            "path": "v1/cart",
                             "query": [],
-                            "raw": "{{baseUrl}}\/v1\/cart"
+                            "raw": "{{baseUrl}}/v1/cart"
                         },
                         "method": "GET",
                         "header": [
                             {
                                 "key": "Content-Type",
-                                "value": "application\/json"
+                                "value": "application/json"
                             },
                             {
                                 "key": "Accept",
-                                "value": "application\/json"
+                                "value": "application/json"
                             }
                         ],
                         "body": null,
@@ -2099,7 +2099,7 @@
                                 },
                                 {
                                     "key": "content-type",
-                                    "value": "application\/json"
+                                    "value": "application/json"
                                 }
                             ],
                             "code": 401,
@@ -2113,19 +2113,19 @@
                     "request": {
                         "url": {
                             "host": "{{baseUrl}}",
-                            "path": "v1\/cart",
+                            "path": "v1/cart",
                             "query": [],
-                            "raw": "{{baseUrl}}\/v1\/cart"
+                            "raw": "{{baseUrl}}/v1/cart"
                         },
                         "method": "POST",
                         "header": [
                             {
                                 "key": "Content-Type",
-                                "value": "application\/json"
+                                "value": "application/json"
                             },
                             {
                                 "key": "Accept",
-                                "value": "application\/json"
+                                "value": "application/json"
                             }
                         ],
                         "body": {
@@ -2144,9 +2144,9 @@
                     "request": {
                         "url": {
                             "host": "{{baseUrl}}",
-                            "path": "v1\/cart\/:cartItem",
+                            "path": "v1/cart/:cartItem",
                             "query": [],
-                            "raw": "{{baseUrl}}\/v1\/cart\/:cartItem",
+                            "raw": "{{baseUrl}}/v1/cart/:cartItem",
                             "variable": [
                                 {
                                     "id": "cartItem",
@@ -2160,11 +2160,11 @@
                         "header": [
                             {
                                 "key": "Content-Type",
-                                "value": "application\/json"
+                                "value": "application/json"
                             },
                             {
                                 "key": "Accept",
-                                "value": "application\/json"
+                                "value": "application/json"
                             }
                         ],
                         "body": {
@@ -2183,9 +2183,9 @@
                     "request": {
                         "url": {
                             "host": "{{baseUrl}}",
-                            "path": "v1\/cart\/:cartItem",
+                            "path": "v1/cart/:cartItem",
                             "query": [],
-                            "raw": "{{baseUrl}}\/v1\/cart\/:cartItem",
+                            "raw": "{{baseUrl}}/v1/cart/:cartItem",
                             "variable": [
                                 {
                                     "id": "cartItem",
@@ -2199,11 +2199,11 @@
                         "header": [
                             {
                                 "key": "Content-Type",
-                                "value": "application\/json"
+                                "value": "application/json"
                             },
                             {
                                 "key": "Accept",
-                                "value": "application\/json"
+                                "value": "application/json"
                             }
                         ],
                         "body": null,
@@ -2219,19 +2219,19 @@
                     "request": {
                         "url": {
                             "host": "{{baseUrl}}",
-                            "path": "v1\/cart",
+                            "path": "v1/cart",
                             "query": [],
-                            "raw": "{{baseUrl}}\/v1\/cart"
+                            "raw": "{{baseUrl}}/v1/cart"
                         },
                         "method": "DELETE",
                         "header": [
                             {
                                 "key": "Content-Type",
-                                "value": "application\/json"
+                                "value": "application/json"
                             },
                             {
                                 "key": "Accept",
-                                "value": "application\/json"
+                                "value": "application/json"
                             }
                         ],
                         "body": null,
@@ -2253,19 +2253,19 @@
                     "request": {
                         "url": {
                             "host": "{{baseUrl}}",
-                            "path": "v1\/categories",
+                            "path": "v1/categories",
                             "query": [],
-                            "raw": "{{baseUrl}}\/v1\/categories"
+                            "raw": "{{baseUrl}}/v1/categories"
                         },
                         "method": "GET",
                         "header": [
                             {
                                 "key": "Content-Type",
-                                "value": "application\/json"
+                                "value": "application/json"
                             },
                             {
                                 "key": "Accept",
-                                "value": "application\/json"
+                                "value": "application/json"
                             }
                         ],
                         "body": null,
@@ -2283,11 +2283,11 @@
                                 },
                                 {
                                     "key": "content-type",
-                                    "value": "application\/json"
+                                    "value": "application/json"
                                 }
                             ],
                             "code": 200,
-                            "body": "{\"success\":true,\"data\":{\"current_page\":1,\"data\":[{\"id\":1,\"name\":\"Ut\",\"slug\":\"ut\",\"description\":\"Magnam dolorem quod nihil voluptas perspiciatis labore voluptate occaecati animi reprehenderit id.\",\"parent_id\":null,\"image_url\":\"https:\\\/\\\/via.placeholder.com\\\/400x400.png\\\/0000aa?text=categories+laborum\",\"status\":\"active\",\"created_at\":\"2025-12-25T13:00:10.000000Z\",\"updated_at\":\"2025-12-25T13:00:10.000000Z\",\"level\":0,\"sort_order\":0,\"icon\":null,\"deleted_at\":null,\"parent\":null,\"children\":[]},{\"id\":2,\"name\":\"Ab\",\"slug\":\"ab\",\"description\":\"Rerum non velit ut qui qui eius temporibus impedit fugiat.\",\"parent_id\":null,\"image_url\":\"https:\\\/\\\/via.placeholder.com\\\/400x400.png\\\/006633?text=categories+ratione\",\"status\":\"active\",\"created_at\":\"2025-12-25T13:00:10.000000Z\",\"updated_at\":\"2025-12-25T13:00:10.000000Z\",\"level\":0,\"sort_order\":0,\"icon\":null,\"deleted_at\":null,\"parent\":null,\"children\":[]},{\"id\":3,\"name\":\"Nam\",\"slug\":\"nam\",\"description\":\"Officiis ut expedita nihil impedit necessitatibus qui.\",\"parent_id\":null,\"image_url\":\"https:\\\/\\\/via.placeholder.com\\\/400x400.png\\\/006600?text=categories+modi\",\"status\":\"active\",\"created_at\":\"2025-12-25T13:00:10.000000Z\",\"updated_at\":\"2025-12-25T13:00:10.000000Z\",\"level\":0,\"sort_order\":0,\"icon\":null,\"deleted_at\":null,\"parent\":null,\"children\":[]},{\"id\":4,\"name\":\"Iste\",\"slug\":\"iste\",\"description\":\"Omnis optio rerum accusamus pariatur dolorem provident alias quia reprehenderit dignissimos.\",\"parent_id\":null,\"image_url\":\"https:\\\/\\\/via.placeholder.com\\\/400x400.png\\\/00ff22?text=categories+accusantium\",\"status\":\"active\",\"created_at\":\"2025-12-25T13:00:10.000000Z\",\"updated_at\":\"2025-12-25T13:00:10.000000Z\",\"level\":0,\"sort_order\":0,\"icon\":null,\"deleted_at\":null,\"parent\":null,\"children\":[]},{\"id\":5,\"name\":\"Molestias\",\"slug\":\"molestias\",\"description\":\"Omnis architecto non officia assumenda quis tenetur accusamus quo.\",\"parent_id\":null,\"image_url\":\"https:\\\/\\\/via.placeholder.com\\\/400x400.png\\\/00ff88?text=categories+et\",\"status\":\"active\",\"created_at\":\"2025-12-25T13:00:10.000000Z\",\"updated_at\":\"2025-12-25T13:00:10.000000Z\",\"level\":0,\"sort_order\":0,\"icon\":null,\"deleted_at\":null,\"parent\":null,\"children\":[]}],\"first_page_url\":\"http:\\\/\\\/localhost:8000\\\/v1\\\/categories?page=1\",\"from\":1,\"last_page\":1,\"last_page_url\":\"http:\\\/\\\/localhost:8000\\\/v1\\\/categories?page=1\",\"links\":[{\"url\":null,\"label\":\"&laquo; Previous\",\"page\":null,\"active\":false},{\"url\":\"http:\\\/\\\/localhost:8000\\\/v1\\\/categories?page=1\",\"label\":\"1\",\"page\":1,\"active\":true},{\"url\":null,\"label\":\"Next &raquo;\",\"page\":null,\"active\":false}],\"next_page_url\":null,\"path\":\"http:\\\/\\\/localhost:8000\\\/v1\\\/categories\",\"per_page\":15,\"prev_page_url\":null,\"to\":5,\"total\":5}}",
+                            "body": "{\"success\":true,\"data\":{\"current_page\":1,\"data\":[{\"id\":1,\"name\":\"Ut\",\"slug\":\"ut\",\"description\":\"Magnam dolorem quod nihil voluptas perspiciatis labore voluptate occaecati animi reprehenderit id.\",\"parent_id\":null,\"image_url\":\"https:\\/\\/via.placeholder.com\\/400x400.png\\/0000aa?text=categories+laborum\",\"status\":\"active\",\"created_at\":\"2025-12-25T13:00:10.000000Z\",\"updated_at\":\"2025-12-25T13:00:10.000000Z\",\"level\":0,\"sort_order\":0,\"icon\":null,\"deleted_at\":null,\"parent\":null,\"children\":[]},{\"id\":2,\"name\":\"Ab\",\"slug\":\"ab\",\"description\":\"Rerum non velit ut qui qui eius temporibus impedit fugiat.\",\"parent_id\":null,\"image_url\":\"https:\\/\\/via.placeholder.com\\/400x400.png\\/006633?text=categories+ratione\",\"status\":\"active\",\"created_at\":\"2025-12-25T13:00:10.000000Z\",\"updated_at\":\"2025-12-25T13:00:10.000000Z\",\"level\":0,\"sort_order\":0,\"icon\":null,\"deleted_at\":null,\"parent\":null,\"children\":[]},{\"id\":3,\"name\":\"Nam\",\"slug\":\"nam\",\"description\":\"Officiis ut expedita nihil impedit necessitatibus qui.\",\"parent_id\":null,\"image_url\":\"https:\\/\\/via.placeholder.com\\/400x400.png\\/006600?text=categories+modi\",\"status\":\"active\",\"created_at\":\"2025-12-25T13:00:10.000000Z\",\"updated_at\":\"2025-12-25T13:00:10.000000Z\",\"level\":0,\"sort_order\":0,\"icon\":null,\"deleted_at\":null,\"parent\":null,\"children\":[]},{\"id\":4,\"name\":\"Iste\",\"slug\":\"iste\",\"description\":\"Omnis optio rerum accusamus pariatur dolorem provident alias quia reprehenderit dignissimos.\",\"parent_id\":null,\"image_url\":\"https:\\/\\/via.placeholder.com\\/400x400.png\\/00ff22?text=categories+accusantium\",\"status\":\"active\",\"created_at\":\"2025-12-25T13:00:10.000000Z\",\"updated_at\":\"2025-12-25T13:00:10.000000Z\",\"level\":0,\"sort_order\":0,\"icon\":null,\"deleted_at\":null,\"parent\":null,\"children\":[]},{\"id\":5,\"name\":\"Molestias\",\"slug\":\"molestias\",\"description\":\"Omnis architecto non officia assumenda quis tenetur accusamus quo.\",\"parent_id\":null,\"image_url\":\"https:\\/\\/via.placeholder.com\\/400x400.png\\/00ff88?text=categories+et\",\"status\":\"active\",\"created_at\":\"2025-12-25T13:00:10.000000Z\",\"updated_at\":\"2025-12-25T13:00:10.000000Z\",\"level\":0,\"sort_order\":0,\"icon\":null,\"deleted_at\":null,\"parent\":null,\"children\":[]}],\"first_page_url\":\"http:\\/\\/localhost:8000\\/v1\\/categories?page=1\",\"from\":1,\"last_page\":1,\"last_page_url\":\"http:\\/\\/localhost:8000\\/v1\\/categories?page=1\",\"links\":[{\"url\":null,\"label\":\"&laquo; Previous\",\"page\":null,\"active\":false},{\"url\":\"http:\\/\\/localhost:8000\\/v1\\/categories?page=1\",\"label\":\"1\",\"page\":1,\"active\":true},{\"url\":null,\"label\":\"Next &raquo;\",\"page\":null,\"active\":false}],\"next_page_url\":null,\"path\":\"http:\\/\\/localhost:8000\\/v1\\/categories\",\"per_page\":15,\"prev_page_url\":null,\"to\":5,\"total\":5}}",
                             "name": ""
                         }
                     ]
@@ -2297,19 +2297,19 @@
                     "request": {
                         "url": {
                             "host": "{{baseUrl}}",
-                            "path": "v1\/categories\/parent-categories",
+                            "path": "v1/categories/parent-categories",
                             "query": [],
-                            "raw": "{{baseUrl}}\/v1\/categories\/parent-categories"
+                            "raw": "{{baseUrl}}/v1/categories/parent-categories"
                         },
                         "method": "GET",
                         "header": [
                             {
                                 "key": "Content-Type",
-                                "value": "application\/json"
+                                "value": "application/json"
                             },
                             {
                                 "key": "Accept",
-                                "value": "application\/json"
+                                "value": "application/json"
                             }
                         ],
                         "body": null,
@@ -2327,7 +2327,7 @@
                                 },
                                 {
                                     "key": "content-type",
-                                    "value": "application\/json"
+                                    "value": "application/json"
                                 }
                             ],
                             "code": 200,
@@ -2341,9 +2341,9 @@
                     "request": {
                         "url": {
                             "host": "{{baseUrl}}",
-                            "path": "v1\/categories\/:category_id",
+                            "path": "v1/categories/:category_id",
                             "query": [],
-                            "raw": "{{baseUrl}}\/v1\/categories\/:category_id",
+                            "raw": "{{baseUrl}}/v1/categories/:category_id",
                             "variable": [
                                 {
                                     "id": "category_id",
@@ -2357,11 +2357,11 @@
                         "header": [
                             {
                                 "key": "Content-Type",
-                                "value": "application\/json"
+                                "value": "application/json"
                             },
                             {
                                 "key": "Accept",
-                                "value": "application\/json"
+                                "value": "application/json"
                             }
                         ],
                         "body": null,
@@ -2379,11 +2379,11 @@
                                 },
                                 {
                                     "key": "content-type",
-                                    "value": "application\/json"
+                                    "value": "application/json"
                                 }
                             ],
                             "code": 200,
-                            "body": "{\"success\":true,\"data\":{\"id\":1,\"name\":\"Ut\",\"slug\":\"ut\",\"description\":\"Magnam dolorem quod nihil voluptas perspiciatis labore voluptate occaecati animi reprehenderit id.\",\"parent_id\":null,\"image_url\":\"https:\\\/\\\/via.placeholder.com\\\/400x400.png\\\/0000aa?text=categories+laborum\",\"status\":\"active\",\"created_at\":\"2025-12-25T13:00:10.000000Z\",\"updated_at\":\"2025-12-25T13:00:10.000000Z\",\"level\":0,\"sort_order\":0,\"icon\":null,\"deleted_at\":null,\"parent\":null,\"children\":[]}}",
+                            "body": "{\"success\":true,\"data\":{\"id\":1,\"name\":\"Ut\",\"slug\":\"ut\",\"description\":\"Magnam dolorem quod nihil voluptas perspiciatis labore voluptate occaecati animi reprehenderit id.\",\"parent_id\":null,\"image_url\":\"https:\\/\\/via.placeholder.com\\/400x400.png\\/0000aa?text=categories+laborum\",\"status\":\"active\",\"created_at\":\"2025-12-25T13:00:10.000000Z\",\"updated_at\":\"2025-12-25T13:00:10.000000Z\",\"level\":0,\"sort_order\":0,\"icon\":null,\"deleted_at\":null,\"parent\":null,\"children\":[]}}",
                             "name": ""
                         }
                     ]
@@ -2393,19 +2393,19 @@
                     "request": {
                         "url": {
                             "host": "{{baseUrl}}",
-                            "path": "v1\/admin\/categories",
+                            "path": "v1/admin/categories",
                             "query": [],
-                            "raw": "{{baseUrl}}\/v1\/admin\/categories"
+                            "raw": "{{baseUrl}}/v1/admin/categories"
                         },
                         "method": "GET",
                         "header": [
                             {
                                 "key": "Content-Type",
-                                "value": "application\/json"
+                                "value": "application/json"
                             },
                             {
                                 "key": "Accept",
-                                "value": "application\/json"
+                                "value": "application/json"
                             }
                         ],
                         "body": null,
@@ -2423,7 +2423,7 @@
                                 },
                                 {
                                     "key": "content-type",
-                                    "value": "application\/json"
+                                    "value": "application/json"
                                 }
                             ],
                             "code": 401,
@@ -2437,19 +2437,19 @@
                     "request": {
                         "url": {
                             "host": "{{baseUrl}}",
-                            "path": "v1\/admin\/categories\/parent-categories",
+                            "path": "v1/admin/categories/parent-categories",
                             "query": [],
-                            "raw": "{{baseUrl}}\/v1\/admin\/categories\/parent-categories"
+                            "raw": "{{baseUrl}}/v1/admin/categories/parent-categories"
                         },
                         "method": "GET",
                         "header": [
                             {
                                 "key": "Content-Type",
-                                "value": "application\/json"
+                                "value": "application/json"
                             },
                             {
                                 "key": "Accept",
-                                "value": "application\/json"
+                                "value": "application/json"
                             }
                         ],
                         "body": null,
@@ -2467,7 +2467,7 @@
                                 },
                                 {
                                     "key": "content-type",
-                                    "value": "application\/json"
+                                    "value": "application/json"
                                 }
                             ],
                             "code": 401,
@@ -2481,9 +2481,9 @@
                     "request": {
                         "url": {
                             "host": "{{baseUrl}}",
-                            "path": "v1\/admin\/categories\/:category_id",
+                            "path": "v1/admin/categories/:category_id",
                             "query": [],
-                            "raw": "{{baseUrl}}\/v1\/admin\/categories\/:category_id",
+                            "raw": "{{baseUrl}}/v1/admin/categories/:category_id",
                             "variable": [
                                 {
                                     "id": "category_id",
@@ -2497,11 +2497,11 @@
                         "header": [
                             {
                                 "key": "Content-Type",
-                                "value": "application\/json"
+                                "value": "application/json"
                             },
                             {
                                 "key": "Accept",
-                                "value": "application\/json"
+                                "value": "application/json"
                             }
                         ],
                         "body": null,
@@ -2519,7 +2519,7 @@
                                 },
                                 {
                                     "key": "content-type",
-                                    "value": "application\/json"
+                                    "value": "application/json"
                                 }
                             ],
                             "code": 401,
@@ -2539,19 +2539,19 @@
                     "request": {
                         "url": {
                             "host": "{{baseUrl}}",
-                            "path": "v1\/coupons\/validate",
+                            "path": "v1/coupons/validate",
                             "query": [],
-                            "raw": "{{baseUrl}}\/v1\/coupons\/validate"
+                            "raw": "{{baseUrl}}/v1/coupons/validate"
                         },
                         "method": "POST",
                         "header": [
                             {
                                 "key": "Content-Type",
-                                "value": "application\/json"
+                                "value": "application/json"
                             },
                             {
                                 "key": "Accept",
-                                "value": "application\/json"
+                                "value": "application/json"
                             }
                         ],
                         "body": {
@@ -2576,19 +2576,19 @@
                     "request": {
                         "url": {
                             "host": "{{baseUrl}}",
-                            "path": "v1\/orders",
+                            "path": "v1/orders",
                             "query": [],
-                            "raw": "{{baseUrl}}\/v1\/orders"
+                            "raw": "{{baseUrl}}/v1/orders"
                         },
                         "method": "GET",
                         "header": [
                             {
                                 "key": "Content-Type",
-                                "value": "application\/json"
+                                "value": "application/json"
                             },
                             {
                                 "key": "Accept",
-                                "value": "application\/json"
+                                "value": "application/json"
                             }
                         ],
                         "body": null,
@@ -2606,7 +2606,7 @@
                                 },
                                 {
                                     "key": "content-type",
-                                    "value": "application\/json"
+                                    "value": "application/json"
                                 }
                             ],
                             "code": 401,
@@ -2620,19 +2620,19 @@
                     "request": {
                         "url": {
                             "host": "{{baseUrl}}",
-                            "path": "v1\/orders",
+                            "path": "v1/orders",
                             "query": [],
-                            "raw": "{{baseUrl}}\/v1\/orders"
+                            "raw": "{{baseUrl}}/v1/orders"
                         },
                         "method": "POST",
                         "header": [
                             {
                                 "key": "Content-Type",
-                                "value": "application\/json"
+                                "value": "application/json"
                             },
                             {
                                 "key": "Accept",
-                                "value": "application\/json"
+                                "value": "application/json"
                             }
                         ],
                         "body": {
@@ -2651,9 +2651,9 @@
                     "request": {
                         "url": {
                             "host": "{{baseUrl}}",
-                            "path": "v1\/orders\/:order_id",
+                            "path": "v1/orders/:order_id",
                             "query": [],
-                            "raw": "{{baseUrl}}\/v1\/orders\/:order_id",
+                            "raw": "{{baseUrl}}/v1/orders/:order_id",
                             "variable": [
                                 {
                                     "id": "order_id",
@@ -2667,11 +2667,11 @@
                         "header": [
                             {
                                 "key": "Content-Type",
-                                "value": "application\/json"
+                                "value": "application/json"
                             },
                             {
                                 "key": "Accept",
-                                "value": "application\/json"
+                                "value": "application/json"
                             }
                         ],
                         "body": null,
@@ -2689,7 +2689,7 @@
                                 },
                                 {
                                     "key": "content-type",
-                                    "value": "application\/json"
+                                    "value": "application/json"
                                 }
                             ],
                             "code": 401,
@@ -2703,9 +2703,9 @@
                     "request": {
                         "url": {
                             "host": "{{baseUrl}}",
-                            "path": "v1\/orders\/:order_id\/cancel",
+                            "path": "v1/orders/:order_id/cancel",
                             "query": [],
-                            "raw": "{{baseUrl}}\/v1\/orders\/:order_id\/cancel",
+                            "raw": "{{baseUrl}}/v1/orders/:order_id/cancel",
                             "variable": [
                                 {
                                     "id": "order_id",
@@ -2719,11 +2719,11 @@
                         "header": [
                             {
                                 "key": "Content-Type",
-                                "value": "application\/json"
+                                "value": "application/json"
                             },
                             {
                                 "key": "Accept",
-                                "value": "application\/json"
+                                "value": "application/json"
                             }
                         ],
                         "body": null,
@@ -2745,19 +2745,19 @@
                     "request": {
                         "url": {
                             "host": "{{baseUrl}}",
-                            "path": "v1\/payments",
+                            "path": "v1/payments",
                             "query": [],
-                            "raw": "{{baseUrl}}\/v1\/payments"
+                            "raw": "{{baseUrl}}/v1/payments"
                         },
                         "method": "POST",
                         "header": [
                             {
                                 "key": "Content-Type",
-                                "value": "application\/json"
+                                "value": "application/json"
                             },
                             {
                                 "key": "Accept",
-                                "value": "application\/json"
+                                "value": "application/json"
                             }
                         ],
                         "body": {
@@ -2776,9 +2776,9 @@
                     "request": {
                         "url": {
                             "host": "{{baseUrl}}",
-                            "path": "v1\/payments\/:payment_id",
+                            "path": "v1/payments/:payment_id",
                             "query": [],
-                            "raw": "{{baseUrl}}\/v1\/payments\/:payment_id",
+                            "raw": "{{baseUrl}}/v1/payments/:payment_id",
                             "variable": [
                                 {
                                     "id": "payment_id",
@@ -2792,11 +2792,11 @@
                         "header": [
                             {
                                 "key": "Content-Type",
-                                "value": "application\/json"
+                                "value": "application/json"
                             },
                             {
                                 "key": "Accept",
-                                "value": "application\/json"
+                                "value": "application/json"
                             }
                         ],
                         "body": null,
@@ -2814,7 +2814,7 @@
                                 },
                                 {
                                     "key": "content-type",
-                                    "value": "application\/json"
+                                    "value": "application/json"
                                 }
                             ],
                             "code": 401,
@@ -2828,9 +2828,9 @@
                     "request": {
                         "url": {
                             "host": "{{baseUrl}}",
-                            "path": "v1\/payments\/order\/:order_id",
+                            "path": "v1/payments/order/:order_id",
                             "query": [],
-                            "raw": "{{baseUrl}}\/v1\/payments\/order\/:order_id",
+                            "raw": "{{baseUrl}}/v1/payments/order/:order_id",
                             "variable": [
                                 {
                                     "id": "order_id",
@@ -2844,11 +2844,11 @@
                         "header": [
                             {
                                 "key": "Content-Type",
-                                "value": "application\/json"
+                                "value": "application/json"
                             },
                             {
                                 "key": "Accept",
-                                "value": "application\/json"
+                                "value": "application/json"
                             }
                         ],
                         "body": null,
@@ -2866,7 +2866,7 @@
                                 },
                                 {
                                     "key": "content-type",
-                                    "value": "application\/json"
+                                    "value": "application/json"
                                 }
                             ],
                             "code": 401,
@@ -2886,19 +2886,19 @@
                     "request": {
                         "url": {
                             "host": "{{baseUrl}}",
-                            "path": "v1\/products",
+                            "path": "v1/products",
                             "query": [],
-                            "raw": "{{baseUrl}}\/v1\/products"
+                            "raw": "{{baseUrl}}/v1/products"
                         },
                         "method": "GET",
                         "header": [
                             {
                                 "key": "Content-Type",
-                                "value": "application\/json"
+                                "value": "application/json"
                             },
                             {
                                 "key": "Accept",
-                                "value": "application\/json"
+                                "value": "application/json"
                             }
                         ],
                         "body": null,
@@ -2916,11 +2916,11 @@
                                 },
                                 {
                                     "key": "content-type",
-                                    "value": "application\/json"
+                                    "value": "application/json"
                                 }
                             ],
                             "code": 200,
-                            "body": "[{\"id\":1,\"sku\":\"SKU-371VA\",\"name\":\"quas id\",\"description\":\"Earum doloremque suscipit modi ea voluptas voluptate deserunt reiciendis hic.\",\"category_id\":3,\"brand_id\":3,\"price\":\"427.73\",\"discount_price\":\"100.94\",\"stock\":25,\"image_url\":\"https:\\\/\\\/via.placeholder.com\\\/400x400.png\\\/00bb22?text=products+nihil\",\"rating\":\"3.00\",\"created_at\":\"2025-12-25T13:00:11.000000Z\",\"updated_at\":\"2025-12-25T13:00:11.000000Z\",\"slug\":\"quas-id-6638\",\"short_description\":null,\"cost_price\":null,\"discount_percentage\":null,\"low_stock_threshold\":10,\"stock_status\":\"in_stock\",\"weight\":null,\"dimensions\":null,\"reviews_count\":0,\"views_count\":0,\"sold_count\":0,\"is_featured\":false,\"meta_title\":null,\"meta_description\":null,\"status\":\"active\",\"deleted_at\":null,\"category\":{\"id\":3,\"name\":\"Nam\",\"slug\":\"nam\",\"description\":\"Officiis ut expedita nihil impedit necessitatibus qui.\",\"parent_id\":null,\"image_url\":\"https:\\\/\\\/via.placeholder.com\\\/400x400.png\\\/006600?text=categories+modi\",\"status\":\"active\",\"created_at\":\"2025-12-25T13:00:10.000000Z\",\"updated_at\":\"2025-12-25T13:00:10.000000Z\",\"level\":0,\"sort_order\":0,\"icon\":null,\"deleted_at\":null},\"brand\":{\"id\":3,\"name\":\"Halvorson-Effertz\",\"slug\":\"halvorson-effertz\",\"description\":\"Quis doloribus deleniti maxime quia modi dolorum earum sapiente.\",\"logo_url\":\"https:\\\/\\\/via.placeholder.com\\\/200x200.png\\\/005588?text=brands+magnam\",\"website\":\"https:\\\/\\\/becker.org\\\/recusandae-provident-sit-numquam-ut-similique-sunt-unde.html\",\"status\":\"active\",\"created_at\":\"2025-12-25T13:00:10.000000Z\",\"updated_at\":\"2025-12-25T13:00:10.000000Z\",\"sort_order\":0,\"deleted_at\":null}},{\"id\":2,\"sku\":\"SKU-725KS\",\"name\":\"magnam id\",\"description\":\"Nobis voluptatum aut sequi iure similique cumque sint explicabo cumque fugit beatae veniam.\",\"category_id\":3,\"brand_id\":4,\"price\":\"630.40\",\"discount_price\":null,\"stock\":11,\"image_url\":\"https:\\\/\\\/via.placeholder.com\\\/400x400.png\\\/001133?text=products+atque\",\"rating\":\"1.10\",\"created_at\":\"2025-12-25T13:00:11.000000Z\",\"updated_at\":\"2025-12-25T13:00:11.000000Z\",\"slug\":\"magnam-id-1769\",\"short_description\":null,\"cost_price\":null,\"discount_percentage\":null,\"low_stock_threshold\":10,\"stock_status\":\"in_stock\",\"weight\":null,\"dimensions\":null,\"reviews_count\":0,\"views_count\":0,\"sold_count\":0,\"is_featured\":false,\"meta_title\":null,\"meta_description\":null,\"status\":\"active\",\"deleted_at\":null,\"category\":{\"id\":3,\"name\":\"Nam\",\"slug\":\"nam\",\"description\":\"Officiis ut expedita nihil impedit necessitatibus qui.\",\"parent_id\":null,\"image_url\":\"https:\\\/\\\/via.placeholder.com\\\/400x400.png\\\/006600?text=categories+modi\",\"status\":\"active\",\"created_at\":\"2025-12-25T13:00:10.000000Z\",\"updated_at\":\"2025-12-25T13:00:10.000000Z\",\"level\":0,\"sort_order\":0,\"icon\":null,\"deleted_at\":null},\"brand\":{\"id\":4,\"name\":\"Cruickshank, Von and Schaden\",\"slug\":\"cruickshank-von-and-schaden\",\"description\":\"Esse repudiandae repudiandae eum laudantium molestias ullam consequatur a perferendis in.\",\"logo_url\":\"https:\\\/\\\/via.placeholder.com\\\/200x200.png\\\/006677?text=brands+officiis\",\"website\":\"http:\\\/\\\/franecki.biz\\\/\",\"status\":\"active\",\"created_at\":\"2025-12-25T13:00:10.000000Z\",\"updated_at\":\"2025-12-25T13:00:10.000000Z\",\"sort_order\":0,\"deleted_at\":null}},{\"id\":3,\"sku\":\"SKU-994BU\",\"name\":\"minima reiciendis\",\"description\":\"Tempore quia quas nihil optio qui ipsa nihil et.\",\"category_id\":2,\"brand_id\":5,\"price\":\"909.43\",\"discount_price\":null,\"stock\":78,\"image_url\":\"https:\\\/\\\/via.placeholder.com\\\/400x400.png\\\/0033ff?text=products+dolores\",\"rating\":\"4.00\",\"created_at\":\"2025-12-25T13:00:11.000000Z\",\"updated_at\":\"2025-12-25T13:00:11.000000Z\",\"slug\":\"minima-reiciendis-7746\",\"short_description\":null,\"cost_price\":null,\"discount_percentage\":null,\"low_stock_threshold\":10,\"stock_status\":\"in_stock\",\"weight\":null,\"dimensions\":null,\"reviews_count\":0,\"views_count\":0,\"sold_count\":0,\"is_featured\":false,\"meta_title\":null,\"meta_description\":null,\"status\":\"active\",\"deleted_at\":null,\"category\":{\"id\":2,\"name\":\"Ab\",\"slug\":\"ab\",\"description\":\"Rerum non velit ut qui qui eius temporibus impedit fugiat.\",\"parent_id\":null,\"image_url\":\"https:\\\/\\\/via.placeholder.com\\\/400x400.png\\\/006633?text=categories+ratione\",\"status\":\"active\",\"created_at\":\"2025-12-25T13:00:10.000000Z\",\"updated_at\":\"2025-12-25T13:00:10.000000Z\",\"level\":0,\"sort_order\":0,\"icon\":null,\"deleted_at\":null},\"brand\":{\"id\":5,\"name\":\"Feeney-Langosh\",\"slug\":\"feeney-langosh\",\"description\":\"Repellendus aut et quo vel ut hic praesentium quos eveniet.\",\"logo_url\":\"https:\\\/\\\/via.placeholder.com\\\/200x200.png\\\/007700?text=brands+omnis\",\"website\":\"http:\\\/\\\/www.lockman.org\\\/voluptatum-aliquid-hic-et-quasi-eaque-voluptate.html\",\"status\":\"active\",\"created_at\":\"2025-12-25T13:00:10.000000Z\",\"updated_at\":\"2025-12-25T13:00:10.000000Z\",\"sort_order\":0,\"deleted_at\":null}},{\"id\":4,\"sku\":\"SKU-705KP\",\"name\":\"quia quae\",\"description\":\"Qui dolores delectus laudantium tenetur possimus officia quibusdam inventore quibusdam.\",\"category_id\":5,\"brand_id\":3,\"price\":\"243.84\",\"discount_price\":\"798.48\",\"stock\":67,\"image_url\":\"https:\\\/\\\/via.placeholder.com\\\/400x400.png\\\/008833?text=products+sed\",\"rating\":\"3.90\",\"created_at\":\"2025-12-25T13:00:11.000000Z\",\"updated_at\":\"2025-12-25T13:00:11.000000Z\",\"slug\":\"quia-quae-6791\",\"short_description\":null,\"cost_price\":null,\"discount_percentage\":null,\"low_stock_threshold\":10,\"stock_status\":\"in_stock\",\"weight\":null,\"dimensions\":null,\"reviews_count\":0,\"views_count\":0,\"sold_count\":0,\"is_featured\":false,\"meta_title\":null,\"meta_description\":null,\"status\":\"active\",\"deleted_at\":null,\"category\":{\"id\":5,\"name\":\"Molestias\",\"slug\":\"molestias\",\"description\":\"Omnis architecto non officia assumenda quis tenetur accusamus quo.\",\"parent_id\":null,\"image_url\":\"https:\\\/\\\/via.placeholder.com\\\/400x400.png\\\/00ff88?text=categories+et\",\"status\":\"active\",\"created_at\":\"2025-12-25T13:00:10.000000Z\",\"updated_at\":\"2025-12-25T13:00:10.000000Z\",\"level\":0,\"sort_order\":0,\"icon\":null,\"deleted_at\":null},\"brand\":{\"id\":3,\"name\":\"Halvorson-Effertz\",\"slug\":\"halvorson-effertz\",\"description\":\"Quis doloribus deleniti maxime quia modi dolorum earum sapiente.\",\"logo_url\":\"https:\\\/\\\/via.placeholder.com\\\/200x200.png\\\/005588?text=brands+magnam\",\"website\":\"https:\\\/\\\/becker.org\\\/recusandae-provident-sit-numquam-ut-similique-sunt-unde.html\",\"status\":\"active\",\"created_at\":\"2025-12-25T13:00:10.000000Z\",\"updated_at\":\"2025-12-25T13:00:10.000000Z\",\"sort_order\":0,\"deleted_at\":null}},{\"id\":5,\"sku\":\"SKU-252KC\",\"name\":\"ratione sunt\",\"description\":\"Est possimus sapiente harum repellendus distinctio quidem consequatur provident aut omnis ut et odio hic temporibus autem.\",\"category_id\":3,\"brand_id\":2,\"price\":\"699.11\",\"discount_price\":null,\"stock\":45,\"image_url\":\"https:\\\/\\\/via.placeholder.com\\\/400x400.png\\\/0055aa?text=products+quae\",\"rating\":\"2.50\",\"created_at\":\"2025-12-25T13:00:11.000000Z\",\"updated_at\":\"2025-12-25T13:00:11.000000Z\",\"slug\":\"ratione-sunt-6541\",\"short_description\":null,\"cost_price\":null,\"discount_percentage\":null,\"low_stock_threshold\":10,\"stock_status\":\"in_stock\",\"weight\":null,\"dimensions\":null,\"reviews_count\":0,\"views_count\":0,\"sold_count\":0,\"is_featured\":false,\"meta_title\":null,\"meta_description\":null,\"status\":\"active\",\"deleted_at\":null,\"category\":{\"id\":3,\"name\":\"Nam\",\"slug\":\"nam\",\"description\":\"Officiis ut expedita nihil impedit necessitatibus qui.\",\"parent_id\":null,\"image_url\":\"https:\\\/\\\/via.placeholder.com\\\/400x400.png\\\/006600?text=categories+modi\",\"status\":\"active\",\"created_at\":\"2025-12-25T13:00:10.000000Z\",\"updated_at\":\"2025-12-25T13:00:10.000000Z\",\"level\":0,\"sort_order\":0,\"icon\":null,\"deleted_at\":null},\"brand\":{\"id\":2,\"name\":\"Blanda Inc\",\"slug\":\"blanda-inc\",\"description\":\"Totam inventore esse ipsum repellat et sapiente quod maiores.\",\"logo_url\":\"https:\\\/\\\/via.placeholder.com\\\/200x200.png\\\/001155?text=brands+voluptatem\",\"website\":\"http:\\\/\\\/corkery.com\\\/et-tenetur-omnis-iste-optio.html\",\"status\":\"active\",\"created_at\":\"2025-12-25T13:00:10.000000Z\",\"updated_at\":\"2025-12-25T13:00:10.000000Z\",\"sort_order\":0,\"deleted_at\":null}},{\"id\":6,\"sku\":\"SKU-646QC\",\"name\":\"ut ea\",\"description\":\"Consequatur cupiditate ut ad aut quaerat cumque at aliquid.\",\"category_id\":2,\"brand_id\":2,\"price\":\"707.95\",\"discount_price\":\"453.27\",\"stock\":79,\"image_url\":\"https:\\\/\\\/via.placeholder.com\\\/400x400.png\\\/006666?text=products+facilis\",\"rating\":\"4.60\",\"created_at\":\"2025-12-25T13:00:11.000000Z\",\"updated_at\":\"2025-12-25T13:00:11.000000Z\",\"slug\":\"ut-ea-5563\",\"short_description\":null,\"cost_price\":null,\"discount_percentage\":null,\"low_stock_threshold\":10,\"stock_status\":\"in_stock\",\"weight\":null,\"dimensions\":null,\"reviews_count\":0,\"views_count\":0,\"sold_count\":0,\"is_featured\":true,\"meta_title\":null,\"meta_description\":null,\"status\":\"active\",\"deleted_at\":null,\"category\":{\"id\":2,\"name\":\"Ab\",\"slug\":\"ab\",\"description\":\"Rerum non velit ut qui qui eius temporibus impedit fugiat.\",\"parent_id\":null,\"image_url\":\"https:\\\/\\\/via.placeholder.com\\\/400x400.png\\\/006633?text=categories+ratione\",\"status\":\"active\",\"created_at\":\"2025-12-25T13:00:10.000000Z\",\"updated_at\":\"2025-12-25T13:00:10.000000Z\",\"level\":0,\"sort_order\":0,\"icon\":null,\"deleted_at\":null},\"brand\":{\"id\":2,\"name\":\"Blanda Inc\",\"slug\":\"blanda-inc\",\"description\":\"Totam inventore esse ipsum repellat et sapiente quod maiores.\",\"logo_url\":\"https:\\\/\\\/via.placeholder.com\\\/200x200.png\\\/001155?text=brands+voluptatem\",\"website\":\"http:\\\/\\\/corkery.com\\\/et-tenetur-omnis-iste-optio.html\",\"status\":\"active\",\"created_at\":\"2025-12-25T13:00:10.000000Z\",\"updated_at\":\"2025-12-25T13:00:10.000000Z\",\"sort_order\":0,\"deleted_at\":null}},{\"id\":7,\"sku\":\"SKU-828NV\",\"name\":\"est odit\",\"description\":\"Vel quia dolore necessitatibus voluptatem quas et aut nemo non.\",\"category_id\":2,\"brand_id\":5,\"price\":\"758.04\",\"discount_price\":null,\"stock\":41,\"image_url\":\"https:\\\/\\\/via.placeholder.com\\\/400x400.png\\\/008866?text=products+ea\",\"rating\":\"4.30\",\"created_at\":\"2025-12-25T13:00:11.000000Z\",\"updated_at\":\"2025-12-25T13:00:11.000000Z\",\"slug\":\"est-odit-2515\",\"short_description\":null,\"cost_price\":null,\"discount_percentage\":null,\"low_stock_threshold\":10,\"stock_status\":\"in_stock\",\"weight\":null,\"dimensions\":null,\"reviews_count\":0,\"views_count\":0,\"sold_count\":0,\"is_featured\":false,\"meta_title\":null,\"meta_description\":null,\"status\":\"active\",\"deleted_at\":null,\"category\":{\"id\":2,\"name\":\"Ab\",\"slug\":\"ab\",\"description\":\"Rerum non velit ut qui qui eius temporibus impedit fugiat.\",\"parent_id\":null,\"image_url\":\"https:\\\/\\\/via.placeholder.com\\\/400x400.png\\\/006633?text=categories+ratione\",\"status\":\"active\",\"created_at\":\"2025-12-25T13:00:10.000000Z\",\"updated_at\":\"2025-12-25T13:00:10.000000Z\",\"level\":0,\"sort_order\":0,\"icon\":null,\"deleted_at\":null},\"brand\":{\"id\":5,\"name\":\"Feeney-Langosh\",\"slug\":\"feeney-langosh\",\"description\":\"Repellendus aut et quo vel ut hic praesentium quos eveniet.\",\"logo_url\":\"https:\\\/\\\/via.placeholder.com\\\/200x200.png\\\/007700?text=brands+omnis\",\"website\":\"http:\\\/\\\/www.lockman.org\\\/voluptatum-aliquid-hic-et-quasi-eaque-voluptate.html\",\"status\":\"active\",\"created_at\":\"2025-12-25T13:00:10.000000Z\",\"updated_at\":\"2025-12-25T13:00:10.000000Z\",\"sort_order\":0,\"deleted_at\":null}},{\"id\":8,\"sku\":\"SKU-163QF\",\"name\":\"repellat repudiandae\",\"description\":\"Quidem placeat quia facere temporibus ut culpa assumenda placeat praesentium nisi enim.\",\"category_id\":1,\"brand_id\":4,\"price\":\"350.69\",\"discount_price\":\"470.97\",\"stock\":77,\"image_url\":\"https:\\\/\\\/via.placeholder.com\\\/400x400.png\\\/00ff00?text=products+omnis\",\"rating\":\"1.30\",\"created_at\":\"2025-12-25T13:00:11.000000Z\",\"updated_at\":\"2025-12-25T13:00:11.000000Z\",\"slug\":\"repellat-repudiandae-6721\",\"short_description\":null,\"cost_price\":null,\"discount_percentage\":null,\"low_stock_threshold\":10,\"stock_status\":\"in_stock\",\"weight\":null,\"dimensions\":null,\"reviews_count\":0,\"views_count\":0,\"sold_count\":0,\"is_featured\":false,\"meta_title\":null,\"meta_description\":null,\"status\":\"active\",\"deleted_at\":null,\"category\":{\"id\":1,\"name\":\"Ut\",\"slug\":\"ut\",\"description\":\"Magnam dolorem quod nihil voluptas perspiciatis labore voluptate occaecati animi reprehenderit id.\",\"parent_id\":null,\"image_url\":\"https:\\\/\\\/via.placeholder.com\\\/400x400.png\\\/0000aa?text=categories+laborum\",\"status\":\"active\",\"created_at\":\"2025-12-25T13:00:10.000000Z\",\"updated_at\":\"2025-12-25T13:00:10.000000Z\",\"level\":0,\"sort_order\":0,\"icon\":null,\"deleted_at\":null},\"brand\":{\"id\":4,\"name\":\"Cruickshank, Von and Schaden\",\"slug\":\"cruickshank-von-and-schaden\",\"description\":\"Esse repudiandae repudiandae eum laudantium molestias ullam consequatur a perferendis in.\",\"logo_url\":\"https:\\\/\\\/via.placeholder.com\\\/200x200.png\\\/006677?text=brands+officiis\",\"website\":\"http:\\\/\\\/franecki.biz\\\/\",\"status\":\"active\",\"created_at\":\"2025-12-25T13:00:10.000000Z\",\"updated_at\":\"2025-12-25T13:00:10.000000Z\",\"sort_order\":0,\"deleted_at\":null}},{\"id\":9,\"sku\":\"SKU-700BU\",\"name\":\"dicta voluptatem\",\"description\":\"Dolor molestiae maiores repudiandae inventore nihil autem ea natus optio.\",\"category_id\":5,\"brand_id\":2,\"price\":\"761.80\",\"discount_price\":null,\"stock\":86,\"image_url\":\"https:\\\/\\\/via.placeholder.com\\\/400x400.png\\\/0088dd?text=products+reprehenderit\",\"rating\":\"3.40\",\"created_at\":\"2025-12-25T13:00:11.000000Z\",\"updated_at\":\"2025-12-25T13:00:11.000000Z\",\"slug\":\"dicta-voluptatem-7949\",\"short_description\":null,\"cost_price\":null,\"discount_percentage\":null,\"low_stock_threshold\":10,\"stock_status\":\"in_stock\",\"weight\":null,\"dimensions\":null,\"reviews_count\":0,\"views_count\":0,\"sold_count\":0,\"is_featured\":true,\"meta_title\":null,\"meta_description\":null,\"status\":\"active\",\"deleted_at\":null,\"category\":{\"id\":5,\"name\":\"Molestias\",\"slug\":\"molestias\",\"description\":\"Omnis architecto non officia assumenda quis tenetur accusamus quo.\",\"parent_id\":null,\"image_url\":\"https:\\\/\\\/via.placeholder.com\\\/400x400.png\\\/00ff88?text=categories+et\",\"status\":\"active\",\"created_at\":\"2025-12-25T13:00:10.000000Z\",\"updated_at\":\"2025-12-25T13:00:10.000000Z\",\"level\":0,\"sort_order\":0,\"icon\":null,\"deleted_at\":null},\"brand\":{\"id\":2,\"name\":\"Blanda Inc\",\"slug\":\"blanda-inc\",\"description\":\"Totam inventore esse ipsum repellat et sapiente quod maiores.\",\"logo_url\":\"https:\\\/\\\/via.placeholder.com\\\/200x200.png\\\/001155?text=brands+voluptatem\",\"website\":\"http:\\\/\\\/corkery.com\\\/et-tenetur-omnis-iste-optio.html\",\"status\":\"active\",\"created_at\":\"2025-12-25T13:00:10.000000Z\",\"updated_at\":\"2025-12-25T13:00:10.000000Z\",\"sort_order\":0,\"deleted_at\":null}},{\"id\":10,\"sku\":\"SKU-203BS\",\"name\":\"porro in\",\"description\":\"Distinctio impedit fugit id et dolores atque dignissimos odit ducimus animi deleniti et.\",\"category_id\":4,\"brand_id\":4,\"price\":\"245.47\",\"discount_price\":\"82.82\",\"stock\":43,\"image_url\":\"https:\\\/\\\/via.placeholder.com\\\/400x400.png\\\/00ee33?text=products+quidem\",\"rating\":\"2.50\",\"created_at\":\"2025-12-25T13:00:11.000000Z\",\"updated_at\":\"2025-12-25T13:00:11.000000Z\",\"slug\":\"porro-in-3377\",\"short_description\":null,\"cost_price\":null,\"discount_percentage\":null,\"low_stock_threshold\":10,\"stock_status\":\"in_stock\",\"weight\":null,\"dimensions\":null,\"reviews_count\":0,\"views_count\":0,\"sold_count\":0,\"is_featured\":false,\"meta_title\":null,\"meta_description\":null,\"status\":\"active\",\"deleted_at\":null,\"category\":{\"id\":4,\"name\":\"Iste\",\"slug\":\"iste\",\"description\":\"Omnis optio rerum accusamus pariatur dolorem provident alias quia reprehenderit dignissimos.\",\"parent_id\":null,\"image_url\":\"https:\\\/\\\/via.placeholder.com\\\/400x400.png\\\/00ff22?text=categories+accusantium\",\"status\":\"active\",\"created_at\":\"2025-12-25T13:00:10.000000Z\",\"updated_at\":\"2025-12-25T13:00:10.000000Z\",\"level\":0,\"sort_order\":0,\"icon\":null,\"deleted_at\":null},\"brand\":{\"id\":4,\"name\":\"Cruickshank, Von and Schaden\",\"slug\":\"cruickshank-von-and-schaden\",\"description\":\"Esse repudiandae repudiandae eum laudantium molestias ullam consequatur a perferendis in.\",\"logo_url\":\"https:\\\/\\\/via.placeholder.com\\\/200x200.png\\\/006677?text=brands+officiis\",\"website\":\"http:\\\/\\\/franecki.biz\\\/\",\"status\":\"active\",\"created_at\":\"2025-12-25T13:00:10.000000Z\",\"updated_at\":\"2025-12-25T13:00:10.000000Z\",\"sort_order\":0,\"deleted_at\":null}},{\"id\":11,\"sku\":\"SKU-518LO\",\"name\":\"voluptatem quia\",\"description\":\"Cum tempora soluta a corporis rerum assumenda saepe saepe inventore aut distinctio.\",\"category_id\":1,\"brand_id\":3,\"price\":\"200.25\",\"discount_price\":null,\"stock\":59,\"image_url\":\"https:\\\/\\\/via.placeholder.com\\\/400x400.png\\\/00ccff?text=products+eaque\",\"rating\":\"3.40\",\"created_at\":\"2025-12-25T13:00:11.000000Z\",\"updated_at\":\"2025-12-25T13:00:11.000000Z\",\"slug\":\"voluptatem-quia-5628\",\"short_description\":null,\"cost_price\":null,\"discount_percentage\":null,\"low_stock_threshold\":10,\"stock_status\":\"in_stock\",\"weight\":null,\"dimensions\":null,\"reviews_count\":0,\"views_count\":0,\"sold_count\":0,\"is_featured\":false,\"meta_title\":null,\"meta_description\":null,\"status\":\"active\",\"deleted_at\":null,\"category\":{\"id\":1,\"name\":\"Ut\",\"slug\":\"ut\",\"description\":\"Magnam dolorem quod nihil voluptas perspiciatis labore voluptate occaecati animi reprehenderit id.\",\"parent_id\":null,\"image_url\":\"https:\\\/\\\/via.placeholder.com\\\/400x400.png\\\/0000aa?text=categories+laborum\",\"status\":\"active\",\"created_at\":\"2025-12-25T13:00:10.000000Z\",\"updated_at\":\"2025-12-25T13:00:10.000000Z\",\"level\":0,\"sort_order\":0,\"icon\":null,\"deleted_at\":null},\"brand\":{\"id\":3,\"name\":\"Halvorson-Effertz\",\"slug\":\"halvorson-effertz\",\"description\":\"Quis doloribus deleniti maxime quia modi dolorum earum sapiente.\",\"logo_url\":\"https:\\\/\\\/via.placeholder.com\\\/200x200.png\\\/005588?text=brands+magnam\",\"website\":\"https:\\\/\\\/becker.org\\\/recusandae-provident-sit-numquam-ut-similique-sunt-unde.html\",\"status\":\"active\",\"created_at\":\"2025-12-25T13:00:10.000000Z\",\"updated_at\":\"2025-12-25T13:00:10.000000Z\",\"sort_order\":0,\"deleted_at\":null}},{\"id\":12,\"sku\":\"SKU-928CK\",\"name\":\"repellendus tempora\",\"description\":\"Aut odit minima error et est dolorem quod.\",\"category_id\":1,\"brand_id\":2,\"price\":\"628.75\",\"discount_price\":null,\"stock\":89,\"image_url\":\"https:\\\/\\\/via.placeholder.com\\\/400x400.png\\\/00ffdd?text=products+sit\",\"rating\":\"3.30\",\"created_at\":\"2025-12-25T13:00:11.000000Z\",\"updated_at\":\"2025-12-25T13:00:11.000000Z\",\"slug\":\"repellendus-tempora-4841\",\"short_description\":null,\"cost_price\":null,\"discount_percentage\":null,\"low_stock_threshold\":10,\"stock_status\":\"in_stock\",\"weight\":null,\"dimensions\":null,\"reviews_count\":0,\"views_count\":0,\"sold_count\":0,\"is_featured\":true,\"meta_title\":null,\"meta_description\":null,\"status\":\"active\",\"deleted_at\":null,\"category\":{\"id\":1,\"name\":\"Ut\",\"slug\":\"ut\",\"description\":\"Magnam dolorem quod nihil voluptas perspiciatis labore voluptate occaecati animi reprehenderit id.\",\"parent_id\":null,\"image_url\":\"https:\\\/\\\/via.placeholder.com\\\/400x400.png\\\/0000aa?text=categories+laborum\",\"status\":\"active\",\"created_at\":\"2025-12-25T13:00:10.000000Z\",\"updated_at\":\"2025-12-25T13:00:10.000000Z\",\"level\":0,\"sort_order\":0,\"icon\":null,\"deleted_at\":null},\"brand\":{\"id\":2,\"name\":\"Blanda Inc\",\"slug\":\"blanda-inc\",\"description\":\"Totam inventore esse ipsum repellat et sapiente quod maiores.\",\"logo_url\":\"https:\\\/\\\/via.placeholder.com\\\/200x200.png\\\/001155?text=brands+voluptatem\",\"website\":\"http:\\\/\\\/corkery.com\\\/et-tenetur-omnis-iste-optio.html\",\"status\":\"active\",\"created_at\":\"2025-12-25T13:00:10.000000Z\",\"updated_at\":\"2025-12-25T13:00:10.000000Z\",\"sort_order\":0,\"deleted_at\":null}},{\"id\":13,\"sku\":\"SKU-446NT\",\"name\":\"sunt id\",\"description\":\"Modi et vitae nesciunt mollitia tenetur ratione est.\",\"category_id\":5,\"brand_id\":1,\"price\":\"517.28\",\"discount_price\":null,\"stock\":34,\"image_url\":\"https:\\\/\\\/via.placeholder.com\\\/400x400.png\\\/00cc11?text=products+voluptas\",\"rating\":\"4.60\",\"created_at\":\"2025-12-25T13:00:11.000000Z\",\"updated_at\":\"2025-12-25T13:00:11.000000Z\",\"slug\":\"sunt-id-3115\",\"short_description\":null,\"cost_price\":null,\"discount_percentage\":null,\"low_stock_threshold\":10,\"stock_status\":\"in_stock\",\"weight\":null,\"dimensions\":null,\"reviews_count\":0,\"views_count\":0,\"sold_count\":0,\"is_featured\":false,\"meta_title\":null,\"meta_description\":null,\"status\":\"active\",\"deleted_at\":null,\"category\":{\"id\":5,\"name\":\"Molestias\",\"slug\":\"molestias\",\"description\":\"Omnis architecto non officia assumenda quis tenetur accusamus quo.\",\"parent_id\":null,\"image_url\":\"https:\\\/\\\/via.placeholder.com\\\/400x400.png\\\/00ff88?text=categories+et\",\"status\":\"active\",\"created_at\":\"2025-12-25T13:00:10.000000Z\",\"updated_at\":\"2025-12-25T13:00:10.000000Z\",\"level\":0,\"sort_order\":0,\"icon\":null,\"deleted_at\":null},\"brand\":{\"id\":1,\"name\":\"Lehner-Lehner\",\"slug\":\"lehner-lehner\",\"description\":\"Velit id pariatur voluptas commodi voluptatibus aut.\",\"logo_url\":\"https:\\\/\\\/via.placeholder.com\\\/200x200.png\\\/008833?text=brands+incidunt\",\"website\":\"http:\\\/\\\/steuber.com\\\/\",\"status\":\"active\",\"created_at\":\"2025-12-25T13:00:10.000000Z\",\"updated_at\":\"2025-12-25T13:00:10.000000Z\",\"sort_order\":0,\"deleted_at\":null}},{\"id\":14,\"sku\":\"SKU-653TA\",\"name\":\"inventore dolorem\",\"description\":\"Sequi magni in illum quos quaerat quae vero maiores quam omnis nostrum consequatur architecto voluptates.\",\"category_id\":4,\"brand_id\":4,\"price\":\"596.16\",\"discount_price\":null,\"stock\":76,\"image_url\":\"https:\\\/\\\/via.placeholder.com\\\/400x400.png\\\/00ffbb?text=products+corporis\",\"rating\":\"3.80\",\"created_at\":\"2025-12-25T13:00:11.000000Z\",\"updated_at\":\"2025-12-25T13:00:11.000000Z\",\"slug\":\"inventore-dolorem-5993\",\"short_description\":null,\"cost_price\":null,\"discount_percentage\":null,\"low_stock_threshold\":10,\"stock_status\":\"in_stock\",\"weight\":null,\"dimensions\":null,\"reviews_count\":0,\"views_count\":0,\"sold_count\":0,\"is_featured\":false,\"meta_title\":null,\"meta_description\":null,\"status\":\"active\",\"deleted_at\":null,\"category\":{\"id\":4,\"name\":\"Iste\",\"slug\":\"iste\",\"description\":\"Omnis optio rerum accusamus pariatur dolorem provident alias quia reprehenderit dignissimos.\",\"parent_id\":null,\"image_url\":\"https:\\\/\\\/via.placeholder.com\\\/400x400.png\\\/00ff22?text=categories+accusantium\",\"status\":\"active\",\"created_at\":\"2025-12-25T13:00:10.000000Z\",\"updated_at\":\"2025-12-25T13:00:10.000000Z\",\"level\":0,\"sort_order\":0,\"icon\":null,\"deleted_at\":null},\"brand\":{\"id\":4,\"name\":\"Cruickshank, Von and Schaden\",\"slug\":\"cruickshank-von-and-schaden\",\"description\":\"Esse repudiandae repudiandae eum laudantium molestias ullam consequatur a perferendis in.\",\"logo_url\":\"https:\\\/\\\/via.placeholder.com\\\/200x200.png\\\/006677?text=brands+officiis\",\"website\":\"http:\\\/\\\/franecki.biz\\\/\",\"status\":\"active\",\"created_at\":\"2025-12-25T13:00:10.000000Z\",\"updated_at\":\"2025-12-25T13:00:10.000000Z\",\"sort_order\":0,\"deleted_at\":null}},{\"id\":15,\"sku\":\"SKU-365WE\",\"name\":\"cum consequatur\",\"description\":\"Minus occaecati necessitatibus dolores id ut voluptatum quam.\",\"category_id\":5,\"brand_id\":1,\"price\":\"243.83\",\"discount_price\":null,\"stock\":14,\"image_url\":\"https:\\\/\\\/via.placeholder.com\\\/400x400.png\\\/00bbee?text=products+consequatur\",\"rating\":\"3.50\",\"created_at\":\"2025-12-25T13:00:11.000000Z\",\"updated_at\":\"2025-12-25T13:00:11.000000Z\",\"slug\":\"cum-consequatur-5737\",\"short_description\":null,\"cost_price\":null,\"discount_percentage\":null,\"low_stock_threshold\":10,\"stock_status\":\"in_stock\",\"weight\":null,\"dimensions\":null,\"reviews_count\":0,\"views_count\":0,\"sold_count\":0,\"is_featured\":false,\"meta_title\":null,\"meta_description\":null,\"status\":\"active\",\"deleted_at\":null,\"category\":{\"id\":5,\"name\":\"Molestias\",\"slug\":\"molestias\",\"description\":\"Omnis architecto non officia assumenda quis tenetur accusamus quo.\",\"parent_id\":null,\"image_url\":\"https:\\\/\\\/via.placeholder.com\\\/400x400.png\\\/00ff88?text=categories+et\",\"status\":\"active\",\"created_at\":\"2025-12-25T13:00:10.000000Z\",\"updated_at\":\"2025-12-25T13:00:10.000000Z\",\"level\":0,\"sort_order\":0,\"icon\":null,\"deleted_at\":null},\"brand\":{\"id\":1,\"name\":\"Lehner-Lehner\",\"slug\":\"lehner-lehner\",\"description\":\"Velit id pariatur voluptas commodi voluptatibus aut.\",\"logo_url\":\"https:\\\/\\\/via.placeholder.com\\\/200x200.png\\\/008833?text=brands+incidunt\",\"website\":\"http:\\\/\\\/steuber.com\\\/\",\"status\":\"active\",\"created_at\":\"2025-12-25T13:00:10.000000Z\",\"updated_at\":\"2025-12-25T13:00:10.000000Z\",\"sort_order\":0,\"deleted_at\":null}},{\"id\":16,\"sku\":\"SKU-093PS\",\"name\":\"tempora qui\",\"description\":\"Enim delectus deleniti quam natus enim consequatur voluptas asperiores quod dolor atque optio amet.\",\"category_id\":3,\"brand_id\":2,\"price\":\"707.04\",\"discount_price\":null,\"stock\":48,\"image_url\":\"https:\\\/\\\/via.placeholder.com\\\/400x400.png\\\/0055dd?text=products+voluptatum\",\"rating\":\"1.10\",\"created_at\":\"2025-12-25T13:00:11.000000Z\",\"updated_at\":\"2025-12-25T13:00:11.000000Z\",\"slug\":\"tempora-qui-5710\",\"short_description\":null,\"cost_price\":null,\"discount_percentage\":null,\"low_stock_threshold\":10,\"stock_status\":\"in_stock\",\"weight\":null,\"dimensions\":null,\"reviews_count\":0,\"views_count\":0,\"sold_count\":0,\"is_featured\":true,\"meta_title\":null,\"meta_description\":null,\"status\":\"active\",\"deleted_at\":null,\"category\":{\"id\":3,\"name\":\"Nam\",\"slug\":\"nam\",\"description\":\"Officiis ut expedita nihil impedit necessitatibus qui.\",\"parent_id\":null,\"image_url\":\"https:\\\/\\\/via.placeholder.com\\\/400x400.png\\\/006600?text=categories+modi\",\"status\":\"active\",\"created_at\":\"2025-12-25T13:00:10.000000Z\",\"updated_at\":\"2025-12-25T13:00:10.000000Z\",\"level\":0,\"sort_order\":0,\"icon\":null,\"deleted_at\":null},\"brand\":{\"id\":2,\"name\":\"Blanda Inc\",\"slug\":\"blanda-inc\",\"description\":\"Totam inventore esse ipsum repellat et sapiente quod maiores.\",\"logo_url\":\"https:\\\/\\\/via.placeholder.com\\\/200x200.png\\\/001155?text=brands+voluptatem\",\"website\":\"http:\\\/\\\/corkery.com\\\/et-tenetur-omnis-iste-optio.html\",\"status\":\"active\",\"created_at\":\"2025-12-25T13:00:10.000000Z\",\"updated_at\":\"2025-12-25T13:00:10.000000Z\",\"sort_order\":0,\"deleted_at\":null}},{\"id\":17,\"sku\":\"SKU-341LD\",\"name\":\"voluptate sequi\",\"description\":\"Perspiciatis excepturi qui veritatis in rerum velit est et veniam illo.\",\"category_id\":4,\"brand_id\":4,\"price\":\"750.76\",\"discount_price\":null,\"stock\":48,\"image_url\":\"https:\\\/\\\/via.placeholder.com\\\/400x400.png\\\/00ee22?text=products+iusto\",\"rating\":\"1.10\",\"created_at\":\"2025-12-25T13:00:11.000000Z\",\"updated_at\":\"2025-12-25T13:00:11.000000Z\",\"slug\":\"voluptate-sequi-9694\",\"short_description\":null,\"cost_price\":null,\"discount_percentage\":null,\"low_stock_threshold\":10,\"stock_status\":\"in_stock\",\"weight\":null,\"dimensions\":null,\"reviews_count\":0,\"views_count\":0,\"sold_count\":0,\"is_featured\":true,\"meta_title\":null,\"meta_description\":null,\"status\":\"active\",\"deleted_at\":null,\"category\":{\"id\":4,\"name\":\"Iste\",\"slug\":\"iste\",\"description\":\"Omnis optio rerum accusamus pariatur dolorem provident alias quia reprehenderit dignissimos.\",\"parent_id\":null,\"image_url\":\"https:\\\/\\\/via.placeholder.com\\\/400x400.png\\\/00ff22?text=categories+accusantium\",\"status\":\"active\",\"created_at\":\"2025-12-25T13:00:10.000000Z\",\"updated_at\":\"2025-12-25T13:00:10.000000Z\",\"level\":0,\"sort_order\":0,\"icon\":null,\"deleted_at\":null},\"brand\":{\"id\":4,\"name\":\"Cruickshank, Von and Schaden\",\"slug\":\"cruickshank-von-and-schaden\",\"description\":\"Esse repudiandae repudiandae eum laudantium molestias ullam consequatur a perferendis in.\",\"logo_url\":\"https:\\\/\\\/via.placeholder.com\\\/200x200.png\\\/006677?text=brands+officiis\",\"website\":\"http:\\\/\\\/franecki.biz\\\/\",\"status\":\"active\",\"created_at\":\"2025-12-25T13:00:10.000000Z\",\"updated_at\":\"2025-12-25T13:00:10.000000Z\",\"sort_order\":0,\"deleted_at\":null}},{\"id\":18,\"sku\":\"SKU-078FD\",\"name\":\"atque vel\",\"description\":\"A aut quia est expedita voluptatem nam et sed adipisci ut non incidunt perspiciatis aperiam quia qui.\",\"category_id\":4,\"brand_id\":5,\"price\":\"735.11\",\"discount_price\":null,\"stock\":19,\"image_url\":\"https:\\\/\\\/via.placeholder.com\\\/400x400.png\\\/0066ee?text=products+dolor\",\"rating\":\"1.60\",\"created_at\":\"2025-12-25T13:00:11.000000Z\",\"updated_at\":\"2025-12-25T13:00:11.000000Z\",\"slug\":\"atque-vel-7554\",\"short_description\":null,\"cost_price\":null,\"discount_percentage\":null,\"low_stock_threshold\":10,\"stock_status\":\"in_stock\",\"weight\":null,\"dimensions\":null,\"reviews_count\":0,\"views_count\":0,\"sold_count\":0,\"is_featured\":false,\"meta_title\":null,\"meta_description\":null,\"status\":\"active\",\"deleted_at\":null,\"category\":{\"id\":4,\"name\":\"Iste\",\"slug\":\"iste\",\"description\":\"Omnis optio rerum accusamus pariatur dolorem provident alias quia reprehenderit dignissimos.\",\"parent_id\":null,\"image_url\":\"https:\\\/\\\/via.placeholder.com\\\/400x400.png\\\/00ff22?text=categories+accusantium\",\"status\":\"active\",\"created_at\":\"2025-12-25T13:00:10.000000Z\",\"updated_at\":\"2025-12-25T13:00:10.000000Z\",\"level\":0,\"sort_order\":0,\"icon\":null,\"deleted_at\":null},\"brand\":{\"id\":5,\"name\":\"Feeney-Langosh\",\"slug\":\"feeney-langosh\",\"description\":\"Repellendus aut et quo vel ut hic praesentium quos eveniet.\",\"logo_url\":\"https:\\\/\\\/via.placeholder.com\\\/200x200.png\\\/007700?text=brands+omnis\",\"website\":\"http:\\\/\\\/www.lockman.org\\\/voluptatum-aliquid-hic-et-quasi-eaque-voluptate.html\",\"status\":\"active\",\"created_at\":\"2025-12-25T13:00:10.000000Z\",\"updated_at\":\"2025-12-25T13:00:10.000000Z\",\"sort_order\":0,\"deleted_at\":null}},{\"id\":19,\"sku\":\"SKU-022TT\",\"name\":\"suscipit non\",\"description\":\"Explicabo ut dolorum deleniti animi quae beatae vero et mollitia ipsum.\",\"category_id\":2,\"brand_id\":2,\"price\":\"323.82\",\"discount_price\":null,\"stock\":79,\"image_url\":\"https:\\\/\\\/via.placeholder.com\\\/400x400.png\\\/00ff55?text=products+autem\",\"rating\":\"4.60\",\"created_at\":\"2025-12-25T13:00:11.000000Z\",\"updated_at\":\"2025-12-25T13:00:11.000000Z\",\"slug\":\"suscipit-non-9637\",\"short_description\":null,\"cost_price\":null,\"discount_percentage\":null,\"low_stock_threshold\":10,\"stock_status\":\"in_stock\",\"weight\":null,\"dimensions\":null,\"reviews_count\":0,\"views_count\":0,\"sold_count\":0,\"is_featured\":false,\"meta_title\":null,\"meta_description\":null,\"status\":\"active\",\"deleted_at\":null,\"category\":{\"id\":2,\"name\":\"Ab\",\"slug\":\"ab\",\"description\":\"Rerum non velit ut qui qui eius temporibus impedit fugiat.\",\"parent_id\":null,\"image_url\":\"https:\\\/\\\/via.placeholder.com\\\/400x400.png\\\/006633?text=categories+ratione\",\"status\":\"active\",\"created_at\":\"2025-12-25T13:00:10.000000Z\",\"updated_at\":\"2025-12-25T13:00:10.000000Z\",\"level\":0,\"sort_order\":0,\"icon\":null,\"deleted_at\":null},\"brand\":{\"id\":2,\"name\":\"Blanda Inc\",\"slug\":\"blanda-inc\",\"description\":\"Totam inventore esse ipsum repellat et sapiente quod maiores.\",\"logo_url\":\"https:\\\/\\\/via.placeholder.com\\\/200x200.png\\\/001155?text=brands+voluptatem\",\"website\":\"http:\\\/\\\/corkery.com\\\/et-tenetur-omnis-iste-optio.html\",\"status\":\"active\",\"created_at\":\"2025-12-25T13:00:10.000000Z\",\"updated_at\":\"2025-12-25T13:00:10.000000Z\",\"sort_order\":0,\"deleted_at\":null}},{\"id\":20,\"sku\":\"SKU-038HF\",\"name\":\"nostrum ipsa\",\"description\":\"Quae alias sed aut rerum laborum incidunt ex rerum.\",\"category_id\":3,\"brand_id\":3,\"price\":\"277.92\",\"discount_price\":\"175.60\",\"stock\":86,\"image_url\":\"https:\\\/\\\/via.placeholder.com\\\/400x400.png\\\/00bb11?text=products+saepe\",\"rating\":\"4.50\",\"created_at\":\"2025-12-25T13:00:11.000000Z\",\"updated_at\":\"2025-12-25T13:00:11.000000Z\",\"slug\":\"nostrum-ipsa-6482\",\"short_description\":null,\"cost_price\":null,\"discount_percentage\":null,\"low_stock_threshold\":10,\"stock_status\":\"in_stock\",\"weight\":null,\"dimensions\":null,\"reviews_count\":0,\"views_count\":0,\"sold_count\":0,\"is_featured\":false,\"meta_title\":null,\"meta_description\":null,\"status\":\"active\",\"deleted_at\":null,\"category\":{\"id\":3,\"name\":\"Nam\",\"slug\":\"nam\",\"description\":\"Officiis ut expedita nihil impedit necessitatibus qui.\",\"parent_id\":null,\"image_url\":\"https:\\\/\\\/via.placeholder.com\\\/400x400.png\\\/006600?text=categories+modi\",\"status\":\"active\",\"created_at\":\"2025-12-25T13:00:10.000000Z\",\"updated_at\":\"2025-12-25T13:00:10.000000Z\",\"level\":0,\"sort_order\":0,\"icon\":null,\"deleted_at\":null},\"brand\":{\"id\":3,\"name\":\"Halvorson-Effertz\",\"slug\":\"halvorson-effertz\",\"description\":\"Quis doloribus deleniti maxime quia modi dolorum earum sapiente.\",\"logo_url\":\"https:\\\/\\\/via.placeholder.com\\\/200x200.png\\\/005588?text=brands+magnam\",\"website\":\"https:\\\/\\\/becker.org\\\/recusandae-provident-sit-numquam-ut-similique-sunt-unde.html\",\"status\":\"active\",\"created_at\":\"2025-12-25T13:00:10.000000Z\",\"updated_at\":\"2025-12-25T13:00:10.000000Z\",\"sort_order\":0,\"deleted_at\":null}}]",
+                            "body": "{\"success\": true, \"data\": [{\"id\": 12, \"sku\": \"SH-0012\", \"name\": \"Aurora Desk Lamp\", \"slug\": \"aurora-desk-lamp\", \"short_description\": \"Warm minimalist desk lamp.\", \"description\": \"Full product description text.\", \"price\": \"189.00\", \"discount_price\": \"149.00\", \"discount_percentage\": 21, \"final_price\": \"149.00\", \"image_url\": \"http://localhost:8000/storage/products/aurora.jpg\", \"weight\": \"1.20\", \"dimensions\": {\"w\": 10, \"h\": 20, \"d\": 10}, \"rating\": \"4.50\", \"reviews_count\": 23, \"is_featured\": true, \"stock_status\": \"in_stock\", \"category\": {\"id\": 3, \"name\": \"Lighting\", \"slug\": \"lighting\"}, \"brand\": {\"id\": 7, \"name\": \"Lumen\", \"slug\": \"lumen\"}}, {\"id\": 18, \"sku\": \"SH-0018\", \"name\": \"Nimbus Floor Lamp\", \"slug\": \"nimbus-floor-lamp\", \"short_description\": \"Tall ambient floor lamp.\", \"description\": \"Full product description text.\", \"price\": \"299.00\", \"discount_price\": null, \"discount_percentage\": null, \"final_price\": \"299.00\", \"image_url\": \"http://localhost:8000/storage/products/nimbus.jpg\", \"weight\": \"4.00\", \"dimensions\": {\"w\": 30, \"h\": 150, \"d\": 30}, \"rating\": \"4.20\", \"reviews_count\": 11, \"is_featured\": false, \"stock_status\": \"in_stock\", \"category\": {\"id\": 3, \"name\": \"Lighting\", \"slug\": \"lighting\"}, \"brand\": {\"id\": 7, \"name\": \"Lumen\", \"slug\": \"lumen\"}}], \"meta\": {\"current_page\": 1, \"last_page\": 5, \"per_page\": 15, \"total\": 68}}",
                             "name": ""
                         }
                     ]
@@ -2930,19 +2930,19 @@
                     "request": {
                         "url": {
                             "host": "{{baseUrl}}",
-                            "path": "v1\/products\/form\/data",
+                            "path": "v1/products/form/data",
                             "query": [],
-                            "raw": "{{baseUrl}}\/v1\/products\/form\/data"
+                            "raw": "{{baseUrl}}/v1/products/form/data"
                         },
                         "method": "GET",
                         "header": [
                             {
                                 "key": "Content-Type",
-                                "value": "application\/json"
+                                "value": "application/json"
                             },
                             {
                                 "key": "Accept",
-                                "value": "application\/json"
+                                "value": "application/json"
                             }
                         ],
                         "body": null,
@@ -2960,11 +2960,11 @@
                                 },
                                 {
                                     "key": "content-type",
-                                    "value": "application\/json"
+                                    "value": "application/json"
                                 }
                             ],
                             "code": 200,
-                            "body": "{\"success\":true,\"data\":{\"categories\":[{\"id\":1,\"name\":\"Ut\",\"slug\":\"ut\",\"description\":\"Magnam dolorem quod nihil voluptas perspiciatis labore voluptate occaecati animi reprehenderit id.\",\"parent_id\":null,\"image_url\":\"https:\\\/\\\/via.placeholder.com\\\/400x400.png\\\/0000aa?text=categories+laborum\",\"status\":\"active\",\"created_at\":\"2025-12-25T13:00:10.000000Z\",\"updated_at\":\"2025-12-25T13:00:10.000000Z\",\"level\":0,\"sort_order\":0,\"icon\":null,\"deleted_at\":null},{\"id\":2,\"name\":\"Ab\",\"slug\":\"ab\",\"description\":\"Rerum non velit ut qui qui eius temporibus impedit fugiat.\",\"parent_id\":null,\"image_url\":\"https:\\\/\\\/via.placeholder.com\\\/400x400.png\\\/006633?text=categories+ratione\",\"status\":\"active\",\"created_at\":\"2025-12-25T13:00:10.000000Z\",\"updated_at\":\"2025-12-25T13:00:10.000000Z\",\"level\":0,\"sort_order\":0,\"icon\":null,\"deleted_at\":null},{\"id\":3,\"name\":\"Nam\",\"slug\":\"nam\",\"description\":\"Officiis ut expedita nihil impedit necessitatibus qui.\",\"parent_id\":null,\"image_url\":\"https:\\\/\\\/via.placeholder.com\\\/400x400.png\\\/006600?text=categories+modi\",\"status\":\"active\",\"created_at\":\"2025-12-25T13:00:10.000000Z\",\"updated_at\":\"2025-12-25T13:00:10.000000Z\",\"level\":0,\"sort_order\":0,\"icon\":null,\"deleted_at\":null},{\"id\":4,\"name\":\"Iste\",\"slug\":\"iste\",\"description\":\"Omnis optio rerum accusamus pariatur dolorem provident alias quia reprehenderit dignissimos.\",\"parent_id\":null,\"image_url\":\"https:\\\/\\\/via.placeholder.com\\\/400x400.png\\\/00ff22?text=categories+accusantium\",\"status\":\"active\",\"created_at\":\"2025-12-25T13:00:10.000000Z\",\"updated_at\":\"2025-12-25T13:00:10.000000Z\",\"level\":0,\"sort_order\":0,\"icon\":null,\"deleted_at\":null},{\"id\":5,\"name\":\"Molestias\",\"slug\":\"molestias\",\"description\":\"Omnis architecto non officia assumenda quis tenetur accusamus quo.\",\"parent_id\":null,\"image_url\":\"https:\\\/\\\/via.placeholder.com\\\/400x400.png\\\/00ff88?text=categories+et\",\"status\":\"active\",\"created_at\":\"2025-12-25T13:00:10.000000Z\",\"updated_at\":\"2025-12-25T13:00:10.000000Z\",\"level\":0,\"sort_order\":0,\"icon\":null,\"deleted_at\":null}],\"brands\":[{\"id\":1,\"name\":\"Lehner-Lehner\",\"slug\":\"lehner-lehner\",\"description\":\"Velit id pariatur voluptas commodi voluptatibus aut.\",\"logo_url\":\"https:\\\/\\\/via.placeholder.com\\\/200x200.png\\\/008833?text=brands+incidunt\",\"website\":\"http:\\\/\\\/steuber.com\\\/\",\"status\":\"active\",\"created_at\":\"2025-12-25T13:00:10.000000Z\",\"updated_at\":\"2025-12-25T13:00:10.000000Z\",\"sort_order\":0,\"deleted_at\":null},{\"id\":2,\"name\":\"Blanda Inc\",\"slug\":\"blanda-inc\",\"description\":\"Totam inventore esse ipsum repellat et sapiente quod maiores.\",\"logo_url\":\"https:\\\/\\\/via.placeholder.com\\\/200x200.png\\\/001155?text=brands+voluptatem\",\"website\":\"http:\\\/\\\/corkery.com\\\/et-tenetur-omnis-iste-optio.html\",\"status\":\"active\",\"created_at\":\"2025-12-25T13:00:10.000000Z\",\"updated_at\":\"2025-12-25T13:00:10.000000Z\",\"sort_order\":0,\"deleted_at\":null},{\"id\":3,\"name\":\"Halvorson-Effertz\",\"slug\":\"halvorson-effertz\",\"description\":\"Quis doloribus deleniti maxime quia modi dolorum earum sapiente.\",\"logo_url\":\"https:\\\/\\\/via.placeholder.com\\\/200x200.png\\\/005588?text=brands+magnam\",\"website\":\"https:\\\/\\\/becker.org\\\/recusandae-provident-sit-numquam-ut-similique-sunt-unde.html\",\"status\":\"active\",\"created_at\":\"2025-12-25T13:00:10.000000Z\",\"updated_at\":\"2025-12-25T13:00:10.000000Z\",\"sort_order\":0,\"deleted_at\":null},{\"id\":4,\"name\":\"Cruickshank, Von and Schaden\",\"slug\":\"cruickshank-von-and-schaden\",\"description\":\"Esse repudiandae repudiandae eum laudantium molestias ullam consequatur a perferendis in.\",\"logo_url\":\"https:\\\/\\\/via.placeholder.com\\\/200x200.png\\\/006677?text=brands+officiis\",\"website\":\"http:\\\/\\\/franecki.biz\\\/\",\"status\":\"active\",\"created_at\":\"2025-12-25T13:00:10.000000Z\",\"updated_at\":\"2025-12-25T13:00:10.000000Z\",\"sort_order\":0,\"deleted_at\":null},{\"id\":5,\"name\":\"Feeney-Langosh\",\"slug\":\"feeney-langosh\",\"description\":\"Repellendus aut et quo vel ut hic praesentium quos eveniet.\",\"logo_url\":\"https:\\\/\\\/via.placeholder.com\\\/200x200.png\\\/007700?text=brands+omnis\",\"website\":\"http:\\\/\\\/www.lockman.org\\\/voluptatum-aliquid-hic-et-quasi-eaque-voluptate.html\",\"status\":\"active\",\"created_at\":\"2025-12-25T13:00:10.000000Z\",\"updated_at\":\"2025-12-25T13:00:10.000000Z\",\"sort_order\":0,\"deleted_at\":null}]}}",
+                            "body": "{\"success\":true,\"data\":{\"categories\":[{\"id\":1,\"name\":\"Ut\",\"slug\":\"ut\",\"description\":\"Magnam dolorem quod nihil voluptas perspiciatis labore voluptate occaecati animi reprehenderit id.\",\"parent_id\":null,\"image_url\":\"https:\\/\\/via.placeholder.com\\/400x400.png\\/0000aa?text=categories+laborum\",\"status\":\"active\",\"created_at\":\"2025-12-25T13:00:10.000000Z\",\"updated_at\":\"2025-12-25T13:00:10.000000Z\",\"level\":0,\"sort_order\":0,\"icon\":null,\"deleted_at\":null},{\"id\":2,\"name\":\"Ab\",\"slug\":\"ab\",\"description\":\"Rerum non velit ut qui qui eius temporibus impedit fugiat.\",\"parent_id\":null,\"image_url\":\"https:\\/\\/via.placeholder.com\\/400x400.png\\/006633?text=categories+ratione\",\"status\":\"active\",\"created_at\":\"2025-12-25T13:00:10.000000Z\",\"updated_at\":\"2025-12-25T13:00:10.000000Z\",\"level\":0,\"sort_order\":0,\"icon\":null,\"deleted_at\":null},{\"id\":3,\"name\":\"Nam\",\"slug\":\"nam\",\"description\":\"Officiis ut expedita nihil impedit necessitatibus qui.\",\"parent_id\":null,\"image_url\":\"https:\\/\\/via.placeholder.com\\/400x400.png\\/006600?text=categories+modi\",\"status\":\"active\",\"created_at\":\"2025-12-25T13:00:10.000000Z\",\"updated_at\":\"2025-12-25T13:00:10.000000Z\",\"level\":0,\"sort_order\":0,\"icon\":null,\"deleted_at\":null},{\"id\":4,\"name\":\"Iste\",\"slug\":\"iste\",\"description\":\"Omnis optio rerum accusamus pariatur dolorem provident alias quia reprehenderit dignissimos.\",\"parent_id\":null,\"image_url\":\"https:\\/\\/via.placeholder.com\\/400x400.png\\/00ff22?text=categories+accusantium\",\"status\":\"active\",\"created_at\":\"2025-12-25T13:00:10.000000Z\",\"updated_at\":\"2025-12-25T13:00:10.000000Z\",\"level\":0,\"sort_order\":0,\"icon\":null,\"deleted_at\":null},{\"id\":5,\"name\":\"Molestias\",\"slug\":\"molestias\",\"description\":\"Omnis architecto non officia assumenda quis tenetur accusamus quo.\",\"parent_id\":null,\"image_url\":\"https:\\/\\/via.placeholder.com\\/400x400.png\\/00ff88?text=categories+et\",\"status\":\"active\",\"created_at\":\"2025-12-25T13:00:10.000000Z\",\"updated_at\":\"2025-12-25T13:00:10.000000Z\",\"level\":0,\"sort_order\":0,\"icon\":null,\"deleted_at\":null}],\"brands\":[{\"id\":1,\"name\":\"Lehner-Lehner\",\"slug\":\"lehner-lehner\",\"description\":\"Velit id pariatur voluptas commodi voluptatibus aut.\",\"logo_url\":\"https:\\/\\/via.placeholder.com\\/200x200.png\\/008833?text=brands+incidunt\",\"website\":\"http:\\/\\/steuber.com\\/\",\"status\":\"active\",\"created_at\":\"2025-12-25T13:00:10.000000Z\",\"updated_at\":\"2025-12-25T13:00:10.000000Z\",\"sort_order\":0,\"deleted_at\":null},{\"id\":2,\"name\":\"Blanda Inc\",\"slug\":\"blanda-inc\",\"description\":\"Totam inventore esse ipsum repellat et sapiente quod maiores.\",\"logo_url\":\"https:\\/\\/via.placeholder.com\\/200x200.png\\/001155?text=brands+voluptatem\",\"website\":\"http:\\/\\/corkery.com\\/et-tenetur-omnis-iste-optio.html\",\"status\":\"active\",\"created_at\":\"2025-12-25T13:00:10.000000Z\",\"updated_at\":\"2025-12-25T13:00:10.000000Z\",\"sort_order\":0,\"deleted_at\":null},{\"id\":3,\"name\":\"Halvorson-Effertz\",\"slug\":\"halvorson-effertz\",\"description\":\"Quis doloribus deleniti maxime quia modi dolorum earum sapiente.\",\"logo_url\":\"https:\\/\\/via.placeholder.com\\/200x200.png\\/005588?text=brands+magnam\",\"website\":\"https:\\/\\/becker.org\\/recusandae-provident-sit-numquam-ut-similique-sunt-unde.html\",\"status\":\"active\",\"created_at\":\"2025-12-25T13:00:10.000000Z\",\"updated_at\":\"2025-12-25T13:00:10.000000Z\",\"sort_order\":0,\"deleted_at\":null},{\"id\":4,\"name\":\"Cruickshank, Von and Schaden\",\"slug\":\"cruickshank-von-and-schaden\",\"description\":\"Esse repudiandae repudiandae eum laudantium molestias ullam consequatur a perferendis in.\",\"logo_url\":\"https:\\/\\/via.placeholder.com\\/200x200.png\\/006677?text=brands+officiis\",\"website\":\"http:\\/\\/franecki.biz\\/\",\"status\":\"active\",\"created_at\":\"2025-12-25T13:00:10.000000Z\",\"updated_at\":\"2025-12-25T13:00:10.000000Z\",\"sort_order\":0,\"deleted_at\":null},{\"id\":5,\"name\":\"Feeney-Langosh\",\"slug\":\"feeney-langosh\",\"description\":\"Repellendus aut et quo vel ut hic praesentium quos eveniet.\",\"logo_url\":\"https:\\/\\/via.placeholder.com\\/200x200.png\\/007700?text=brands+omnis\",\"website\":\"http:\\/\\/www.lockman.org\\/voluptatum-aliquid-hic-et-quasi-eaque-voluptate.html\",\"status\":\"active\",\"created_at\":\"2025-12-25T13:00:10.000000Z\",\"updated_at\":\"2025-12-25T13:00:10.000000Z\",\"sort_order\":0,\"deleted_at\":null}]}}",
                             "name": ""
                         }
                     ]
@@ -2974,15 +2974,15 @@
                     "request": {
                         "url": {
                             "host": "{{baseUrl}}",
-                            "path": "v1\/products\/:product_id",
+                            "path": "v1/products/:product_slug",
                             "query": [],
-                            "raw": "{{baseUrl}}\/v1\/products\/:product_id",
+                            "raw": "{{baseUrl}}/v1/products/:product_slug",
                             "variable": [
                                 {
-                                    "id": "product_id",
-                                    "key": "product_id",
-                                    "value": "1",
-                                    "description": "The ID of the product."
+                                    "id": "product_slug",
+                                    "key": "product_slug",
+                                    "value": "aurora-desk-lamp",
+                                    "description": "The slug of the product."
                                 }
                             ]
                         },
@@ -2990,11 +2990,11 @@
                         "header": [
                             {
                                 "key": "Content-Type",
-                                "value": "application\/json"
+                                "value": "application/json"
                             },
                             {
                                 "key": "Accept",
-                                "value": "application\/json"
+                                "value": "application/json"
                             }
                         ],
                         "body": null,
@@ -3012,11 +3012,63 @@
                                 },
                                 {
                                     "key": "content-type",
-                                    "value": "application\/json"
+                                    "value": "application/json"
                                 }
                             ],
                             "code": 200,
-                            "body": "{\"success\":true,\"data\":{\"id\":1,\"sku\":\"SKU-371VA\",\"name\":\"quas id\",\"description\":\"Earum doloremque suscipit modi ea voluptas voluptate deserunt reiciendis hic.\",\"category_id\":3,\"brand_id\":3,\"price\":\"427.73\",\"discount_price\":\"100.94\",\"stock\":25,\"image_url\":\"https:\\\/\\\/via.placeholder.com\\\/400x400.png\\\/00bb22?text=products+nihil\",\"rating\":\"3.00\",\"created_at\":\"2025-12-25T13:00:11.000000Z\",\"updated_at\":\"2025-12-25T13:00:11.000000Z\",\"slug\":\"quas-id-6638\",\"short_description\":null,\"cost_price\":null,\"discount_percentage\":null,\"low_stock_threshold\":10,\"stock_status\":\"in_stock\",\"weight\":null,\"dimensions\":null,\"reviews_count\":0,\"views_count\":0,\"sold_count\":0,\"is_featured\":false,\"meta_title\":null,\"meta_description\":null,\"status\":\"active\",\"deleted_at\":null,\"category\":{\"id\":3,\"name\":\"Nam\",\"slug\":\"nam\",\"description\":\"Officiis ut expedita nihil impedit necessitatibus qui.\",\"parent_id\":null,\"image_url\":\"https:\\\/\\\/via.placeholder.com\\\/400x400.png\\\/006600?text=categories+modi\",\"status\":\"active\",\"created_at\":\"2025-12-25T13:00:10.000000Z\",\"updated_at\":\"2025-12-25T13:00:10.000000Z\",\"level\":0,\"sort_order\":0,\"icon\":null,\"deleted_at\":null},\"brand\":{\"id\":3,\"name\":\"Halvorson-Effertz\",\"slug\":\"halvorson-effertz\",\"description\":\"Quis doloribus deleniti maxime quia modi dolorum earum sapiente.\",\"logo_url\":\"https:\\\/\\\/via.placeholder.com\\\/200x200.png\\\/005588?text=brands+magnam\",\"website\":\"https:\\\/\\\/becker.org\\\/recusandae-provident-sit-numquam-ut-similique-sunt-unde.html\",\"status\":\"active\",\"created_at\":\"2025-12-25T13:00:10.000000Z\",\"updated_at\":\"2025-12-25T13:00:10.000000Z\",\"sort_order\":0,\"deleted_at\":null}}}",
+                            "body": "{\"success\":true,\"data\":{\"id\":12,\"sku\":\"SH-0012\",\"name\":\"Aurora Desk Lamp\",\"slug\":\"aurora-desk-lamp\",\"short_description\":\"Warm minimalist desk lamp.\",\"description\":\"Full product description text.\",\"price\":\"189.00\",\"discount_price\":\"149.00\",\"discount_percentage\":21,\"final_price\":\"149.00\",\"image_url\":\"http:\\/\\/localhost:8000\\/storage\\/products\\/aurora.jpg\",\"weight\":\"1.20\",\"dimensions\":{\"w\":10,\"h\":20,\"d\":10},\"rating\":\"4.50\",\"reviews_count\":23,\"is_featured\":true,\"stock_status\":\"in_stock\",\"category\":{\"id\":3,\"name\":\"Lighting\",\"slug\":\"lighting\"},\"brand\":{\"id\":7,\"name\":\"Lumen\",\"slug\":\"lumen\"},\"images\":[{\"url\":\"http:\\/\\/localhost:8000\\/storage\\/products\\/aurora.jpg\",\"alt_text\":\"Aurora lamp front\",\"is_primary\":true,\"sort_order\":0},{\"url\":\"http:\\/\\/localhost:8000\\/storage\\/products\\/aurora-2.jpg\",\"alt_text\":\"Aurora lamp side\",\"is_primary\":false,\"sort_order\":1}]}}",
+                            "name": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "Get related products.",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "v1/products/:product_slug/related",
+                            "query": [],
+                            "raw": "{{baseUrl}}/v1/products/:product_slug/related",
+                            "variable": [
+                                {
+                                    "id": "product_slug",
+                                    "key": "product_slug",
+                                    "value": "aurora-desk-lamp",
+                                    "description": "The slug of the product."
+                                }
+                            ]
+                        },
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": "Up to 4 active products in the same category, excluding the product itself.",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": [
+                        {
+                            "header": [
+                                {
+                                    "key": "cache-control",
+                                    "value": "no-cache, private"
+                                },
+                                {
+                                    "key": "content-type",
+                                    "value": "application/json"
+                                }
+                            ],
+                            "code": 200,
+                            "body": "{\"success\":true,\"data\":[{\"id\":18,\"sku\":\"SH-0018\",\"name\":\"Nimbus Floor Lamp\",\"slug\":\"nimbus-floor-lamp\",\"short_description\":\"Tall ambient floor lamp.\",\"description\":\"Full product description text.\",\"price\":\"299.00\",\"discount_price\":null,\"discount_percentage\":null,\"final_price\":\"299.00\",\"image_url\":\"http:\\/\\/localhost:8000\\/storage\\/products\\/nimbus.jpg\",\"weight\":\"4.00\",\"dimensions\":{\"w\":30,\"h\":150,\"d\":30},\"rating\":\"4.20\",\"reviews_count\":11,\"is_featured\":false,\"stock_status\":\"in_stock\",\"category\":{\"id\":3,\"name\":\"Lighting\",\"slug\":\"lighting\"},\"brand\":{\"id\":7,\"name\":\"Lumen\",\"slug\":\"lumen\"},\"images\":[{\"url\":\"http:\\/\\/localhost:8000\\/storage\\/products\\/nimbus.jpg\",\"alt_text\":\"Nimbus lamp\",\"is_primary\":true,\"sort_order\":0}]}]}",
                             "name": ""
                         }
                     ]
@@ -3026,19 +3078,19 @@
                     "request": {
                         "url": {
                             "host": "{{baseUrl}}",
-                            "path": "v1\/admin\/products",
+                            "path": "v1/admin/products",
                             "query": [],
-                            "raw": "{{baseUrl}}\/v1\/admin\/products"
+                            "raw": "{{baseUrl}}/v1/admin/products"
                         },
                         "method": "GET",
                         "header": [
                             {
                                 "key": "Content-Type",
-                                "value": "application\/json"
+                                "value": "application/json"
                             },
                             {
                                 "key": "Accept",
-                                "value": "application\/json"
+                                "value": "application/json"
                             }
                         ],
                         "body": null,
@@ -3056,7 +3108,7 @@
                                 },
                                 {
                                     "key": "content-type",
-                                    "value": "application\/json"
+                                    "value": "application/json"
                                 }
                             ],
                             "code": 401,
@@ -3070,19 +3122,19 @@
                     "request": {
                         "url": {
                             "host": "{{baseUrl}}",
-                            "path": "v1\/admin\/products\/form\/data",
+                            "path": "v1/admin/products/form/data",
                             "query": [],
-                            "raw": "{{baseUrl}}\/v1\/admin\/products\/form\/data"
+                            "raw": "{{baseUrl}}/v1/admin/products/form/data"
                         },
                         "method": "GET",
                         "header": [
                             {
                                 "key": "Content-Type",
-                                "value": "application\/json"
+                                "value": "application/json"
                             },
                             {
                                 "key": "Accept",
-                                "value": "application\/json"
+                                "value": "application/json"
                             }
                         ],
                         "body": null,
@@ -3100,7 +3152,7 @@
                                 },
                                 {
                                     "key": "content-type",
-                                    "value": "application\/json"
+                                    "value": "application/json"
                                 }
                             ],
                             "code": 401,
@@ -3114,9 +3166,9 @@
                     "request": {
                         "url": {
                             "host": "{{baseUrl}}",
-                            "path": "v1\/admin\/products\/:product_id",
+                            "path": "v1/admin/products/:product_id",
                             "query": [],
-                            "raw": "{{baseUrl}}\/v1\/admin\/products\/:product_id",
+                            "raw": "{{baseUrl}}/v1/admin/products/:product_id",
                             "variable": [
                                 {
                                     "id": "product_id",
@@ -3130,11 +3182,11 @@
                         "header": [
                             {
                                 "key": "Content-Type",
-                                "value": "application\/json"
+                                "value": "application/json"
                             },
                             {
                                 "key": "Accept",
-                                "value": "application\/json"
+                                "value": "application/json"
                             }
                         ],
                         "body": null,
@@ -3152,7 +3204,7 @@
                                 },
                                 {
                                     "key": "content-type",
-                                    "value": "application\/json"
+                                    "value": "application/json"
                                 }
                             ],
                             "code": 401,
@@ -3172,19 +3224,19 @@
                     "request": {
                         "url": {
                             "host": "{{baseUrl}}",
-                            "path": "v1\/profile",
+                            "path": "v1/profile",
                             "query": [],
-                            "raw": "{{baseUrl}}\/v1\/profile"
+                            "raw": "{{baseUrl}}/v1/profile"
                         },
                         "method": "GET",
                         "header": [
                             {
                                 "key": "Content-Type",
-                                "value": "application\/json"
+                                "value": "application/json"
                             },
                             {
                                 "key": "Accept",
-                                "value": "application\/json"
+                                "value": "application/json"
                             }
                         ],
                         "body": null,
@@ -3202,7 +3254,7 @@
                                 },
                                 {
                                     "key": "content-type",
-                                    "value": "application\/json"
+                                    "value": "application/json"
                                 }
                             ],
                             "code": 401,
@@ -3216,19 +3268,19 @@
                     "request": {
                         "url": {
                             "host": "{{baseUrl}}",
-                            "path": "v1\/profile",
+                            "path": "v1/profile",
                             "query": [],
-                            "raw": "{{baseUrl}}\/v1\/profile"
+                            "raw": "{{baseUrl}}/v1/profile"
                         },
                         "method": "PUT",
                         "header": [
                             {
                                 "key": "Content-Type",
-                                "value": "application\/json"
+                                "value": "application/json"
                             },
                             {
                                 "key": "Accept",
-                                "value": "application\/json"
+                                "value": "application/json"
                             }
                         ],
                         "body": {
@@ -3253,9 +3305,9 @@
                     "request": {
                         "url": {
                             "host": "{{baseUrl}}",
-                            "path": "v1\/products\/:product_id\/reviews",
+                            "path": "v1/products/:product_id/reviews",
                             "query": [],
-                            "raw": "{{baseUrl}}\/v1\/products\/:product_id\/reviews",
+                            "raw": "{{baseUrl}}/v1/products/:product_id/reviews",
                             "variable": [
                                 {
                                     "id": "product_id",
@@ -3269,11 +3321,11 @@
                         "header": [
                             {
                                 "key": "Content-Type",
-                                "value": "application\/json"
+                                "value": "application/json"
                             },
                             {
                                 "key": "Accept",
-                                "value": "application\/json"
+                                "value": "application/json"
                             }
                         ],
                         "body": null,
@@ -3291,7 +3343,7 @@
                                 },
                                 {
                                     "key": "content-type",
-                                    "value": "application\/json"
+                                    "value": "application/json"
                                 }
                             ],
                             "code": 200,
@@ -3305,19 +3357,19 @@
                     "request": {
                         "url": {
                             "host": "{{baseUrl}}",
-                            "path": "v1\/reviews",
+                            "path": "v1/reviews",
                             "query": [],
-                            "raw": "{{baseUrl}}\/v1\/reviews"
+                            "raw": "{{baseUrl}}/v1/reviews"
                         },
                         "method": "POST",
                         "header": [
                             {
                                 "key": "Content-Type",
-                                "value": "multipart\/form-data"
+                                "value": "multipart/form-data"
                             },
                             {
                                 "key": "Accept",
-                                "value": "application\/json"
+                                "value": "application/json"
                             }
                         ],
                         "body": {
@@ -3327,13 +3379,13 @@
                                     "key": "product_id",
                                     "value": "16",
                                     "type": "text",
-                                    "description": "The <code>id<\/code> of an existing record in the products table."
+                                    "description": "The <code>id</code> of an existing record in the products table."
                                 },
                                 {
                                     "key": "order_id",
                                     "value": "16",
                                     "type": "text",
-                                    "description": "The <code>id<\/code> of an existing record in the orders table."
+                                    "description": "The <code>id</code> of an existing record in the orders table."
                                 },
                                 {
                                     "key": "rating",
@@ -3372,9 +3424,9 @@
                     "request": {
                         "url": {
                             "host": "{{baseUrl}}",
-                            "path": "v1\/reviews\/:review_id",
+                            "path": "v1/reviews/:review_id",
                             "query": [],
-                            "raw": "{{baseUrl}}\/v1\/reviews\/:review_id",
+                            "raw": "{{baseUrl}}/v1/reviews/:review_id",
                             "variable": [
                                 {
                                     "id": "review_id",
@@ -3388,11 +3440,11 @@
                         "header": [
                             {
                                 "key": "Content-Type",
-                                "value": "multipart\/form-data"
+                                "value": "multipart/form-data"
                             },
                             {
                                 "key": "Accept",
-                                "value": "application\/json"
+                                "value": "application/json"
                             }
                         ],
                         "body": {
@@ -3440,9 +3492,9 @@
                     "request": {
                         "url": {
                             "host": "{{baseUrl}}",
-                            "path": "v1\/reviews\/:review_id",
+                            "path": "v1/reviews/:review_id",
                             "query": [],
-                            "raw": "{{baseUrl}}\/v1\/reviews\/:review_id",
+                            "raw": "{{baseUrl}}/v1/reviews/:review_id",
                             "variable": [
                                 {
                                     "id": "review_id",
@@ -3456,11 +3508,11 @@
                         "header": [
                             {
                                 "key": "Content-Type",
-                                "value": "application\/json"
+                                "value": "application/json"
                             },
                             {
                                 "key": "Accept",
-                                "value": "application\/json"
+                                "value": "application/json"
                             }
                         ],
                         "body": null,
@@ -3476,9 +3528,9 @@
                     "request": {
                         "url": {
                             "host": "{{baseUrl}}",
-                            "path": "v1\/reviews\/:review_id\/helpful",
+                            "path": "v1/reviews/:review_id/helpful",
                             "query": [],
-                            "raw": "{{baseUrl}}\/v1\/reviews\/:review_id\/helpful",
+                            "raw": "{{baseUrl}}/v1/reviews/:review_id/helpful",
                             "variable": [
                                 {
                                     "id": "review_id",
@@ -3492,11 +3544,11 @@
                         "header": [
                             {
                                 "key": "Content-Type",
-                                "value": "application\/json"
+                                "value": "application/json"
                             },
                             {
                                 "key": "Accept",
-                                "value": "application\/json"
+                                "value": "application/json"
                             }
                         ],
                         "body": null,
@@ -3518,19 +3570,19 @@
                     "request": {
                         "url": {
                             "host": "{{baseUrl}}",
-                            "path": "v1\/shipping-methods",
+                            "path": "v1/shipping-methods",
                             "query": [],
-                            "raw": "{{baseUrl}}\/v1\/shipping-methods"
+                            "raw": "{{baseUrl}}/v1/shipping-methods"
                         },
                         "method": "GET",
                         "header": [
                             {
                                 "key": "Content-Type",
-                                "value": "application\/json"
+                                "value": "application/json"
                             },
                             {
                                 "key": "Accept",
-                                "value": "application\/json"
+                                "value": "application/json"
                             }
                         ],
                         "body": null,
@@ -3548,7 +3600,7 @@
                                 },
                                 {
                                     "key": "content-type",
-                                    "value": "application\/json"
+                                    "value": "application/json"
                                 }
                             ],
                             "code": 200,
@@ -3568,19 +3620,19 @@
                     "request": {
                         "url": {
                             "host": "{{baseUrl}}",
-                            "path": "v1\/wishlist",
+                            "path": "v1/wishlist",
                             "query": [],
-                            "raw": "{{baseUrl}}\/v1\/wishlist"
+                            "raw": "{{baseUrl}}/v1/wishlist"
                         },
                         "method": "GET",
                         "header": [
                             {
                                 "key": "Content-Type",
-                                "value": "application\/json"
+                                "value": "application/json"
                             },
                             {
                                 "key": "Accept",
-                                "value": "application\/json"
+                                "value": "application/json"
                             }
                         ],
                         "body": null,
@@ -3598,7 +3650,7 @@
                                 },
                                 {
                                     "key": "content-type",
-                                    "value": "application\/json"
+                                    "value": "application/json"
                                 }
                             ],
                             "code": 401,
@@ -3612,19 +3664,19 @@
                     "request": {
                         "url": {
                             "host": "{{baseUrl}}",
-                            "path": "v1\/wishlist",
+                            "path": "v1/wishlist",
                             "query": [],
-                            "raw": "{{baseUrl}}\/v1\/wishlist"
+                            "raw": "{{baseUrl}}/v1/wishlist"
                         },
                         "method": "POST",
                         "header": [
                             {
                                 "key": "Content-Type",
-                                "value": "application\/json"
+                                "value": "application/json"
                             },
                             {
                                 "key": "Accept",
-                                "value": "application\/json"
+                                "value": "application/json"
                             }
                         ],
                         "body": {
@@ -3643,9 +3695,9 @@
                     "request": {
                         "url": {
                             "host": "{{baseUrl}}",
-                            "path": "v1\/wishlist\/:wishlist",
+                            "path": "v1/wishlist/:wishlist",
                             "query": [],
-                            "raw": "{{baseUrl}}\/v1\/wishlist\/:wishlist",
+                            "raw": "{{baseUrl}}/v1/wishlist/:wishlist",
                             "variable": [
                                 {
                                     "id": "wishlist",
@@ -3659,11 +3711,11 @@
                         "header": [
                             {
                                 "key": "Content-Type",
-                                "value": "application\/json"
+                                "value": "application/json"
                             },
                             {
                                 "key": "Accept",
-                                "value": "application\/json"
+                                "value": "application/json"
                             }
                         ],
                         "body": null,
@@ -3679,9 +3731,9 @@
                     "request": {
                         "url": {
                             "host": "{{baseUrl}}",
-                            "path": "v1\/wishlist\/check\/:product",
+                            "path": "v1/wishlist/check/:product",
                             "query": [],
-                            "raw": "{{baseUrl}}\/v1\/wishlist\/check\/:product",
+                            "raw": "{{baseUrl}}/v1/wishlist/check/:product",
                             "variable": [
                                 {
                                     "id": "product",
@@ -3695,11 +3747,11 @@
                         "header": [
                             {
                                 "key": "Content-Type",
-                                "value": "application\/json"
+                                "value": "application/json"
                             },
                             {
                                 "key": "Accept",
-                                "value": "application\/json"
+                                "value": "application/json"
                             }
                         ],
                         "body": null,
@@ -3717,7 +3769,7 @@
                                 },
                                 {
                                     "key": "content-type",
-                                    "value": "application\/json"
+                                    "value": "application/json"
                                 }
                             ],
                             "code": 401,

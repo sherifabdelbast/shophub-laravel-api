@@ -2,8 +2,11 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Order extends Model
@@ -51,43 +54,43 @@ class Order extends Model
     }
 
     // Relationships
-    public function user()
+    public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
     }
 
-    public function items()
+    public function items(): HasMany
     {
         return $this->hasMany(OrderItem::class);
     }
 
-    public function payments()
+    public function payments(): HasMany
     {
         return $this->hasMany(Payment::class);
     }
 
-    public function coupon()
+    public function coupon(): BelongsTo
     {
         return $this->belongsTo(Coupon::class);
     }
 
-    public function shippingMethod()
+    public function shippingMethod(): BelongsTo
     {
         return $this->belongsTo(ShippingMethod::class);
     }
 
     // Scopes
-    public function scopePending($query)
+    public function scopePending(Builder $query): Builder
     {
         return $query->where('status', 'pending');
     }
 
-    public function scopePaid($query)
+    public function scopePaid(Builder $query): Builder
     {
         return $query->where('payment_status', 'paid');
     }
 
-    public function scopeRecent($query)
+    public function scopeRecent(Builder $query): Builder
     {
         return $query->orderBy('created_at', 'desc');
     }
@@ -108,14 +111,13 @@ class Order extends Model
         return $this->status === 'cancelled';
     }
 
-    public function canCancel()
+    public function canCancel(): bool
     {
         return in_array($this->status, ['pending', 'processing']);
     }
 
-    public function canRefund()
+    public function canRefund(): bool
     {
-        return $this->isPaid() && !$this->isDelivered();
+        return $this->isPaid() && ! $this->isDelivered();
     }
 }
-
