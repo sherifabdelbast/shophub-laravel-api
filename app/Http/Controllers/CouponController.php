@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\Coupon\StoreCouponRequest;
 use App\Http\Requests\Coupon\UpdateCouponRequest;
 use App\Http\Requests\Coupon\ValidateCouponRequest;
+use App\Http\Resources\CouponResource;
 use App\Models\Coupon;
 use App\Services\CouponService;
 use Illuminate\Http\JsonResponse;
@@ -14,11 +15,6 @@ class CouponController extends Controller
 {
     public function __construct(private CouponService $couponService) {}
 
-    /**
-     * Validate coupon code.
-     *
-     * @group Coupons
-     */
     public function validateCoupon(ValidateCouponRequest $request): JsonResponse
     {
         try {
@@ -54,11 +50,6 @@ class CouponController extends Controller
         }
     }
 
-    /**
-     * Get all coupons (Admin only).
-     *
-     * @group Admin - Coupons
-     */
     public function index(Request $request): JsonResponse
     {
         try {
@@ -75,11 +66,11 @@ class CouponController extends Controller
 
             return response()->json([
                 'success' => true,
-                'data' => $coupons->items(),
+                'data' => CouponResource::collection($coupons)->resolve(),
                 'meta' => [
-                    'current_page' => $coupons->currentPage(),
-                    'last_page' => $coupons->lastPage(),
-                    'per_page' => $coupons->perPage(),
+                    'currentPage' => $coupons->currentPage(),
+                    'lastPage' => $coupons->lastPage(),
+                    'perPage' => $coupons->perPage(),
                     'total' => $coupons->total(),
                 ],
             ]);
@@ -92,11 +83,6 @@ class CouponController extends Controller
         }
     }
 
-    /**
-     * Create coupon (Admin only).
-     *
-     * @group Admin - Coupons
-     */
     public function store(StoreCouponRequest $request): JsonResponse
     {
         try {
@@ -105,7 +91,7 @@ class CouponController extends Controller
             return response()->json([
                 'success' => true,
                 'message' => 'Coupon created successfully',
-                'data' => $coupon,
+                'data' => new CouponResource($coupon),
             ], 201);
         } catch (\Exception $e) {
             return response()->json([
@@ -116,24 +102,14 @@ class CouponController extends Controller
         }
     }
 
-    /**
-     * Get coupon details (Admin only).
-     *
-     * @group Admin - Coupons
-     */
     public function show(Coupon $coupon): JsonResponse
     {
         return response()->json([
             'success' => true,
-            'data' => $coupon->load('usage'),
+            'data' => new CouponResource($coupon->load('usage')),
         ]);
     }
 
-    /**
-     * Update coupon (Admin only).
-     *
-     * @group Admin - Coupons
-     */
     public function update(UpdateCouponRequest $request, Coupon $coupon): JsonResponse
     {
         try {
@@ -142,7 +118,7 @@ class CouponController extends Controller
             return response()->json([
                 'success' => true,
                 'message' => 'Coupon updated successfully',
-                'data' => $coupon->fresh(),
+                'data' => new CouponResource($coupon->fresh()),
             ]);
         } catch (\Exception $e) {
             return response()->json([
@@ -153,11 +129,6 @@ class CouponController extends Controller
         }
     }
 
-    /**
-     * Delete coupon (Admin only).
-     *
-     * @group Admin - Coupons
-     */
     public function destroy(Coupon $coupon): JsonResponse
     {
         try {

@@ -25,11 +25,13 @@ class Brand extends Model
     {
         return $this->hasMany(Product::class);
     }
-
+    public function getRouteKeyName(): string
+    {
+        return 'slug';
+    }
     // Scopes
     public function scopeActive($query)
     {
         return $query->where('status', 'active');
     }
 }
-

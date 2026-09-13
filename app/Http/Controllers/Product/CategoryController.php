@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Product;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\CategoryResource;
 use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -17,7 +18,7 @@ class CategoryController extends Controller
      */
     public function index(Request $request)
     {
-        $query = Category::with(['parent', 'children']);
+        $query = Category::with(['parent', 'children'])->withCount('products');
 
         // Search filter
         if ($request->has('search') && $request->search != '') {
@@ -40,7 +41,13 @@ class CategoryController extends Controller
 
         return response()->json([
             'success' => true,
-            'data' => $categories,
+            'data' => CategoryResource::collection($categories)->resolve(),
+            'meta' => [
+                'currentPage' => $categories->currentPage(),
+                'lastPage' => $categories->lastPage(),
+                'perPage' => $categories->perPage(),
+                'total' => $categories->total(),
+            ],
         ]);
     }
 
@@ -74,9 +81,8 @@ class CategoryController extends Controller
             return response()->json([
                 'success' => true,
                 'message' => 'Category created successfully',
-                'data' => $category->load(['parent', 'children']),
+                'data' => new CategoryResource($category->load(['parent', 'children'])),
             ], 201);
-
         } catch (\Exception $e) {
             return response()->json([
                 'success' => false,
@@ -97,7 +103,7 @@ class CategoryController extends Controller
 
         return response()->json([
             'success' => true,
-            'data' => $category,
+            'data' => new CategoryResource($category),
         ]);
     }
 
@@ -109,7 +115,7 @@ class CategoryController extends Controller
     public function update(Request $request, Category $category)
     {
         $validated = $request->validate([
-            'name' => 'required|string|max:255|unique:categories,name,'.$category->id,
+            'name' => 'required|string|max:255|unique:categories,name,' . $category->id,
             'description' => 'nullable|string|max:500',
             'parent_id' => 'nullable|sometimes|exists:categories,id',
             'image' => 'nullable|sometimes|image|mimes:jpeg,png,jpg,gif,webp|max:2048',
@@ -144,9 +150,8 @@ class CategoryController extends Controller
             return response()->json([
                 'success' => true,
                 'message' => 'Category updated successfully',
-                'data' => $category->load(['parent', 'children']),
+                'data' => new CategoryResource($category->load(['parent', 'children'])),
             ]);
-
         } catch (\Exception $e) {
             return response()->json([
                 'success' => false,
@@ -184,7 +189,6 @@ class CategoryController extends Controller
                 'success' => true,
                 'message' => 'Category deleted successfully',
             ]);
-
         } catch (\Exception $e) {
             return response()->json([
                 'success' => false,
@@ -227,7 +231,7 @@ class CategoryController extends Controller
         return response()->json([
             'success' => true,
             'message' => 'Category status updated successfully',
-            'data' => $category,
+            'data' => new CategoryResource($category),
         ]);
     }
 }

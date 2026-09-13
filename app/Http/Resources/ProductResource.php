@@ -7,11 +7,6 @@ use Illuminate\Http\Resources\Json\JsonResource;
 
 class ProductResource extends JsonResource
 {
-    /**
-     * Transform the resource into an array.
-     *
-     * @return array<string, mixed>
-     */
     public function toArray(Request $request): array
     {
         return [
@@ -19,17 +14,27 @@ class ProductResource extends JsonResource
             'sku' => $this->sku,
             'name' => $this->name,
             'slug' => $this->slug,
-            'short_description' => $this->short_description,
+            'series' => $this->series,
+            'material' => $this->material,
+            'shortDescription' => $this->short_description,
             'description' => $this->description,
-            'price' => $this->price,
-            'discount_price' => $this->discount_price,
-            'discount_percentage' => $this->discount_percentage,
-            'final_price' => $this->finalPrice(),
-            'image_url' => $this->image_url,
-            'rating' => $this->rating,
-            'reviews_count' => $this->reviews_count,
-            'is_featured' => $this->is_featured,
-            'stock_status' => $this->stock_status,
+            'price' => (float) $this->price,
+            'discountPrice' => $this->discount_price !== null ? (float) $this->discount_price : null,
+            'discountPercentage' => $this->discount_percentage,
+            'finalPrice' => (float) $this->finalPrice(),
+            'image' => $this->image_url,
+            'alt' => $this->alt,
+            'rating' => (float) $this->rating,
+            'reviewsCount' => $this->reviews_count,
+            'isFeatured' => $this->is_featured,
+            'stockStatus' => $this->stock_status,
+            'inStock' => $this->stock_status === 'in_stock',
+            'releasedAt' => $this->released_at,
+            'badge' => $this->badge,
+            'atelierNote' => $this->atelier_note,
+            'specs' => $this->specs,
+            'gallery' => $this->gallery,
+            'relatedSlugs' => $this->related_slugs,
             'category' => $this->whenLoaded('category', function () {
                 return [
                     'id' => $this->category->id,
@@ -44,14 +49,6 @@ class ProductResource extends JsonResource
                     'slug' => $this->brand->slug,
                 ];
             }),
-            'images' => $this->whenLoaded('images', function () {
-                return $this->images->map(fn ($image) => [
-                    'url' => $image->url,
-                    'alt_text' => $image->alt_text,
-                    'is_primary' => $image->is_primary,
-                ]);
-            }),
-            // Hidden: cost_price, low_stock_threshold, stock (exact numbers), status, meta_title, meta_description, created_at, updated_at, deleted_at
         ];
     }
 }

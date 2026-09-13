@@ -37,6 +37,10 @@ class Product extends Model
         'meta_description',
         'status',
     ];
+    public function getRouteKeyName(): string
+    {
+        return 'slug';
+    }
 
     protected function casts(): array
     {
@@ -48,6 +52,9 @@ class Product extends Model
             'weight' => 'decimal:2',
             'rating' => 'decimal:2',
             'is_featured' => 'boolean',
+            'specs' => 'array',
+            'gallery' => 'array',
+            'related_slugs' => 'array'
         ];
     }
 
@@ -135,4 +142,3 @@ class Product extends Model
         return $this->finalPrice() - $this->cost_price;
     }
 }
-

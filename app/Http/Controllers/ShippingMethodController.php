@@ -4,17 +4,13 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\ShippingMethod\StoreShippingMethodRequest;
 use App\Http\Requests\ShippingMethod\UpdateShippingMethodRequest;
+use App\Http\Resources\ShippingMethodResource;
 use App\Models\ShippingMethod;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
 class ShippingMethodController extends Controller
 {
-    /**
-     * Get active shipping methods (Public).
-     *
-     * @group Shipping Methods
-     */
     public function index(Request $request): JsonResponse
     {
         try {
@@ -22,13 +18,7 @@ class ShippingMethodController extends Controller
 
             return response()->json([
                 'success' => true,
-                'data' => $methods->map(fn ($method) => [
-                    'id' => $method->id,
-                    'name' => $method->name,
-                    'description' => $method->description,
-                    'cost' => $method->cost,
-                    'estimated_delivery' => $method->estimated_delivery,
-                ]),
+                'data' => ShippingMethodResource::collection($methods)->resolve(),
             ]);
         } catch (\Exception $e) {
             return response()->json([
@@ -39,11 +29,6 @@ class ShippingMethodController extends Controller
         }
     }
 
-    /**
-     * Get all shipping methods (Admin only).
-     *
-     * @group Admin - Shipping Methods
-     */
     public function adminIndex(Request $request): JsonResponse
     {
         try {
@@ -57,11 +42,11 @@ class ShippingMethodController extends Controller
 
             return response()->json([
                 'success' => true,
-                'data' => $methods->items(),
+                'data' => ShippingMethodResource::collection($methods)->resolve(),
                 'meta' => [
-                    'current_page' => $methods->currentPage(),
-                    'last_page' => $methods->lastPage(),
-                    'per_page' => $methods->perPage(),
+                    'currentPage' => $methods->currentPage(),
+                    'lastPage' => $methods->lastPage(),
+                    'perPage' => $methods->perPage(),
                     'total' => $methods->total(),
                 ],
             ]);
@@ -74,11 +59,6 @@ class ShippingMethodController extends Controller
         }
     }
 
-    /**
-     * Create shipping method (Admin only).
-     *
-     * @group Admin - Shipping Methods
-     */
     public function store(StoreShippingMethodRequest $request): JsonResponse
     {
         try {
@@ -87,7 +67,7 @@ class ShippingMethodController extends Controller
             return response()->json([
                 'success' => true,
                 'message' => 'Shipping method created successfully',
-                'data' => $method,
+                'data' => new ShippingMethodResource($method),
             ], 201);
         } catch (\Exception $e) {
             return response()->json([
@@ -98,24 +78,14 @@ class ShippingMethodController extends Controller
         }
     }
 
-    /**
-     * Get shipping method details (Admin only).
-     *
-     * @group Admin - Shipping Methods
-     */
     public function show(ShippingMethod $shippingMethod): JsonResponse
     {
         return response()->json([
             'success' => true,
-            'data' => $shippingMethod,
+            'data' => new ShippingMethodResource($shippingMethod),
         ]);
     }
 
-    /**
-     * Update shipping method (Admin only).
-     *
-     * @group Admin - Shipping Methods
-     */
     public function update(UpdateShippingMethodRequest $request, ShippingMethod $shippingMethod): JsonResponse
     {
         try {
@@ -124,7 +94,7 @@ class ShippingMethodController extends Controller
             return response()->json([
                 'success' => true,
                 'message' => 'Shipping method updated successfully',
-                'data' => $shippingMethod->fresh(),
+                'data' => new ShippingMethodResource($shippingMethod->fresh()),
             ]);
         } catch (\Exception $e) {
             return response()->json([
@@ -135,15 +105,9 @@ class ShippingMethodController extends Controller
         }
     }
 
-    /**
-     * Delete shipping method (Admin only).
-     *
-     * @group Admin - Shipping Methods
-     */
     public function destroy(ShippingMethod $shippingMethod): JsonResponse
     {
         try {
-            // Check if method is used in orders
             if ($shippingMethod->orders()->count() > 0) {
                 return response()->json([
                     'success' => false,

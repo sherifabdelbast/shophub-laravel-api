@@ -49,6 +49,7 @@ Route::prefix('categories')->group(function () {
 
 Route::prefix('brands')->group(function () {
     Route::get('/', [BrandController::class, 'index']);
+    Route::get('/active', [BrandController::class, 'activeBrands']);
     Route::get('/{brand}', [BrandController::class, 'show']);
 });
 
