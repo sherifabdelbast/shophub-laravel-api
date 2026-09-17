@@ -172,7 +172,7 @@ class ReviewController extends Controller
                 ? 'Review marked as helpful'
                 : 'You have already marked this review as helpful',
             'data' => [
-                'helpful_count' => $review->helpful_count,
+                'helpfulCount' => $review->helpful_count,
             ],
         ]);
     }

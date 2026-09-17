@@ -26,8 +26,11 @@ class CartController extends Controller
             'success' => true,
             'data' => [
                 'items' => CartItemResource::collection($cart['items']),
-                'subtotal' => $cart['subtotal'],
-                'item_count' => $cart['item_count'],
+                'data' => [
+                    'items' => CartItemResource::collection($cart['items']),
+                    'subtotal' => $cart['subtotal'],
+                    'itemCount' => $cart['item_count'],
+                ],
             ],
         ]);
     }
