@@ -20,23 +20,6 @@ class ProductResource extends JsonResource
             'description' => $this->description,
             'price' => (float) $this->price,
             'discountPrice' => $this->discount_price !== null ? (float) $this->discount_price : null,
-<<<<<<< HEAD
-            'discountPercentage' => $this->discount_percentage,
-            'finalPrice' => (float) $this->finalPrice(),
-            'image' => $this->image_url,
-            'alt' => $this->alt,
-            'rating' => (float) $this->rating,
-            'reviewsCount' => $this->reviews_count,
-            'isFeatured' => $this->is_featured,
-            'stockStatus' => $this->stock_status,
-            'inStock' => $this->stock_status === 'in_stock',
-            'releasedAt' => $this->released_at,
-            'badge' => $this->badge,
-            'atelierNote' => $this->atelier_note,
-            'specs' => $this->specs,
-            'gallery' => $this->gallery,
-            'relatedSlugs' => $this->related_slugs,
-=======
             'discountPercentage' => (int) $this->discount_percentage,
             'finalPrice' => (float) $this->finalPrice(),
             'imageUrl' => $this->absoluteUrl($this->image_url),
@@ -51,7 +34,6 @@ class ProductResource extends JsonResource
             'inStock' => $this->stock_status === 'in_stock',
             'releasedAt' => optional($this->released_at)->toDateString(),
             'badge' => $this->badge,
->>>>>>> 7c08fc79fdf0567617cc049853bcea94f3aa35fe
             'category' => $this->whenLoaded('category', function () {
                 return [
                     'id' => $this->category->id,
@@ -66,10 +48,8 @@ class ProductResource extends JsonResource
                     'slug' => $this->brand->slug,
                 ];
             }),
-<<<<<<< HEAD
-=======
             'images' => $this->whenLoaded('images', function () {
-                return $this->images->map(fn ($image) => [
+                return $this->images->map(fn($image) => [
                     'url' => $this->absoluteUrl($image->url),
                     'altText' => $image->alt_text,
                     'isPrimary' => $image->is_primary,
@@ -81,7 +61,6 @@ class ProductResource extends JsonResource
             'atelierNote' => $this->atelier_note,
             'relatedSlugs' => $this->resolveRelatedSlugs(),
             // Hidden: cost_price, low_stock_threshold, stock (exact numbers), status, meta_title, meta_description, created_at, updated_at, deleted_at
->>>>>>> 7c08fc79fdf0567617cc049853bcea94f3aa35fe
         ];
     }
 

@@ -23,15 +23,6 @@ class ProductController extends Controller
      */
     public function index(ProductIndexRequest $request): JsonResponse
     {
-<<<<<<< HEAD
-        $products = Product::with(['category', 'brand'])
-            ->where('status', 'active')
-            ->paginate(15);
-
-        return response()->json([
-            'success' => true,
-            'data' => ProductResource::collection($products)->resolve(),
-=======
         $query = Product::with(['category', 'brand']);
 
         if ($request->filled('search')) {
@@ -105,7 +96,6 @@ class ProductController extends Controller
         return response()->json([
             'success' => true,
             'data' => ProductResource::collection($products->items()),
->>>>>>> 7c08fc79fdf0567617cc049853bcea94f3aa35fe
             'meta' => [
                 'currentPage' => $products->currentPage(),
                 'lastPage' => $products->lastPage(),
