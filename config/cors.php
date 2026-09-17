@@ -17,14 +17,10 @@ return [
 
     'allowed_methods' => ['*'],
 
-<<<<<<< HEAD
-    'allowed_origins' => ['http://localhost:4200', 'http://127.0.0.1:4200', 'http://localhost:3000', 'http://127.0.0.1:3000'],
-=======
     'allowed_origins' => array_filter(array_map(
         'trim',
         explode(',', (string) env('CORS_ALLOWED_ORIGINS', 'http://localhost:3000,http://127.0.0.1:3000'))
     )),
->>>>>>> 7c08fc79fdf0567617cc049853bcea94f3aa35fe
 
     'allowed_origins_patterns' => [],
 

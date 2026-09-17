@@ -183,7 +183,6 @@ class ProductController extends Controller
     {
         $data = $request->validated();
 
-<<<<<<< HEAD
             // Auto-generate slug from name
             $slug = Str::slug($data['name']);
             $originalSlug = $slug;
@@ -206,14 +205,6 @@ class ProductController extends Controller
                 'message' => 'Failed to create product',
                 'error' => $e->getMessage(),
             ], 500);
-=======
-        // Auto-generate slug from name
-        $slug = Str::slug($data['name']);
-        $originalSlug = $slug;
-        $count = 1;
-        while (Product::where('slug', $slug)->exists()) {
-            $slug = $originalSlug.'-'.$count++;
->>>>>>> 7c08fc79fdf0567617cc049853bcea94f3aa35fe
         }
         $data['slug'] = $slug;
 
@@ -256,7 +247,6 @@ class ProductController extends Controller
         $newStatus = $product->status === 'active' ? 'inactive' : 'active';
         $product->update(['status' => $newStatus]);
 
-<<<<<<< HEAD
             return response()->json([
                 'success' => true,
                 'message' => 'Product status updated successfully',
@@ -269,13 +259,6 @@ class ProductController extends Controller
                 'error' => $e->getMessage(),
             ], 500);
         }
-=======
-        return response()->json([
-            'success' => true,
-            'message' => 'Product status updated successfully',
-            'data' => $product->load(['category', 'brand']),
-        ]);
->>>>>>> 7c08fc79fdf0567617cc049853bcea94f3aa35fe
     }
 
     /**
@@ -295,7 +278,6 @@ class ProductController extends Controller
                 Storage::delete($oldImagePath);
             }
 
-<<<<<<< HEAD
             // Handle gallery images if provided
             if ($request->hasFile('gallery')) {
                 $galleryPaths = [];
@@ -320,11 +302,6 @@ class ProductController extends Controller
                 'message' => 'Failed to update product',
                 'error' => $e->getMessage(),
             ], 500);
-=======
-            // Store new image
-            $imagePath = $request->file('image')->store('products', 'public');
-            $data['image_url'] = Storage::url($imagePath);
->>>>>>> 7c08fc79fdf0567617cc049853bcea94f3aa35fe
         }
 
         // Handle gallery images if provided
@@ -356,7 +333,6 @@ class ProductController extends Controller
     {
         $product->delete();
 
-<<<<<<< HEAD
             return response()->json([
                 'success' => true,
                 'message' => 'Product deleted successfully',
@@ -368,11 +344,5 @@ class ProductController extends Controller
                 'error' => $e->getMessage(),
             ], 500);
         }
-=======
-        return response()->json([
-            'success' => true,
-            'message' => 'Product deleted successfully',
-        ]);
->>>>>>> 7c08fc79fdf0567617cc049853bcea94f3aa35fe
     }
 }

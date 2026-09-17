@@ -95,7 +95,7 @@ class WishlistController extends Controller
         return response()->json([
             'success' => true,
             'data' => [
-                'is_in_wishlist' => $exists,
+                'isInWishlist' => $exists,
             ],
         ]);
     }

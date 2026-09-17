@@ -37,16 +37,8 @@ class Category extends Model
     {
         return $this->belongsTo(Category::class, 'parent_id');
     }
-<<<<<<< HEAD
-    public function getRouteKeyName(): string
-    {
-        return 'slug';
-    }
-    public function children()
-=======
 
     public function children(): HasMany
->>>>>>> 7c08fc79fdf0567617cc049853bcea94f3aa35fe
     {
         return $this->hasMany(Category::class, 'parent_id')->orderBy('sort_order');
     }

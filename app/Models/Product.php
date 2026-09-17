@@ -64,26 +64,14 @@ class Product extends Model
             'weight' => 'decimal:2',
             'rating' => 'decimal:2',
             'is_featured' => 'boolean',
-<<<<<<< HEAD
-            'specs' => 'array',
-            'gallery' => 'array',
-            'related_slugs' => 'array'
-=======
             'released_at' => 'date',
             'specs' => 'array',
             'gallery' => 'array',
             'related_slugs' => 'array',
->>>>>>> 7c08fc79fdf0567617cc049853bcea94f3aa35fe
         ];
     }
 
-    /**
-     * Resolve route model bindings by slug instead of id.
-     */
-    public function getRouteKeyName(): string
-    {
-        return 'slug';
-    }
+
 
     // Relationships
     public function category(): BelongsTo

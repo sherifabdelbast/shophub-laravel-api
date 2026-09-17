@@ -18,46 +18,6 @@ class BrandController extends Controller
      */
     public function index(Request $request)
     {
-<<<<<<< HEAD
-        try {
-            $query = Brand::withCount('products');
-
-            if ($request->has('search') && $request->search != '') {
-                $search = $request->search;
-                $query->where(function ($q) use ($search) {
-                    $q->where('name', 'like', "%{$search}%")
-                        ->orWhere('description', 'like', "%{$search}%");
-                });
-            }
-
-            if ($request->has('status') && $request->status != '') {
-                $query->where('status', $request->status);
-            }
-
-            $sortField = $request->get('sort_field', 'created_at');
-            $sortDirection = $request->get('sort_direction', 'desc');
-            $query->orderBy($sortField, $sortDirection);
-
-            $perPage = $request->get('per_page', 10);
-            $brands = $query->paginate($perPage);
-
-            return response()->json([
-                'success' => true,
-                'data' => BrandResource::collection($brands)->resolve(),
-                'meta' => [
-                    'currentPage' => $brands->currentPage(),
-                    'lastPage' => $brands->lastPage(),
-                    'perPage' => $brands->perPage(),
-                    'total' => $brands->total(),
-                ],
-            ]);
-        } catch (\Exception $e) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Failed to retrieve brands',
-                'error' => $e->getMessage(),
-            ], 500);
-=======
         $query = Brand::query();
 
         // Search functionality
@@ -67,7 +27,6 @@ class BrandController extends Controller
                 $q->where('name', 'like', "%{$search}%")
                     ->orWhere('description', 'like', "%{$search}%");
             });
->>>>>>> 7c08fc79fdf0567617cc049853bcea94f3aa35fe
         }
 
         // Status filter
@@ -116,37 +75,10 @@ class BrandController extends Controller
             'status' => $validated['status'],
         ];
 
-<<<<<<< HEAD
-            if ($request->hasFile('logo')) {
-                $logoPath = $request->file('logo')->store('brands/logos', 'public');
-                $brandData['logo_url'] = Storage::url($logoPath);
-            }
-
-            $brand = Brand::create($brandData);
-
-            return response()->json([
-                'success' => true,
-                'data' => new BrandResource($brand),
-                'message' => 'Brand created successfully',
-            ], 201);
-        } catch (\Illuminate\Validation\ValidationException $e) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Validation failed',
-                'errors' => $e->errors(),
-            ], 422);
-        } catch (\Exception $e) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Failed to create brand',
-                'error' => $e->getMessage(),
-            ], 500);
-=======
         // Handle logo upload
         if ($request->hasFile('logo')) {
             $logoPath = $request->file('logo')->store('brands/logos', 'public');
             $brandData['logo_url'] = Storage::url($logoPath);
->>>>>>> 7c08fc79fdf0567617cc049853bcea94f3aa35fe
         }
 
         $brand = Brand::create($brandData);
@@ -192,27 +124,11 @@ class BrandController extends Controller
 
         $brand->update($validated);
 
-<<<<<<< HEAD
-            return response()->json([
-                'success' => true,
-                'message' => 'Brand updated successfully',
-                'data' => new BrandResource($brand),
-            ], 200);
-        } catch (\Exception $e) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Something went wrong',
-                'errors' => $e->getMessage(),
-                'data' => null,
-            ], 500);
-        }
-=======
         return response()->json([
             'success' => true,
             'message' => 'Brand updated successfully',
             'data' => new BrandResource($brand),
         ], 200);
->>>>>>> 7c08fc79fdf0567617cc049853bcea94f3aa35fe
     }
 
     /**
@@ -222,31 +138,8 @@ class BrandController extends Controller
      */
     public function destroy(Brand $brand)
     {
-<<<<<<< HEAD
-        try {
-            if ($brand->products()->count() > 0) {
-                return response()->json([
-                    'success' => false,
-                    'message' => 'Cannot delete brand with associated products',
-                ], 422);
-            }
-
-            if ($brand->logo_url) {
-                $logoPath = str_replace('/storage/', '', $brand->logo_url);
-                Storage::disk('public')->delete($logoPath);
-            }
-
-            $brand->delete();
-
-            return response()->json([
-                'success' => true,
-                'message' => 'Brand deleted successfully',
-            ]);
-        } catch (\Exception $e) {
-=======
         // Check if brand has products
         if ($brand->products()->count() > 0) {
->>>>>>> 7c08fc79fdf0567617cc049853bcea94f3aa35fe
             return response()->json([
                 'success' => false,
                 'message' => 'Cannot delete brand with associated products',
@@ -280,32 +173,11 @@ class BrandController extends Controller
 
         $brand->update(['status' => $validated['status']]);
 
-<<<<<<< HEAD
-            return response()->json([
-                'success' => true,
-                'data' => new BrandResource($brand),
-                'message' => 'Brand status updated successfully',
-            ]);
-        } catch (\Illuminate\Validation\ValidationException $e) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Validation failed',
-                'errors' => $e->errors(),
-            ], 422);
-        } catch (\Exception $e) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Failed to update brand status',
-                'error' => $e->getMessage(),
-            ], 500);
-        }
-=======
         return response()->json([
             'success' => true,
             'data' => new BrandResource($brand),
             'message' => 'Brand status updated successfully',
         ]);
->>>>>>> 7c08fc79fdf0567617cc049853bcea94f3aa35fe
     }
 
     /**
@@ -315,26 +187,6 @@ class BrandController extends Controller
      */
     public function activeBrands()
     {
-<<<<<<< HEAD
-        try {
-            $brands = Brand::withCount('products')
-                ->where('status', 'active')
-                ->orderBy('name', 'asc')
-                ->get();
-
-            return response()->json([
-                'success' => true,
-                'data' => BrandResource::collection($brands)->resolve(),
-                'message' => 'Active brands retrieved successfully',
-            ]);
-        } catch (\Exception $e) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Failed to retrieve active brands',
-                'error' => $e->getMessage(),
-            ], 500);
-        }
-=======
         $brands = Brand::where('status', 'active')
             ->orderBy('name', 'asc')
             ->get();
@@ -344,6 +196,5 @@ class BrandController extends Controller
             'data' => BrandResource::collection($brands),
             'message' => 'Active brands retrieved successfully',
         ]);
->>>>>>> 7c08fc79fdf0567617cc049853bcea94f3aa35fe
     }
 }

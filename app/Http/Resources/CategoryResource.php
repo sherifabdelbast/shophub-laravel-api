@@ -7,16 +7,6 @@ use Illuminate\Http\Resources\Json\JsonResource;
 
 class CategoryResource extends JsonResource
 {
-<<<<<<< HEAD
-    /**
-     * Transform the resource into an array.
-     *
-     * All keys are camelCase — the API's standardized response convention.
-     *
-     * @return array<string, mixed>
-     */
-=======
->>>>>>> 7c08fc79fdf0567617cc049853bcea94f3aa35fe
     public function toArray(Request $request): array
     {
         return [
@@ -25,19 +15,6 @@ class CategoryResource extends JsonResource
             'slug' => $this->slug,
             'description' => $this->description,
             'parentId' => $this->parent_id,
-<<<<<<< HEAD
-            'imageUrl' => $this->image_url,
-            'icon' => $this->icon,
-            'status' => $this->status,
-            'level' => $this->level,
-            'sortOrder' => $this->sort_order,
-            'displayIndex' => $this->display_index,
-            'meta' => $this->meta,
-            'productsCount' => $this->whenCounted('products'),
-            'children' => CategoryResource::collection($this->whenLoaded('children')),
-        ];
-    }
-=======
             'imageUrl' => $this->absoluteUrl($this->image_url),
             'index' => $this->display_index,
             'meta' => $this->meta,
@@ -59,5 +36,4 @@ class CategoryResource extends JsonResource
 
         return url($path);
     }
->>>>>>> 7c08fc79fdf0567617cc049853bcea94f3aa35fe
 }
