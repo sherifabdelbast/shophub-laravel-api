@@ -239,6 +239,7 @@ Route::prefix('admin')
 
         // Payments Management
         Route::prefix('payments')->group(function () {
+            Route::get('/', [PaymentController::class, 'index']);
             Route::patch('/{payment}/refund', [PaymentController::class, 'refund']);
         });
     });

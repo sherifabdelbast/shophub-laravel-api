@@ -53,6 +53,32 @@ class PaymentController extends Controller
             'data' => new PaymentResource($payment),
         ], 201);
     }
+    /**
+     * Get all payments (Admin only).
+     *
+     * @group Admin - Payments
+     */
+    public function index(Request $request): JsonResponse
+    {
+        $payments = Payment::query()
+            ->with(['order.user'])
+            ->when($request->filled('status'), function ($query) use ($request) {
+                $query->where('status', $request->status);
+            })
+            ->latest()
+            ->paginate(min((int) $request->get('per_page', 15), 100));
+
+        return response()->json([
+            'success' => true,
+            'data' => PaymentResource::collection($payments->items()),
+            'meta' => [
+                'currentPage' => $payments->currentPage(),
+                'lastPage' => $payments->lastPage(),
+                'perPage' => $payments->perPage(),
+                'total' => $payments->total(),
+            ],
+        ]);
+    }
 
     /**
      * Get payment details.

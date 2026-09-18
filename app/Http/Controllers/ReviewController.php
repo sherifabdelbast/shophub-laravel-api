@@ -185,7 +185,7 @@ class ReviewController extends Controller
     public function adminIndex(Request $request): JsonResponse
     {
         $reviews = Review::query()
-            ->with(['user:id,first_name,last_name', 'product:id,name'])
+            ->with(['user:id,first_name,last_name,email', 'product:id,name,slug'])
             ->when($request->filled('status'), function ($query) use ($request) {
                 $query->where('status', $request->status);
             })

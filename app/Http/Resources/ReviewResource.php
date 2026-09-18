@@ -24,10 +24,16 @@ class ReviewResource extends JsonResource
             'helpfulCount' => (int) $this->helpful_count,
             'verifiedPurchase' => (bool) $this->verified_purchase,
             'createdAt' => optional($this->created_at)->toIso8601String(),
-            'user' => $this->whenLoaded('user', fn () => [
+            'user' => $this->whenLoaded('user', fn() => [
                 'id' => $this->user->id,
                 'firstName' => $this->user->first_name,
                 'lastName' => $this->user->last_name,
+                'email' => $this->user->email,
+            ]),
+            'product' => $this->whenLoaded('product', fn() => [
+                'id' => $this->product->id,
+                'name' => $this->product->name,
+                'slug' => $this->product->slug,
             ]),
             'status' => $this->when($request->user()?->isAdmin(), $this->status),
             'orderId' => $this->when($request->user()?->isAdmin(), $this->order_id),

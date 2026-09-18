@@ -20,6 +20,7 @@ class UserResource extends JsonResource
             'gender' => $this->gender,
             'birthday' => $this->birthday,
             'role' => $this->role,
+            'isActive' => (bool) $this->is_active,
             'emailVerifiedAt' => optional($this->email_verified_at)->toIso8601String(),
             'createdAt' => optional($this->created_at)->toIso8601String(),
         ];

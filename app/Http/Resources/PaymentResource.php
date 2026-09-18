@@ -7,11 +7,6 @@ use Illuminate\Http\Resources\Json\JsonResource;
 
 class PaymentResource extends JsonResource
 {
-    /**
-     * Transform the resource into an array.
-     *
-     * @return array<string, mixed>
-     */
     public function toArray(Request $request): array
     {
         return [
@@ -23,6 +18,17 @@ class PaymentResource extends JsonResource
             'status' => $this->status,
             'refundedAmount' => $this->refunded_amount !== null ? (float) $this->refunded_amount : null,
             'paidAt' => optional($this->paid_at)->toIso8601String(),
+            'order' => $this->whenLoaded('order', function () {
+                return [
+                    'id' => $this->order->id,
+                    'orderNumber' => $this->order->order_number,
+                    'customer' => $this->order->relationLoaded('user') && $this->order->user ? [
+                        'id' => $this->order->user->id,
+                        'name' => $this->order->user->full_name,
+                        'email' => $this->order->user->email,
+                    ] : null,
+                ];
+            }),
             // Hidden: gateway_response
         ];
     }
