@@ -68,7 +68,10 @@ class Order extends Model
     {
         return $this->hasMany(Payment::class);
     }
-
+    public function getRouteKeyName(): string
+    {
+        return 'order_number';
+    }
     public function coupon(): BelongsTo
     {
         return $this->belongsTo(Coupon::class);

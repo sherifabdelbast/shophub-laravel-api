@@ -33,7 +33,7 @@ class OrderResource extends JsonResource
             'deliveredAt' => optional($this->delivered_at)->toIso8601String(),
             'itemsCount' => $this->when(isset($this->items_count), (int) $this->items_count),
             'items' => $this->whenLoaded('items', function () {
-                return $this->items->map(fn ($item) => [
+                return $this->items->map(fn($item) => [
                     'id' => $item->id,
                     'productId' => $item->product_id,
                     'productName' => $item->product_name,
@@ -47,6 +47,14 @@ class OrderResource extends JsonResource
                 return [
                     'id' => $this->shippingMethod->id,
                     'name' => $this->shippingMethod->name,
+                ];
+            }),
+            'customer' => $this->whenLoaded('user', function () {
+                return [
+                    'id' => $this->user->id,
+                    'firstName' => $this->user->first_name,
+                    'lastName' => $this->user->last_name,
+                    'email' => $this->user->email,
                 ];
             }),
             'createdAt' => optional($this->created_at)->toIso8601String(),
